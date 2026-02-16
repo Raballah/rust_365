@@ -1,23 +1,23 @@
-///Determine all girls aged 14 years or below and 15 years or above. 
-//Count the number of girls aged 14 years nd below or 15 years and above. 
+// Mutability and Type Casting.
+// A mini task to simulate student study group attendance. 
+// A state-changing system. 
 
 fn main() {
-    let ages = vec![11, 12, 16, 15, 14, 13, 11, 13, 12, 16, 18, 17, 19, 16, 12, 14, 19];
+    let total_attendance = 12;
+    let mut attendance_today = 0; //Attendance begins at zero (0), increases progressively.
 
-    let mut young = Vec::new();
-    let mut old = Vec::new();
+    // Iterate the attendance of students as they enter the study sessions.
+    attendance_today += 1;
+    attendance_today += 1;
+    attendance_today += 1;
+    attendance_today += 1;
+    attendance_today += 1;
 
-    for age in ages {
-        if age <= 14 {
-            young.push(age);
-        } else {
-            old.push(age);
-        }
-    }
+    // Cast the percentage calculation to f64 for decimal precision.
+    let percentage = (attendance_today as f64 / total_attendance as f64) * 100.0; 
+    
+    println!("Expected total attendance: {}", total_attendance);
+    println!("Today's total attendance: {}", attendance_today);
+    println!("Percentage attendance today: {:.1}%", percentage);
 
-    println!("List of girls aged 14 or below: {:?}", young);
-    println!("Number of girls aged 14 or below: {}", young.len());
-
-    println!("List of girls aged 15 or above: {:?}", old);
-    println!("Number of girls aged 15 or above: {}", old.len());
 }
