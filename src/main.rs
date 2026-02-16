@@ -1,23 +1,22 @@
-// Mutability and Type Casting.
-// A mini task to simulate student study group attendance. 
-// A state-changing system. 
+// A mini-practical task regarding mutability and type casting. 
+// Analytical logic, result known so, a report-based format. 
+
+fn percentage_calculation(today_number: i32, total: i32) ->f64 {
+    if total == 0 {
+        0.00 // accounting for dvision by zero (0).
+    } else {
+        // Cast to f64 for decimal precision.
+        (today_number as f64 / total as f64) * 100.0
+    }
+}
 
 fn main() {
-    let total_attendance = 12;
-    let mut attendance_today = 0; //Attendance begins at zero (0), increases progressively.
+    let today_number = 17;
+    let total = 26;
 
-    // Iterate the attendance of students as they enter the study sessions.
-    attendance_today += 1;
-    attendance_today += 1;
-    attendance_today += 1;
-    attendance_today += 1;
-    attendance_today += 1;
+    let percentage_attendance = percentage_calculation(today_number, total);
 
-    // Cast the percentage calculation to f64 for decimal precision.
-    let percentage = (attendance_today as f64 / total_attendance as f64) * 100.0; 
-    
-    println!("Expected total attendance: {}", total_attendance);
-    println!("Today's total attendance: {}", attendance_today);
-    println!("Percentage attendance today: {:.1}%", percentage);
-
+    println!("The number of students expected to attend the study session: {}", total);
+    println!("Today's number of attendance: {}", today_number);
+    println!("The percentage attendance today: {:.1}%", percentage_attendance);
 }
