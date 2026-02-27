@@ -1,20 +1,25 @@
-// Now, this session entails building a student profile initializer,
-// meant for a Rust-based academic system.
-//Project constraints: Each student profile must contain: Student ID number, Age, GPA, 
-// Active Status, Grade Letter.
+// A Rust program to determine the min and max numbers out of a given array list.
+// Ages of girls in a community study meeting: [23, 31, 18, 21, 22, 12, 28, 29, 27, 32, 17, 16, 20, 26]
+
+fn age_categorized(girl_age: &[i32]) -> (i32, i32) {
+    let mut min_age = girl_age[0];
+    let mut max_age = girl_age[0];
+
+    for &age in girl_age {
+        if age < min_age {
+            min_age = age;
+        }
+        if age > max_age {
+            max_age = age;
+        }
+    }
+
+    (min_age, max_age)
+}
 
 fn main() {
-    let student_id: u32 = 11007; // Unsigned integer, non-negative integer, annotated not casted.
-    let age: u32 = 19;
-    let gpa: f64 = 3.78;
-    let active_status: bool = true;
-    let grade: char = 'A';
+    let girl_age = [23, 31, 18, 21, 22, 12, 28, 29, 27, 32, 17, 16, 20, 26];
+    let (min_age, max_age) = age_categorized(&girl_age);
 
-    let student_profile = (student_id, age, gpa, active_status, grade);
-
-    println!("Student ID: {}", student_profile.0);
-    println!("Age: {}", student_profile.1);
-    println!("GPA: {:.2}", student_profile.2);
-    println!("Active Status: {}", student_profile.3);
-    println!("Grade: {}", student_profile.4);
+    println!("The youngest girl is aged {}, while the oldest girl has an age of {}.", min_age, max_age);
 }
