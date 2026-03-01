@@ -1,34 +1,33 @@
-// Given the  array containing ages of girls: [32, 72, 86, 54, 40, 10, 89, 41, 49, 18, 30, 21, 51]
-// You are to determine which age is below 40 and diplay all those ages.
-// You are expected to use the .enumerate() and .iter() functions in your Rust code.
-// This should clearly show how .enumerate() and .iter() work in Arrays loops.
-// Note: several errors have been made in this attempt. explain then in details as well.
-// println!("The second girl, who is aged 40 or below, is aged {}", young_girls[1]);
-//println!("In the list of women, who are aged 40 and above, the second woman is aged {}.", super_old.len([2]));
+// Now back to Ararys and the use of the push() function for vectors. data type, Vec<i32>, 
+// created as Vec::new(); push() is a widely used function in Rust. 
+// push() used for adding elements to dynamically-sized collections like Vec<i32> and String::new
+// used as vector_name.push(element); push() modifies the data structures of collections; 
+// hence, the variable containing the collection must be declared as mutable using mut. for example:
+// push() takes ownership of the value/item/element being added to the collection. Example usage of push()
+// push() takes ownership of the value / elemnent/value beinga dded to the collection, the Vector or String
+// to remove and return the last element added to a collection using push(), use pop()
+// real-life use-case of the push() function with Vector and String collections.
 
-fn age_category(ages: &[i32]) -> Vec<i32> {
-    let mut old_woman = Vec::new();
-
-    for (i, &age) in ages.iter().enumerate() {
-        if age > 40 {
-            old_woman.push(age);
-            println!("This woman at index {} is very old at age {}", i, age);
-        }
-    }
-    old_woman
-}
+//Processing user input.
+// A common use case is collecting user input in a loop to build a list, 
+// such as adding command line arguments to a list of tasks;
 
 fn main() {
-    let ages = [32, 72, 86, 54, 40, 10, 89, 41, 49, 18, 30, 21, 51];
-    let super_old = age_category(&ages);
+    // 1. Initialize an empty, mutable vector
+    let mut task_list: Vec<String> = Vec::new();
+    
+    // 2. Simulate user input
+    let input1 = String::from("Buy milk");
+    let input2 = String::from("Graze cows");
+    let input3 = String::from("Meet the Dean");
+    let input4 = String::from("Go home to my family!");
 
-    println!("Given here is the list of women aged 40 and above: {:?} ", super_old);
-    //if I wanted to count how many women are aged above 40 in the array; i would use this approach:
-    println!("The generated list of super old woman has exactly {} woman who are super old.", super_old.len());
+    // 3. Push data into the vector
+    task_list.push(input1);
+    task_list.push(input2);
+    task_list.push(input3);
+    task_list.push(input4);
 
-    //if I wanted to determine the age of the woman appearing in the list, I would proceed as follows:
-
-    if super_old.len() >= 2 {
-        println!("The second woman in the list of wanawake ambao wamechapa is aged {} years old.", super_old[1]);
-    }
+    // 4. Output the result
+    println!("These are the tasks I will taking part in today: {:?}", task_list);
 }
