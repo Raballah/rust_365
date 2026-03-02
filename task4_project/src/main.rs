@@ -1,33 +1,23 @@
-// Now back to Ararys and the use of the push() function for vectors. data type, Vec<i32>, 
-// created as Vec::new(); push() is a widely used function in Rust. 
-// push() used for adding elements to dynamically-sized collections like Vec<i32> and String::new
-// used as vector_name.push(element); push() modifies the data structures of collections; 
-// hence, the variable containing the collection must be declared as mutable using mut. for example:
-// push() takes ownership of the value/item/element being added to the collection. Example usage of push()
-// push() takes ownership of the value / elemnent/value beinga dded to the collection, the Vector or String
-// to remove and return the last element added to a collection using push(), use pop()
-// real-life use-case of the push() function with Vector and String collections.
+// Rust slices, do not own data, borrrow data/ represent part of an array/String
+// given women's ages as [82, 18, 29, 39, 49, 59, 10, 38, 71, 63, 90, 42, 17, 50, 79, 47, 27];
+// your work is to return a list of women who are aged 50 or below
 
-//Processing user input.
-// A common use case is collecting user input in a loop to build a list, 
-// such as adding command line arguments to a list of tasks;
+
+fn age_categorized(female_age: &[i32]) -> Vec<i32> {
+    let mut junior_women = Vec::new();
+
+    for &age in female_age {
+        if age <= 50 {
+            junior_women.push(age);
+        }
+    }
+    junior_women
+}
+
 
 fn main() {
-    // 1. Initialize an empty, mutable vector
-    let mut task_list: Vec<String> = Vec::new();
-    
-    // 2. Simulate user input
-    let input1 = String::from("Buy milk");
-    let input2 = String::from("Graze cows");
-    let input3 = String::from("Meet the Dean");
-    let input4 = String::from("Go home to my family!");
+    let female_age = [82, 18, 29, 39, 49, 59, 10, 38, 71, 63, 90, 42, 17, 50, 79, 47, 27];
+    let young_women = age_categorized(&female_age);
 
-    // 3. Push data into the vector
-    task_list.push(input1);
-    task_list.push(input2);
-    task_list.push(input3);
-    task_list.push(input4);
-
-    // 4. Output the result
-    println!("These are the tasks I will taking part in today: {:?}", task_list);
+    println!("The list of young women in the list aged 50 or below is this: {:?}", young_women);
 }
