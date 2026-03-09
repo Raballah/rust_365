@@ -80,7 +80,7 @@ fn main() {
 // of different data types to enable a single unit of operation on data.
 
 
-
+/*
 struct CarDetails {
     make: String,
     model: String,
@@ -102,4 +102,41 @@ fn main() {
 
     println!("My {} {} {} {} car of chasis number {} had a mileage of only {}."
     , my_car.color, my_car.year, my_car.make, my_car.model, my_car.chassis, my_car.mileage);
+}
+
+*/
+
+// The use of structs A real-life use case of structs is in manaing a User Profile in a web application.
+// Instead of passing around individual strings for a username and email, 
+// you group the into a single custom type. 
+// Further Structs Understanding, the Structs in User Profile in a web application.
+// Instead of passing around individual strings for a username and email, you group all associated/
+// related data into a single custom type. Here is an example:
+
+// The Use Case: User Registration
+//In this case, the struct acts as a blueprint to ensure that every user has the required ddata field.
+
+// Defining the data structure 
+
+struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+
+fn main() {
+    // Creating a particular instant of that struct
+    
+    let user1 = User {
+        email: String::from("jamesunkownn@gmail.com"),
+        username: String::from("rustacean123"),
+        active: true,
+        sign_in_count: 21,
+    };
+
+    // Specific Outcome. Accessing two user properties from the User Profile
+
+    println!("The username of user1 is {}.", user1.username);
+    println!("The email of user1 is {}.", user1.email);
 }
