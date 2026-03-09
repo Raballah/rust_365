@@ -118,6 +118,7 @@ fn main() {
 
 // Defining the data structure 
 
+/*
 struct User {
     username: String,
     email: String,
@@ -139,4 +140,58 @@ fn main() {
 
     println!("The username of user1 is {}.", user1.username);
     println!("The email of user1 is {}.", user1.email);
+}
+*/
+
+// Assume you are given a User Profile with name, age, and net worth.
+// You want to search for people in the list to get their net worth. 
+
+struct IndividualDetails {
+    name: String,
+    age: u32,
+    net_worth: String,
+}
+
+// Remember to set lifetime parameter for the function, 'a
+// Returns a struct, as defined in the data structure.
+
+fn get_individual_by_name<'a>(millionaires: &'a[IndividualDetails], name: &'a str) -> Option<&'a IndividualDetails> {
+    for person in millionaires {
+        if person.name == name {
+            return Some(person);
+        }
+    }
+    None
+}
+
+fn main() {
+    let rich_guys = vec![
+        IndividualDetails {
+            name: "Willy".to_string(),
+            age: 67,
+            net_worth: "200 USD".to_string()
+        },
+        IndividualDetails {
+            name: "Joseph".to_string(),
+            age: 58,
+            net_worth: "USD 129".to_string()
+        },
+        IndividualDetails {
+            name: "Robby".to_string(),
+            age: 43,
+            net_worth: "USD 562".to_string()
+        },
+    ];
+
+    // Search for Robby and get the result
+    match get_individual_by_name(&rich_guys, "Willy") {
+        Some(guy) => println!("{} has a net worth of {}.", guy.name, guy.net_worth),
+        None => println!("No rich guy found!"),
+    }
+
+    // Find out the net worth of Mercy
+    match get_individual_by_name(&rich_guys, "Mercy") {
+        Some(lady) => println!("{} is aged {} with a net worth of {}.", lady.name, lady.age, lady.net_worth),
+        None => println!("No, this is not a millionaire!"),
+    }
 }
