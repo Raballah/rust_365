@@ -143,6 +143,8 @@ fn main() {
 }
 */
 
+
+/*
 // Assume you are given a User Profile with name, age, and net worth.
 // You want to search for people in the list to get their net worth. 
 
@@ -193,5 +195,60 @@ fn main() {
     match get_individual_by_name(&rich_guys, "Mercy") {
         Some(lady) => println!("{} is aged {} with a net worth of {}.", lady.name, lady.age, lady.net_worth),
         None => println!("No, this is not a millionaire!"),
+    }
+}
+*/
+
+
+// Built-in Rust Iteractor, with a struct data type
+
+struct StudentDetails {
+    name: String,
+    id: String,
+    age: u32,
+    gpa: f64,
+}
+
+fn main() {
+    let students = vec![
+        StudentDetails {
+            name: "Wendy".to_string(),
+            id: "1109".to_string(),
+            age: 23,
+            gpa: 4.55
+        },
+        StudentDetails {
+            name: "Billy".to_string(),
+            id: "1108".to_string(),
+            age: 19,
+            gpa: 2.89
+        },
+        StudentDetails {
+            name: "Mary".to_string(),
+            id: "10978".to_string(),
+            age: 21,
+            gpa: 3.89
+        },
+    ];
+
+    // Use the in-bult iteractor .find() to find a name and gpa.
+    if let Some(student) = students.iter().find(|u| u.name == "Wendy") {
+        println!("The student {} aged {} years old has a GPA of {}.", student.name, student.age, student.gpa);
+    } else {
+        println!("No student found!");
+    }
+
+    // Finding a non-existent student "Vance"
+    if let Some(student) = students.iter().find(|u| u.name == "Vance") {
+        println!("{} has an ID of {}.", student.name, student.id);
+    } else {
+        println!("Student does not exist!");
+    }
+
+    // Let's find Mary, her ID, and GPA.
+    if let Some(student) = students.iter().find(|u| u.name == "Wendy") {
+        println!("The student {} of ID {} has a GPA of {}.", student.name, student.id, student.gpa);
+    } else {
+        println!("This student is not registered!");
     }
 }
