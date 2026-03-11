@@ -201,11 +201,8 @@ fn main() {
 
 
 
-//  A reminder on the built-in Rust Iterator for structs, using .find().
-// Say, you have a list of millionaires, and want to find out the net worth of Jane.
-// Use the built-in Rust Iterator, find() to do it.
-// Use a growable list of arrays, vec!
-
+// Built-in Iterator, .find()
+/*
 struct Millionare {
     name: String,
     age: u32,
@@ -249,5 +246,63 @@ fn main() {
         println!("{} is aged {} with a net worth of {}.", person.name, person.age, person.money_accrued);
     } else {
         println!("This person is not a millionaire. Please try another name!");
+    }
+}
+*/
+
+// Do the same, but without the built-in iteractor.
+
+// structs without inline (within fn main()) have a lifetime issue, must include the lifetime parameter 'a.
+// Create a list of prior flu exposure of community members, and find out member status.
+// Use an Option<> to check if empty or none, first, in the function, then pass the function.
+
+struct PersonHealth {
+    name: String,
+    occupation: String,
+    number_of_children: u8,
+    prior_flu_exposure: bool,
+}
+
+fn find_member_by_name<'a>(community_list: &'a [PersonHealth], name: &'a str) -> Option<&'a PersonHealth> {
+    for member in community_list {
+        if member.name == name {
+            return Some(member);
+        }
+    }
+    None
+}
+
+fn main() {
+    let community_members = vec![
+        PersonHealth {
+            name: "Omondi".to_string(),
+            occupation: "plumber".to_string(),
+            number_of_children: 5,
+            prior_flu_exposure: false
+        },
+        PersonHealth {
+            name: "Apondi".to_string(),
+            occupation: "shoe vendor".to_string(),
+            number_of_children: 9,
+            prior_flu_exposure: true
+        },
+        PersonHealth {
+            name: "Robby".to_string(),
+            occupation: "teacher".to_string(),
+            number_of_children: 4,
+            prior_flu_exposure: false
+        },
+    ];
+
+    // Find out if Apondi has prior flu infection
+    match find_member_by_name(&community_members, "Apondi") {
+        Some(member) => println!("{} is a {}. Status of prior flu exposure: {}.", member.name, member.occupation, member.prior_flu_exposure),
+        None => println!("Not a recognized community member"),
+    }
+    
+    // Find out the prir flu exposure status of Dickson (not existing member)
+    match find_member_by_name(&community_members, "Dickson") {
+        Some(member) => println!("{}, who has {} children, found. Status of prior flu infection: {}.", member.name, member.number_of_children, member.prior_flu_exposure),
+        None => println!("Not a member of this community!"),
     }
 }
