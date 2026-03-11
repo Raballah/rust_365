@@ -200,55 +200,54 @@ fn main() {
 */
 
 
-// Built-in Rust Iteractor, with a struct data type
 
-struct StudentDetails {
+//  A reminder on the built-in Rust Iterator for structs, using .find().
+// Say, you have a list of millionaires, and want to find out the net worth of Jane.
+// Use the built-in Rust Iterator, find() to do it.
+// Use a growable list of arrays, vec!
+
+struct Millionare {
     name: String,
-    id: String,
     age: u32,
-    gpa: f64,
+    money_accrued: String,
+    wealth_source: String,
 }
 
 fn main() {
-    let students = vec![
-        StudentDetails {
-            name: "Wendy".to_string(),
-            id: "1109".to_string(),
-            age: 23,
-            gpa: 4.55
+    let flashy_people = vec![
+        Millionare {
+            name: "Raballah".to_string(),
+            age: 35,
+            money_accrued: "$200M".to_string(),
+            wealth_source: "crypto trading".to_string()
         },
-        StudentDetails {
-            name: "Billy".to_string(),
-            id: "1108".to_string(),
-            age: 19,
-            gpa: 2.89
+        Millionare {
+            name: "Ivy".to_string(),
+            age: 29,
+            money_accrued: "$160M".to_string(),
+            wealth_source: "small business".to_string()
         },
-        StudentDetails {
-            name: "Mary".to_string(),
-            id: "10978".to_string(),
-            age: 21,
-            gpa: 3.89
+        Millionare {
+            name: "Sharon".to_string(),
+            age: 24,
+            money_accrued: "$181M".to_string(),
+            wealth_source: "community crowd-sourcing".to_string()
         },
     ];
 
-    // Use the in-bult iteractor .find() to find a name and gpa.
-    if let Some(student) = students.iter().find(|u| u.name == "Wendy") {
-        println!("The student {} aged {} years old has a GPA of {}.", student.name, student.age, student.gpa);
+    // Use the built-in, inline Iteractor .find() to find out display Sharon's wealth.
+
+    if let Some(person) = flashy_people.iter().find(|u| u.name == "Sharon") {
+        println!("The net worth of {} is {}, sourced from {}.", person.name, person.money_accrued, person.wealth_source);
     } else {
-        println!("No student found!");
+        println!("No, this user is not a millionaire!");
     }
 
-    // Finding a non-existent student "Vance"
-    if let Some(student) = students.iter().find(|u| u.name == "Vance") {
-        println!("{} has an ID of {}.", student.name, student.id);
-    } else {
-        println!("Student does not exist!");
-    }
+    // Look for a user who does not exist in the millioanires database, say "Sandy"
 
-    // Let's find Mary, her ID, and GPA.
-    if let Some(student) = students.iter().find(|u| u.name == "Wendy") {
-        println!("The student {} of ID {} has a GPA of {}.", student.name, student.id, student.gpa);
+    if let Some(person) = flashy_people.iter().find(|u| u.name == "Sandy") {
+        println!("{} is aged {} with a net worth of {}.", person.name, person.age, person.money_accrued);
     } else {
-        println!("This student is not registered!");
+        println!("This person is not a millionaire. Please try another name!");
     }
 }
