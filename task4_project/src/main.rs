@@ -3,7 +3,7 @@
 
 fn return_items(marks: &[i32]) {
     
-    for value in marks {
+    for value in marks.iter_mut() {
         println!("This is a valid value: {}", value);
     }
 }
