@@ -1,24 +1,20 @@
-// Day 4: Lessons Regarding Control Flow (if, else, else if, match)
-// If expressions
-// if mus be boolean expressions, not integers. 
-
-// Using match, insted of if, as an exprsesion to return values. 
-// That is, use match as an expresssion to represent a value, instead of the let itself, 
-// to return a value. 
-
-// Propensity to crime based across ages. 
+// Day 4: Lessons Regarding Control Flow (if, else, else if, match
+// The match, but operates the same way as if statements. match as expresssion, or as a variable.
+// The match feature in Rust
 
 fn main() {
-    let age = 75; 
+    let weight = 34;
 
-    let crime_propensity = match age {
-        18..=25 => "Very likely!",
-        26..=30 => "Likely!",
-        31..=35 => "Neutral!",
-        36..=40 => "Unlikely!",
-        41..=45 => "Very unlikely!",
-        _ => "Not likely!",
+    let weight_category = match weight {
+        w if w > 100 => "obese",
+        90..=100 => "very overweight",
+        80..=89 => "fat",
+        70..=79 => "normal",
+        60..=69 => "slim",
+        50..=59 => "thin",
+        40..=49 => "emaciated",
+        _ => "frail",
     };
 
-    println!("Likelihood of James, 75, committing a crime: {}", crime_propensity);
+    println!("Based on his weight readings now, he is definitely {}.", weight_category);
 }
