@@ -1,17 +1,22 @@
 // Day 5: Loops 
-// Loops that return values, more Rust-like
-// Count my money, break to return value, and then subtract to get balance.
+// While loop
+// Simple command line tool using while loop.
+
+use std::io;
 
 fn main() {
-    let mut money_counter = 0;
+    let mut user_data = String::new();
 
-    let my_balance = loop {
-        money_counter += 1;
+    while user_data.trim() != "exit" {
+        user_data.clear(); // clears the previous input
+        println!("Type something to proceed (or 'exit' to quit):");
 
-        if money_counter == 1200 {
-            break money_counter - 122;
-        }
-    };
+        io::stdin()
+            .read_line(&mut user_data)
+            .expect("Failed to read line!");
 
-    println!("My balance from the money availabe is {}", my_balance);
+        println!("You typed: {}", user_data);
+    }
+
+    println!("Exited successfully!");
 }
