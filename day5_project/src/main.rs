@@ -1,8 +1,6 @@
 // Day 5: Loops 
 // for loop. Using for with ranges.
-// Whenever a for loop has to produce a result/outcome that's
-//  Rust's signal to switch to the iterator chain. 
-// Using the Rust iterator chain.
+// rust iterators using continue feature.
 
 fn main() {
     let shoe_sizes = [44, 46, 32, 37, 45, 40, 41, 39, 38, 36, 35, 47];
@@ -12,11 +10,11 @@ fn main() {
     let new_sizes: Vec<i32> = shoe_sizes
         .iter() // Borrows shows sizes as &i32
         .copied() // Converts borrowed &i32 to i32
-        .filter(|&size| size < 38) // Filters by size
+        .filter(|&size| size > 38) // Filters by size
         .collect(); // returns the new_sizes growable vector as Vec<i32>
 
-    for size in &new_sizes {   // Borrows &Vec<i32> with elements &i32
-        if *size == 46 {       // Manually converts the borrowed &i32 to i32
+    for &size in &new_sizes {   // Borrows &Vec<i32> with elements &i32
+        if size == 46 {       // Manually converts the borrowed &i32 to i32
             continue;
         }
 
