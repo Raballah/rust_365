@@ -3,23 +3,13 @@
 // rust iterators using continue feature.
 
 fn main() {
-    let shoe_sizes = [44, 46, 32, 37, 45, 40, 41, 39, 38, 36, 35, 47];
+    let numbers = vec![1,2,3];
 
-    // Task: filter all shoes size above 38 into a new array, then continue if not 46
-
-    let new_sizes: Vec<i32> = shoe_sizes
-        .iter() // Borrows shows sizes as &i32
-        .copied() // Converts borrowed &i32 to i32
-        .filter(|&size| size > 38) // Filters by size
-        .collect(); // returns the new_sizes growable vector as Vec<i32>
-
-    for &size in &new_sizes {   // Borrows &Vec<i32> with elements &i32
-        if size == 46 {       // Manually converts the borrowed &i32 to i32
-            continue;
-        }
-
-        println!("Available size: {}", size);
+    for n in numbers.iter() { // creates an interator, which yields &i32
+        println!("{}", n);  // println! macro implements Display trait, automatically handles conversion of &i32 to i32 
     }
 
-    println!("List of all available shoe sizes: {:?}", new_sizes);
+    for n in numbers {  // Implements numbers.into_iter() interation, consumption iteration. n is i32 here, within Vec<i32)
+        println!("{}", n);  // prints, but moves ownership of numbers vector to the loop iterator. numbers vector unavaiable beyond this for loop scope.
+    }
 }
