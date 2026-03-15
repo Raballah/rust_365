@@ -1,28 +1,24 @@
 // Day 5: Loops 
-// While loop
-// Building a multi-line text buffer 
-
-use std::io;
+// for loop. Using for with ranges.
+// the continue key word with for loop
+// continue skips the current iteraction
 
 fn main() {
-    let mut document = String::new();
-    let mut line = String::new();
+    let ages = [34, 28, 25, 33, 35, 41, 38, 21, 27];
 
-    println!("Type 'done' to exit!:");
+    let mut possible_age: Vec<i32> = Vec::new();
 
-    loop {
-        line.clear();
-
-        io::stdin()
-            .read_line(&mut line)
-            .expect("Failed to read line");
-        
-        if line.trim() == "done" {
-            break;
+    for age in ages {
+        if age < 35 {
+            println!("{}", age);
+            possible_age.push(age);
         }
-
-        document.push_str(&line);
     }
 
-    println!("Document progress: \n{}", document);
+    for age in possible_age {
+        if age == 34 {
+            continue;
+        }
+        println!("Eligible age: {}", age);
+    }
 }
