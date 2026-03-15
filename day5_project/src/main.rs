@@ -1,18 +1,22 @@
 // Day 5: Loops 
 // While loop
-// A Basic Game Loop
+// Simple command-line tool. Reading from a buffer.
+
+use std::io;
 
 fn main() {
-    let mut lifetime = 100;
+    let mut user_input = String::new();
 
-    loop {
-        println!("Game on... Health remaining: {}", lifetime);
+    while user_input.trim() != "exit" {
+        user_input.clear(); // Clear existing, previous entry
+        println!("Type something to proceed or 'exit' to quit!");
 
-        lifetime -= 20;
-
-        if lifetime <= 0 {
-            println!("Game Over..0% health");
-            break;
-        }
+        io::stdin()
+            .read_line(&mut user_input)
+            .expect("Failed to read any input from the line!");
+        
+        println!("Your Entry: {}", user_input);
     }
+
+    println!("Exited successfully!");
 }
