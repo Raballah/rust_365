@@ -14,26 +14,17 @@ Will this suggested code print. offer corrections based on this approach.
 
 fn main() {
     let total_students = 10;
-    let mut student_counter = 0;
+    let mut present = 0;
 
-    loop {
-        for student in 1..=total_students {  
-
-            if student == 5 {
-                println!("Student 5 not counted.");
-                continue;
-            }
-            student_counter +=1;
-
-            println!("Student Entered. Present Count: {}", student_counter);
+    for student in 1..=total_students {
+        if student == 5 {
+            println!("Student 5 not counted.");
+            continue;
         }
 
-        while student_counter < total_students {
-            println!("Waiting for other students to enter. Present: {}", student_counter);
-            student_counter += 1;
-        }
-
-        println!("All Students Entered. Present Number: {}", total_students);
-        break;
+        present += 1;
+        println!("Student {} Entered. Currently Present: {}", student, present);
     }
+
+    println!("Final Attendance: {}/{}", present, total_students);
 }
