@@ -1,12 +1,21 @@
 // Day 5: Loops 
-// The continue keyword. 
+// Looop Labels. Rust allows loops to be labelled, calld labelled loops. 
 
 fn main() {
+    let mut _count = 0;
 
-    for number in 1..6 {
-        if number == 1 {
-            continue;
+    'outer: loop {
+        println!("Outer loop!");
+
+        loop {
+            println!("Inner loop");
+            
+            loop {
+                println!("Will this work, and why?");
+                break 'outer;
+            }
         }
-    println!("{}", number);
     }
+
+    println!("Done looping for now!");
 }
