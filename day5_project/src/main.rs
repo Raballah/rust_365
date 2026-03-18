@@ -1,27 +1,39 @@
 // Day 5: Loops 
 // Looop Labels. Rust allows loops to be labelled, calld labelled loops. 
-// Case Example: Searching Through 2D Dataset
-// Say I want to search for the number 17 in an excel sheet dataset, within a range.
+// Day 5 Mini Project: Student Attendance Simulation
+// The project entails simulating students arrriving at a school 
+
+/*
+Student attendance simulation. Simulating students entering a class. Program has a total of 
+10 students. Uses a loop to simulate attendance counting. each loop increases the number of students present. Stop when the classroom is full.
+Print attendance progress.  Constraints: program must use loop, break, for, while, continue
+you many split them into sections in the same program. add this rule. if student number 5 arrives, skip printing them using continue.
+so, expected output excludes 5. 
+Will this suggested code print. offer corrections based on this approach. 
+*/
 
 fn main() {
-    let rope_length = [
-        [78, 128, 24, 18],
-        [89, 133, 28, 90],
-        [109, 56, 48, 46],
-        [110, 72, 83, 71],
-        [107, 94, 32, 21],
-    ];
+    let total_students = 10;
+    let mut student_counter = 0;
 
-    let target = 28;
+    loop {
+        for student in 1..=total_students {  
 
-    'outer: for row in 0..5 {
-        for col in 0..4 {
-            if rope_length[row] [col] == 28 {
-                println!("Found {} at ({}, {}).", target, col, row);
-                break 'outer;
+            if student == 5 {
+                println!("Student 5 not counted.");
+                continue;
             }
-        }
-    }
+            student_counter +=1;
 
-    println!("Search completed successfully!");
+            println!("Student Entered. Present Count: {}", student_counter);
+        }
+
+        while student_counter < total_students {
+            println!("Waiting for other students to enter. Present: {}", student_counter);
+            student_counter += 1;
+        }
+
+        println!("All Students Entered. Present Number: {}", total_students);
+        break;
+    }
 }
