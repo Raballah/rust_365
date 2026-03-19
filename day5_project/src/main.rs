@@ -13,6 +13,12 @@
 fn main() {
     let freight_size = 45;
 
+    if let nightmare @ 42..=48 = freight_size {
+        println!("Emergency: This {} is an overkill freight size for us.", nightmare);
+    } else {
+        println!("The rest of the freight sizes are fine.");
+    }
+
     match freight_size {
         w if w < 17 => println!("Not significant enough!"),
         17..=31 => println!("Seriously in demand!"),
