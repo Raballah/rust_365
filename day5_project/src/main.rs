@@ -1,30 +1,36 @@
 // Day 6: Functions and Return Values
 // Day 6 Mini Project: "Student Score Analyzer CLI"
+// Building a simple CLI program, which takes a student's score.
+// uses functions to determine the grade.
 
-// Two control flows are if and match
-// if accepts boolean expressions, no ranges like 1..=78
-// match goes with ranges, for example 3..=67;
+fn score_grader(score: i32) -> char {
+    match score {
+        w if w > 100 => 'E',
+        80..=100 => 'A',
+        70..=79 => 'B',
+        60..=69 => 'C',
+        50..=59 => 'D',
+        40..=49 => 'E',
+        _ => 'F',
+    }
+}
 
-// No need to use loops (for, while, loop break, continue- eliminates of what has been ===) with control 
-// No need t include control flows with loops, but control flows are used inside loops, where necessary
-
-// Looping through numbers and categorizing into specific ranges, needs control flow if match inside loops
+fn pass_determinant(mark: i32) -> &'static str {
+    if mark >= 50 {
+        "Pass"
+    } else {
+        "Fail"
+    }
+}
 
 fn main() {
-    let freight_size = 45;
+    let student_score = 43;
 
-    if let nightmare @ 42..=48 = freight_size {
-        println!("Emergency: This {} is an overkill freight size for us.", nightmare);
-    } else {
-        println!("The rest of the freight sizes are fine.");
-    }
+    let grade = score_grader(student_score);
+    let pass_level = pass_determinant(student_score);
 
-    match freight_size {
-        w if w < 17 => println!("Not significant enough!"),
-        17..=31 => println!("Seriously in demand!"),
-        32..42 => println!("Somewhat in demand!"),
-        nightmare @ 42..=48 => println!("Dwindling demand! {} falls here!", nightmare),
-        49..=51 => println!("Almost no demand!"),
-        _ => println!("Ignorable!"),
-        }
+    println!("\n--- Students' Grading and Pass Categorization---");
+
+    print!("Grade: {}", grade);
+    println!(" | Pass Level: {}", pass_level);
 }
