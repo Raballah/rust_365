@@ -3,6 +3,8 @@
 // Building a simple CLI program, which takes a student's score.
 // uses functions to determine the grade.
 
+use std::io;
+
 // 1. Grade Calculator
 fn calculate_grade(score: i32) -> char {
     match score {
@@ -81,4 +83,19 @@ fn main() {
     let score_analysis = analyze(student_score);
     println!("\n--- Score Analysis Using Analyze()---");
     println!("Score Analysis: {:?}", score_analysis);
+
+
+    let mut input = String::new();
+    println!("Enter Student Score: ");
+
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read input");
+    
+    let student_score: i32 = input
+        .trim()
+        .parse()
+        .expect("Please Enter a Valid Number!");
+    
+    println!("You Entered: {}", student_score);
 }
