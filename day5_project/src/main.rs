@@ -19,8 +19,11 @@ fn calculate_grade(score: i32) -> char {
 
 // 2. Pass/Fail Checker
 
-fn is_pass(score: i32) -> bool {  // is_pass is Verbose bool return.
-    score >= 50
+fn is_pass(score: i32) -> Option<bool> {  // is_pass is Verbose bool return.
+    if !(0..=100).contains(&score) {
+        return None;
+    } 
+    Some(score >= 50)
 }
 
 // 3. Feedback Generator
@@ -39,45 +42,30 @@ fn feedback(score: i32) -> String {
 
 // 4. Return tuple
 
-fn analyze(score: i32) -> (char, bool, String) {
+fn analyze(score: i32) -> (char, Option<bool>, String) {
     (calculate_grade(score), is_pass(score), feedback(score))
 }
 
 fn main() {
     let score = 109;
+    let passed = is_pass(score);
+
+    let pass_determinant = match passed {
+        Some(true) => "Pass",
+        Some(false) => "Fail",
+        None => "Invalid - Please recheck score entry!",
+    };
 
     let grade = calculate_grade(score);
-    let passed = is_pass(score);
     let message = feedback(score);
 
     println!("\n--- Students' Grading and Pass Categorization---");
 
-    println!("Grade: {} | Pass?: {} | Feedback: {}", grade, passed, message);
+    println!("Grade: {} | Pass?: {} | Feedback: {}", grade, pass_determinant, message);
 
     let score_analysis = analyze(score);
 
-    println!("\n--- Score analysis as a tuple---");
+    println!("\n--- Score Analysis Result as a Tuple---");
 
     println!("Score analysis: {:?}", score_analysis);
-}
-
-// Not sure of how to acheive this requirement: "Accept user input from terminal". An opportunity to learn here.
-
-// Some lessons
-
-.contains(&score) takes integer slice.
-
-pub fn contains(&self, item: &i32) -> bool
-
-(0..=100).contains(&score)
-
-fn is_valid(score: i32) -> bool {
-    (0..=100).contains(&score)
-}
-
-fn is_pass(score: i32) -> Option<bool> {
-    if !(0..100).contains(&score) {
-        return None;  // Invalid - no pass/fail assigned
-    }
-    Some(score >= 50) // valid - evaluate normally.
 }
