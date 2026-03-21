@@ -4,25 +4,23 @@
 // uses functions to determine the grade.
 
 // 1. Grade Calculator
-
 fn calculate_grade(score: i32) -> char {
     match score {
-        w if w > 100 || w < 0 => 'I', // 'I' invalid score entered. reccheck entry.
+        w if w > 100 || w < 0 => 'I', // Invalid. Recheck Score Entry!
         80..=100 => 'A',
-        70..=79 => 'B',
+        70..=70 => 'B',
         60..=69 => 'C',
         50..=59 => 'D',
         0..=49 => 'F',
-        _ => 'I',
+        _ => 'I', // Covers all possible entry scenarios
     }
 }
 
 // 2. Pass/Fail Checker
-
-fn is_pass(score: i32) -> Option<bool> {  // is_pass is Verbose bool return.
+fn is_pass(score: i32) -> Option<bool> {
     if !(0..=100).contains(&score) {
         return None;
-    } 
+    }
     Some(score >= 50)
 }
 
@@ -40,32 +38,47 @@ fn feedback(score: i32) -> String {
     }
 }
 
-// 4. Return tuple
+// 4. Return Score Analysis as a Tuple
 
-fn analyze(score: i32) -> (char, Option<bool>, String) {
-    (calculate_grade(score), is_pass(score), feedback(score))
-}
-
-fn main() {
-    let score = 109;
-    let passed = is_pass(score);
-
-    let pass_determinant = match passed {
+fn analyze(score: i32) -> (&'static str, char, String) {
+    let pass_status = is_pass(score);
+    let pass_label = match pass_status {
         Some(true) => "Pass",
         Some(false) => "Fail",
-        None => "Invalid - Please recheck score entry!",
+        None => "Invalid! Please Recheck Score Entry!",
     };
 
-    let grade = calculate_grade(score);
-    let message = feedback(score);
+    (pass_label, calculate_grade(score), feedback(score))
+}
 
+// 5. Main
+fn main() {
+    let student_score = 81;
+
+    let pass_checker = is_pass(student_score);
+
+    let pass_determinant = match pass_checker {
+        Some(true) => "Pass",
+        Some(false) => "Fail",
+        None => "Invalid! Please Recheck Score Entry!",
+    };
+
+    let grade = calculate_grade(student_score);
+    let message = feedback(student_score);
+    
+    // Option 1 Display: Inline Display
     println!("\n--- Students' Grading and Pass Categorization---");
+    println!("Pass?: {}, Grade: {}, Feedback: {}", pass_determinant, grade, message);
 
-    println!("Grade: {} | Pass?: {} | Feedback: {}", grade, pass_determinant, message);
-
-    let score_analysis = analyze(score);
+    // Option 2 Display: Score analysis as a tuple
+    let score_tuple = (pass_determinant, grade, message);
 
     println!("\n--- Score Analysis Result as a Tuple---");
+    println!("Score Analysis: {:?}", score_tuple);
 
-    println!("Score analysis: {:?}", score_analysis);
+    // Option 3: Use of analyze() fn, but this brings me a Some(value) in display
+
+    let score_analysis = analyze(student_score);
+    println!("\n--- Score Analysis Using Analyze()---");
+    println!("Score Analysis: {:?}", score_analysis);
 }
