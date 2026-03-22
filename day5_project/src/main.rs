@@ -78,14 +78,14 @@ fn analyze(score: i32) -> (&'static str, char, String) {
 fn main() {
     loop {
         let mut input = String::new();
-
-        println!("\n Enter Student Score or 'exit' to exit: ");
+        println!("Enter Student Score or 'exit' to exit.");
 
         io::stdin()
             .read_line(&mut input)
-            .expect("Failed to read input!");
+            .expect("Failed to read input");
         
-        let trimmed = input.trim();
+        let input_check = input.trim();
+        let trimmed = input_check.to_lowercase();
 
         // exit check
         if trimmed == "exit" {
@@ -93,14 +93,15 @@ fn main() {
             break;
         }
 
-        // not exit. parse input - if valid text, prompt again without exiting
-        let student_score: i32 = match trimmed.parse() {
+        // not exit. parse into it loop without existing
+        let student_score = match trimmed.parse() {
             Ok(num) => num,
             Err(_) => {
-                println!("Invalid Input. Enter a Valid Student Score or 'exit' to exit.");
-                continue; // Skips to the next loop iteration, does not exit.
+                println!("Invalid Input. Enter a Valid Student Score!");
+                continue;
             }
         };
+
         
         let pass_checker = is_pass(student_score);
         
