@@ -3,12 +3,35 @@
 // Building a simple CLI program, which takes a student's score.
 // uses functions to determine the grade.
 
+/* 
+This part of your code (the part with if trimmed.eq_ignore_ascii_case) sounds about super complex for a beginner Rust dev like me, 
+especially because of this part: if trimmed.eq_ignore_ascii_case. 
+is this the idimomatic rust option for this part of the code? 
+seems quite non-human readable for real. my version uses this approach: 
+if trimmed == "exit" {}. simple, logical, but not sure if it's idiomatic Rust, see full code below. 
+
+✅ Exit condition
+        if trimmed.eq_ignore_ascii_case("exit") {
+            println!("Exiting program. Goodbye!");
+            break;
+        }
+*/
+
+/*Note: since this is not production-grade, the noted 'redundant work' in fn main() 
+is intentionally there, as I want to see different ways to display the same result, 
+just a learning process, as this is not going to production, 
+seeing different ways of getting the same result, for learning purposes. 
+see full code below.
+*/
+
+use std::io;
+
 // 1. Grade Calculator
 fn calculate_grade(score: i32) -> char {
     match score {
         w if w > 100 || w < 0 => 'I', // Invalid. Recheck Score Entry!
         80..=100 => 'A',
-        70..=70 => 'B',
+        70..=79 => 'B',
         60..=69 => 'C',
         50..=59 => 'D',
         0..=49 => 'F',
@@ -52,46 +75,58 @@ fn analyze(score: i32) -> (&'static str, char, String) {
 }
 
 // 5. Main
-use std::io;
-
 fn main() {
-    let mut input = String::new();
+    loop {
+        let mut input = String::new();
 
-    println!("Enter Student Score: ");
+        println!("\n Enter Student Score or 'exit' to exit: ");
 
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read student score!");
-    
-    let student_score: i32 = input
-        .trim()
-        .parse()
-        .expect("Please Enter a Valid Student Score!");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read input!");
+        
+        let trimmed = input.trim();
 
-    let pass_checker = is_pass(student_score);
+        // exit check
+        if trimmed == "exit" {
+            println!("Session Exited Successfully!");
+            break;
+        }
 
-    let pass_determinant = match pass_checker {
+        // not exit. parse input - if valid text, prompt again without exiting
+        let student_score: i32 = match trimmed.parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Invalid Input. Enter a Valid Student Score or 'exit' to exit.");
+                continue; // Skips to the next loop iteration, does not exit.
+            }
+        };
+        
+        let pass_checker = is_pass(student_score);
+        
+        let pass_determinant = match pass_checker {
         Some(true) => "Pass",
         Some(false) => "Fail",
         None => "Invalid! Please Recheck Score Entry!",
-    };
+        };
+        
+        let grade = calculate_grade(student_score);
+        let message = feedback(student_score);
+        
+        // Option 1 Display: Inline Display
+        println!("\n--- Students' Grading and Pass Categorization---");
+        println!("Pass?: {}, Grade: {}, Feedback: {}", pass_determinant, grade, message);
+        
+        // Option 2 Display: Score analysis as a tuple
+        let score_tuple = (pass_determinant, grade, message);
 
-    let grade = calculate_grade(student_score);
-    let message = feedback(student_score);
-    
-    // Option 1 Display: Inline Display
-    println!("\n--- Students' Grading and Pass Categorization---");
-    println!("Pass?: {}, Grade: {}, Feedback: {}", pass_determinant, grade, message);
+        println!("\n--- Score Analysis Result as a Tuple---");
+        println!("Score Analysis: {:?}", score_tuple);
 
-    // Option 2 Display: Score analysis as a tuple
-    let score_tuple = (pass_determinant, grade, message);
+        // Option 3 Display: Based on analyze() function.
+        let score_analysis = analyze(student_score);
 
-    println!("\n--- Score Analysis Result as a Tuple---");
-    println!("Score Analysis: {:?}", score_tuple);
-
-    // Option 3: Use of analyze() fn, but this brings me a Some(value) in display
-
-    let score_analysis = analyze(student_score);
-    println!("\n--- Score Analysis Using Analyze()---");
-    println!("Score Analysis: {:?}", score_analysis);
+        println!("\n--- Score Analysis Using Analyze()---");
+        println!("Score Analysis: {:?}", score_analysis);
+    }
 }
