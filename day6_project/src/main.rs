@@ -9,6 +9,18 @@ fn is_valid(score: i32) -> bool {
     (0..=100).contains(&score)
 }
 
+fn feedback(score: i32) -> &'static str {
+    match score {
+        w if w > 100 || w < 0 => "Invalid Score. Score Must be From 0-100.",
+        80..=100 => "Excellent Work!",
+        70..=79 => "Good Work. Keep Improving!",
+        60..=69 => "Good Trial, but Needs Improvement!",
+        50..=59 => "Fair Trial. Work Harder Next Time!",
+        0..=49 => "Below Average. See Me!",
+        _ => "Invalid Score",
+    }
+}
+
 fn main() {
     loop {
         let mut input = String::new();
@@ -40,6 +52,10 @@ fn main() {
             continue;
         }
 
-        println!("Student's Score: {}", score);
+        let message = feedback(score);
+
+        println!("\n--- Score and Feedback System ---");
+
+        println!("Score: {} | Feedback: {}", score, message);
     }
 }
