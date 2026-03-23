@@ -23,6 +23,7 @@ fn feedback(score: i32) -> &'static str {
 
 fn main() {
     loop {
+        // Score Entry Validation
         let mut input = String::new();
 
         println!("Enter Student Score or 'exit' to Exit: ");
@@ -51,6 +52,25 @@ fn main() {
             println!("Invalid Entry. Score Must be From 0-100.");
             continue;
         }
+
+        // Check if feedback is required on demand
+        let mut optional_input = String::new();
+
+        println!("Feedback required? (Type 'no' or 'yes'): ");
+
+        io::stdin()
+            .read_line(&mut optional_input)
+            .expect("Failed to read optional input!");
+        
+        let command = optional_input.trim();
+        let trimmed2 = command.to_lowercase();
+
+        if trimmed2 == "no" {
+            println!("\n--- Student Score System ---");
+
+            println!("Student Score: {}", score);
+            continue; // Iteration loop ends and begins afresh
+        } 
 
         let message = feedback(score);
 
