@@ -67,7 +67,7 @@ fn main() {
 
                     if trimmed == "exit" {
                         println!("Returning to Menu...");
-                        break; // Back to outer menu loop
+                        break; // Back to outer (Menu) loop
                     }
 
                     let score: i32 = match trimmed.parse() {
@@ -118,6 +118,10 @@ fn main() {
                     }
                 }
             },
+            2 => {
+
+            },
+
             4 => {
                 println!("Session Exited Successfully!");
                 break; // Outer loop exited, program exited.
