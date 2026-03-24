@@ -23,66 +23,109 @@ fn feedback(score: i32) -> &'static str {
 
 fn main() {
     loop {
-        // Score Entry Validation
-        let mut input = String::new();
+        // 1. Menu System (Core Feature)
+        println!("\n=== Student Score Manager ===");
 
-        println!("Enter Student Score or 'exit' to Exit: ");
+        println!("\n1. Add student score");
+        println!("2. View all scores");
+        println!("3. Analyze scores");
+        println!("4. Exit");
 
-        io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to read input");
-        
-        let small_case = input.trim();
-        let trimmed = small_case.to_lowercase();
-
-        if trimmed == "exit" {
-            println!("Session Exited Successfully!");
-            break;
-        }
-
-        let score: i32 = match trimmed.parse() {
-            Ok(num) => num,
-            Err(_) => {
-                println!("Invalid Entry. Score Must be From 0-100.");
-                continue;
+        // 2. Menu Choice Handler - reprompts, iteration ends at valid choice
+        let choice: i32 = loop {
+            let mut menu_choice = String::new();
+            println!("\nEnter your choice: ");
+            
+            io::stdin()
+                .read_line(&mut menu_choice)
+                .expect("Failed to read menu choice");
+            
+            match menu_choice.trim().parse() {
+                Ok(num) => break num, // num becomes choice, loop ends.
+                Err(_) => {
+                    println!("Invalid Entry. Choice must be from 1-4!");
+                    continue;
+                }
             }
         };
 
-        if !is_valid(score) {
-            println!("Invalid Entry. Score Must be From 0-100.");
-            continue;
-        }
+        // 3. Choice-based Actions
+        match choice {
+            1 => {
+                // Handling user iput and feedback
+                loop {
+                    // Score Entry Validation
+                    let mut input = String::new();
 
-        // Check if feedback is required on demand
-        loop {
-            let mut optional_input = String::new();
+                    println!("\nEnter Student Score or 'exit' to Exit: ");
 
-            println!("Feedback required? (Type 'No' or 'Yes'): ");
+                    io::stdin()
+                        .read_line(&mut input)
+                        .expect("Failed to read input");
+                    
+                    let trimmed = input.trim().to_lowercase();
 
-            io::stdin()
-                .read_line(&mut optional_input)
-                .expect("Failed to read optional input!");
-            
-            let trimmed2 = optional_input.trim().to_lowercase();
+                    if trimmed == "exit" {
+                        println!("Returning to Menu...");
+                        break; // Back to outer menu loop
+                    }
 
-            // 'No'/ 'Yes' are okay entries. otherwise, back to optional_input prompt
-            if trimmed2 == "no" {
-                println!("\n--- Student Score System ---");
+                    let score: i32 = match trimmed.parse() {
+                        Ok(num) => num,
+                        Err(_) => {
+                            println!("Invalid Entry. Score Must be From 0-100.");
+                            continue;
+                        }
+                    };
 
-                println!("Student Score: {}", score);
-                break; // Iteration loop ends and begins afresh
-            } else if trimmed2 == "yes" {
+                    if !is_valid(score) {
+                        println!("Invalid Entry. Score Must be From 0-100.");
+                        continue;
+                    }
 
-                let message = feedback(score);
+                    // Check if feedback is required on demand
+                    loop {
+                        let mut optional_input = String::new();
 
-                println!("\n--- Score and Feedback System ---");
+                        println!("Feedback required? (Type 'No' or 'Yes'): ");
 
-                println!("Score: {} | Feedback: {}", score, message);
-                break;
-            } else {
-                println!("Invalid Entry. Please Enter 'No' or 'Yes'!");
+                        io::stdin()
+                            .read_line(&mut optional_input)
+                            .expect("Failed to read optional input!");
+                        
+                        let trimmed2 = optional_input.trim().to_lowercase();
+
+                        // 'No'/ 'Yes' are okay entries. otherwise, back to optional_input prompt
+                        match trimmed2.as_str() {
+                            "no" => {
+                                println!("\n--- Student Score System ---");
+                                println!("Student Score: {}", score);
+                                break; // Iteration loop ends and begins afresh
+                            },
+                            "yes" => {
+                                let message = feedback(score);
+                                
+                                println!("\n--- Score and Feedback System ---");
+                                
+                                println!("Score: {} | Feedback: {}", score, message);
+                                break;                                
+                            },
+                            _ => {
+                                println!("Invalid Entry. Please Enter 'No' or 'Yes'!");
+                                continue;
+                            },
+                        }
+                    }
+                }
+            },
+            4 => {
+                println!("Session Exited Successfully!");
+                break; // Outer loop exited, program exited.
+            },
+            _ => {
+                println!("Invalid Entry. Choice Must be 1, 2, 3, or 4!");
                 continue;
-            }
+            },
         }
     }
 }
