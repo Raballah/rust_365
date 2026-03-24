@@ -54,28 +54,35 @@ fn main() {
         }
 
         // Check if feedback is required on demand
-        let mut optional_input = String::new();
+        loop {
+            let mut optional_input = String::new();
 
-        println!("Feedback required? (Type 'no' or 'yes'): ");
+            println!("Feedback required? (Type 'No' or 'Yes'): ");
 
-        io::stdin()
-            .read_line(&mut optional_input)
-            .expect("Failed to read optional input!");
-        
-        let command = optional_input.trim();
-        let trimmed2 = command.to_lowercase();
+            io::stdin()
+                .read_line(&mut optional_input)
+                .expect("Failed to read optional input!");
+            
+            let trimmed2 = optional_input.trim().to_lowercase();
 
-        if trimmed2 == "no" {
-            println!("\n--- Student Score System ---");
+            // 'No'/ 'Yes' are okay entries. otherwise, back to optional_input prompt
+            if trimmed2 == "no" {
+                println!("\n--- Student Score System ---");
 
-            println!("Student Score: {}", score);
-            continue; // Iteration loop ends and begins afresh
-        } 
+                println!("Student Score: {}", score);
+                break; // Iteration loop ends and begins afresh
+            } else if trimmed2 == "yes" {
 
-        let message = feedback(score);
+                let message = feedback(score);
 
-        println!("\n--- Score and Feedback System ---");
+                println!("\n--- Score and Feedback System ---");
 
-        println!("Score: {} | Feedback: {}", score, message);
+                println!("Score: {} | Feedback: {}", score, message);
+                break;
+            } else {
+                println!("Invalid Entry. Please Enter 'No' or 'Yes'!");
+                continue;
+            }
+        }
     }
 }
