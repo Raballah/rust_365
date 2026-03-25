@@ -132,7 +132,7 @@ fn main() {
 
                         let mut optional_input = String::new();
 
-                        println!("Type 'Done' to exit!");
+                        println!("Type 'Exit' to exit!");
 
                         io::stdin()
                             .read_line(&mut optional_input)
@@ -140,7 +140,7 @@ fn main() {
                         
                         let trimmed2 = optional_input.trim().to_lowercase();
 
-                        if trimmed2 == "Done" {
+                        if trimmed2 == "exit" {
                             println!("Session Successfully Exited!");
                             break;
                         }
