@@ -95,7 +95,7 @@ fn main() {
                 loop {
                     if scores.is_empty() {
                         println!("No score found!");
-                        return;
+                        break;
                     }
 
                     for score in &scores {
