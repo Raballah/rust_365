@@ -22,6 +22,9 @@ fn feedback(score: i32) -> &'static str {
 }
 
 fn main() {
+    // 3. Student Score Collector / Vector
+    let mut scores: Vec<i32> = Vec::new();
+    
     loop {
         // 1. Menu System (Core Feature)
         println!("\n=== Student Score Manager ===");
@@ -49,12 +52,12 @@ fn main() {
             }
         };
 
-        // 3. Choice-based Actions
+        // 4. Choice-based Actions
         match choice {
             1 => {
-                // Handling user iput and feedback
+                // Add Student Score
                 loop {
-                    // Score Entry Validation
+                    // score entry validation
                     let mut input = String::new();
 
                     println!("\nEnter Student Score or 'exit' to Exit: ");
@@ -66,11 +69,11 @@ fn main() {
                     let trimmed = input.trim().to_lowercase();
 
                     if trimmed == "exit" {
-                        println!("Returning to Menu...");
-                        break; // Back to outer (Menu) loop
+                        println!("Score Added. Returning to Menu...");
+                        break; // Back to (Menu/Outer) loop
                     }
 
-                    let score: i32 = match trimmed.parse() {
+                    let score: i32 = match trimmed.parse::<i32>() {
                         Ok(num) => num,
                         Err(_) => {
                             println!("Invalid Entry. Score Must be From 0-100.");
@@ -81,13 +84,55 @@ fn main() {
                     if !is_valid(score) {
                         println!("Invalid Entry. Score Must be From 0-100.");
                         continue;
+                    } else {
+                        scores.push(score);
+                        println!("Score {} added. Scores added so far: {}", score, scores.len());
+                    }
+                }
+            },
+            2 => {
+                // View All Scores
+                loop {
+                    if scores.is_empty() {
+                        println!("No score found!");
+                        return;
                     }
 
-                    // Check if feedback is required on demand
+                    for score in &scores {
+                        println!("Scores: {:?}", score);
+                    }
+
+                    println!("Scores Collected so far: {:?}", scores);
+
+                    let mut input = String::new();
+
+                    println!("Type 'Exit' to exit: ");
+
+                    io::stdin()
+                        .read_line(&mut input)
+                        .expect("Failed to read input!");
+                    
+                    let trimmed = input.trim().to_lowercase();
+
+                    if trimmed == "exit" {
+                        println!("Exiting...Back to Main Menu!");
+                        break;
+                    }
+                    continue;
+                }
+            },
+            3 => {
+                // Analyze Scores
                     loop {
+                        for &score in &scores {
+                            let message = feedback(score);
+
+                            println!("Score: {} | Feedback: {}", score, message);
+                        }
+
                         let mut optional_input = String::new();
 
-                        println!("Feedback required? (Type 'No' or 'Yes'): ");
+                        println!("Type 'Done' to exit!");
 
                         io::stdin()
                             .read_line(&mut optional_input)
@@ -95,33 +140,13 @@ fn main() {
                         
                         let trimmed2 = optional_input.trim().to_lowercase();
 
-                        // 'No'/ 'Yes' are okay entries. otherwise, back to optional_input prompt
-                        match trimmed2.as_str() {
-                            "no" => {
-                                println!("\n--- Student Score System ---");
-                                println!("Student Score: {}", score);
-                                break; // Iteration loop ends and begins afresh
-                            },
-                            "yes" => {
-                                let message = feedback(score);
-                                
-                                println!("\n--- Score and Feedback System ---");
-                                
-                                println!("Score: {} | Feedback: {}", score, message);
-                                break;                                
-                            },
-                            _ => {
-                                println!("Invalid Entry. Please Enter 'No' or 'Yes'!");
-                                continue;
-                            },
+                        if trimmed2 == "Done" {
+                            println!("Session Successfully Exited!");
+                            break;
                         }
+                        continue;
                     }
-                }
             },
-            2 => {
-
-            },
-
             4 => {
                 println!("Session Exited Successfully!");
                 break; // Outer loop exited, program exited.
