@@ -22,11 +22,11 @@ fn feedback(score: i32) -> &'static str {
 }
 
 fn main() {
-    // 3. Student Score Collector / Vector
+    // 1. Student Score Collector / Vector
     let mut scores: Vec<i32> = Vec::new();
     
     loop {
-        // 1. Menu System (Core Feature)
+        // 2. Menu System (Core Feature)
         println!("\n=== Student Score Manager ===");
 
         println!("\n1. Add student score");
@@ -34,7 +34,7 @@ fn main() {
         println!("3. Analyze scores");
         println!("4. Exit");
 
-        // 2. Menu Choice Handler - reprompts, iteration ends at valid choice
+        // 3. Menu Choice Handler - reprompts, iteration ends at valid choice
         let choice: i32 = loop {
             let mut menu_choice = String::new();
             println!("\nEnter your choice: ");
