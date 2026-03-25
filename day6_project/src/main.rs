@@ -141,7 +141,7 @@ fn main() {
                         let trimmed2 = optional_input.trim().to_lowercase();
 
                         if trimmed2 == "exit" {
-                            println!("Session Successfully Exited!");
+                            println!("Done and Exited Successfully!");
                             break;
                         }
                         continue;
