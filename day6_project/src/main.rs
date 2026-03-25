@@ -99,7 +99,7 @@ fn main() {
                     }
 
                     for score in &scores {
-                        println!("Scores: {:?}", score);
+                        println!("{:?}", score);
                     }
 
                     println!("Scores Collected so far: {:?}", scores);
