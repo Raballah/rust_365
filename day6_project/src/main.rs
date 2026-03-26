@@ -14,6 +14,25 @@ fn show_menu() {
         println!("4. Exit");
 }
 
+fn get_user_input() -> i32 {
+    loop {
+        let mut menu_choice = String::new();
+        println!("\nEnter your choice: ");
+        
+        io::stdin()
+            .read_line(&mut menu_choice)
+            .expect("Failed to read menu choice");
+        
+        match menu_choice.trim().parse::<i32>() {
+            Ok(num) => break num, // num becomes choice, loop ends.
+            Err(_) => {
+                println!("Invalid Entry. Choice must be from 1-4!");
+                continue;
+            }
+        }
+    }
+}
+
 fn is_valid(score: i32) -> bool {
     (0..=100).contains(&score)
 }
@@ -56,24 +75,9 @@ fn main() {
     loop {
         // 2. Menu System (Core Feature)
         show_menu();
-        
+
         // 3. Menu Choice Handler - reprompts, iteration ends at valid choice
-        let choice: i32 = loop {
-            let mut menu_choice = String::new();
-            println!("\nEnter your choice: ");
-            
-            io::stdin()
-                .read_line(&mut menu_choice)
-                .expect("Failed to read menu choice");
-            
-            match menu_choice.trim().parse() {
-                Ok(num) => break num, // num becomes choice, loop ends.
-                Err(_) => {
-                    println!("Invalid Entry. Choice must be from 1-4!");
-                    continue;
-                }
-            }
-        };
+        let choice: i32 = get_user_input();
 
         // 4. Choice-based Actions
         match choice {
