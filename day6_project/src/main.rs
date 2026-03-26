@@ -37,6 +37,43 @@ fn is_valid(score: i32) -> bool {
     (0..=100).contains(&score)
 }
 
+fn add_score(scores: &mut Vec<i32>) {
+    // Add student score
+    loop {
+        // score entry validation
+        let mut input = String::new();
+
+        println!("\nEnter Student Score or 'exit' to Exit: ");
+
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read input!");
+        
+        let trimmed = input.trim().to_lowercase();
+
+        if trimmed == "exit" {
+            println!("Score(s) Added. Returning to Menu...");
+            break; // Back to (Menu/Outer) loop.
+        }
+
+        let score: i32 = match trimmed.parse::<i32>() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Invalid Entry. Score Must be From 0-100.");
+                continue;
+            }
+         };
+
+         if !is_valid(score) {
+            println!("Invalid. Enter 0-100. No Negative Entries.");
+            continue;
+         } else {
+            scores.push(score);
+            println!("Score {} added. Scores added so far: {}", score, scores.len());
+         }
+    }
+}
+
 fn calculate_grade(score: i32) -> char {
     match score {
         w if w > 100 || w < 0 => 'I', // Invalid Entry/Score
@@ -81,42 +118,7 @@ fn main() {
 
         // 4. Choice-based Actions
         match choice {
-            1 => {
-                // Add Student Score
-                loop {
-                    // score entry validation
-                    let mut input = String::new();
-
-                    println!("\nEnter Student Score or 'exit' to Exit: ");
-
-                    io::stdin()
-                        .read_line(&mut input)
-                        .expect("Failed to read input");
-                    
-                    let trimmed = input.trim().to_lowercase();
-
-                    if trimmed == "exit" {
-                        println!("Score(s) Added. Returning to Menu...");
-                        break; // Back to (Menu/Outer) loop
-                    }
-
-                    let score: i32 = match trimmed.parse::<i32>() {
-                        Ok(num) => num,
-                        Err(_) => {
-                            println!("Invalid Entry. Score Must be From 0-100.");
-                            continue;
-                        }
-                    };
-
-                    if !is_valid(score) {
-                        println!("Invalid. Enter 0-100. No Negative Entries.");
-                        continue;
-                    } else {
-                        scores.push(score);
-                        println!("Score {} added. Scores added so far: {}", score, scores.len());
-                    }
-                }
-            },
+            1 => add_score(&mut scores),
             2 => {
                 // View All Scores
                 loop {
