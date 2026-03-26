@@ -110,6 +110,16 @@ fn view_scores(scores: &Vec<i32>) {  // Borrows scores &Vec<i32>, displays as i3
             }
         }
         println!("Highest Score: {}", highest_score);
+
+        // lowest score determinant
+        let mut lowest_score = scores[0];
+
+        for &score in scores {
+            if score < lowest_score {
+                lowest_score = score;
+            }
+        }
+        println!("Lowest Score: {}", lowest_score);
         
         // Input for 'Exit' to exit loop
         let mut input = String::new();
