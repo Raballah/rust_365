@@ -21,6 +21,13 @@ fn calculate_grade(score: i32) -> char {
     }
 }
 
+fn is_pass(score: i32) -> &'static str {
+    if score >= 60 {
+       return "Pass";
+    }
+    "Fail"
+}
+
 fn feedback(score: i32) -> &'static str {
     match score {
         w if w > 100 || w < 0 => "Invalid Score. Score Must be From 0-100.",
@@ -145,9 +152,10 @@ fn main() {
 
                         for &score in &scores {
                             let grade = calculate_grade(score);
+                            let pass = is_pass(score);
                             let message = feedback(score);
 
-                            println!("Score: {} | Grade: {} | Comment: {}", score, grade, message);
+                            println!("Score: {} | Grade: {} | Pass?: {} | Comment: {}", score, grade, pass, message);
                         }
 
                         let mut optional_input = String::new();
