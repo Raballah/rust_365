@@ -37,7 +37,7 @@ fn is_valid(score: i32) -> bool {
     (0..=100).contains(&score)
 }
 
-fn add_score(scores: &mut Vec<i32>) {
+fn add_score(scores: &mut Vec<i32>) {  // Modifies the scores mut vector, borrowed here.
     // Add student score
     loop {
         // score entry validation
@@ -71,6 +71,40 @@ fn add_score(scores: &mut Vec<i32>) {
             scores.push(score);
             println!("Score {} added. Scores added so far: {}", score, scores.len());
          }
+    }
+}
+
+fn view_scores(scores: &Vec<i32>) {  // Borrows scores &Vec<i32>, displays as i32
+    //View All Scores
+    loop {
+        if scores.is_empty() {
+            println!("No score found! Select 1 and add some scores first!");
+            return;
+        }
+        
+        println!("\n--- All Scores ---");
+        
+        for score in scores {
+            println!("{:?}", score);
+        }
+        
+        println!("\nScores Count: {}", scores.len());
+        
+        let mut input = String::new();
+        
+        println!("Type 'Exit' to exit: ");
+        
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read input!");
+                    
+        let trimmed = input.trim().to_lowercase();
+        
+        if trimmed == "exit" {
+            println!("Exiting...Back to Main Menu!");
+            break;
+        }
+        continue;
     }
 }
 
@@ -119,38 +153,7 @@ fn main() {
         // 4. Choice-based Actions
         match choice {
             1 => add_score(&mut scores),
-            2 => {
-                // View All Scores
-                loop {
-                    if scores.is_empty() {
-                        println!("No score found! Select 1 and add some scores first!");
-                    }
-
-                    println!("\n--- All Scores ---");
-
-                    for score in &scores {
-                        println!("{:?}", score);
-                    }
-
-                    println!("\nScores Count: {}", scores.len());
-
-                    let mut input = String::new();
-
-                    println!("Type 'Exit' to exit: ");
-
-                    io::stdin()
-                        .read_line(&mut input)
-                        .expect("Failed to read input!");
-                    
-                    let trimmed = input.trim().to_lowercase();
-
-                    if trimmed == "exit" {
-                        println!("Exiting...Back to Main Menu!");
-                        break;
-                    }
-                    continue;
-                }
-            },
+            2 => view_scores(&scores),
             3 => {
                 // Analyze Scores
                     loop {
