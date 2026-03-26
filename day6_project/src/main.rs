@@ -124,6 +124,10 @@ fn main() {
             3 => {
                 // Analyze Scores
                     loop {
+                        if scores.is_empty() {
+                            println!("No scores found!. Select 1 and enter some scores to analyze!");
+                        }
+
                         for &score in &scores {
                             let message = feedback(score);
 
