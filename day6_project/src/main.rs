@@ -94,8 +94,7 @@ fn main() {
                 // View All Scores
                 loop {
                     if scores.is_empty() {
-                        println!("No score found!");
-                        break;
+                        println!("No score found! Select 1 and add some scores first!");
                     }
 
                     for score in &scores {
