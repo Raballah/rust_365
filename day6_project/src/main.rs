@@ -83,13 +83,35 @@ fn view_scores(scores: &Vec<i32>) {  // Borrows scores &Vec<i32>, displays as i3
         }
         
         println!("\n--- All Scores ---");
-        
+
         for score in scores {
             println!("{:?}", score);
         }
         
         println!("\nScores Count: {}", scores.len());
+
+        // average score calculation
+        let mut sum = 0;
         
+        for score in scores {
+            sum += *score;
+        }
+
+        let average_score: f64 = sum as f64 / scores.len() as f64;
+
+        println!("Average Score: {:.0}", average_score);
+
+        // highest score determinant
+        let mut highest_score = scores[0];
+
+        for &score in scores {
+            if score > highest_score {
+                highest_score = score;
+            }
+        }
+        println!("Highest Score: {}", highest_score);
+        
+        // Input for 'Exit' to exit loop
         let mut input = String::new();
         
         println!("Type 'Exit' to exit: ");
