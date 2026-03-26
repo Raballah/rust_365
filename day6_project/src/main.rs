@@ -108,6 +108,41 @@ fn view_scores(scores: &Vec<i32>) {  // Borrows scores &Vec<i32>, displays as i3
     }
 }
 
+fn analyze_scores(scores: &Vec<i32>) {
+    // Analyze Scores
+    loop {
+        if scores.is_empty() {
+            println!("No scores found!. Select 1 and enter some scores to analyze!");
+        }
+        
+        println!("\n--- Score Analysis ---\n");
+        
+        for score in scores {
+            let grade = calculate_grade(*score);
+            let pass = is_pass(*score);
+            let message = feedback(*score);
+            
+            println!("Score: {} | Grade: {} | Pass?: {} | Comment: {}", score, grade, pass, message);
+        }
+        
+        let mut optional_input = String::new();
+        
+        println!("Type 'Exit' to exit!");
+        
+        io::stdin()
+            .read_line(&mut optional_input)
+            .expect("Failed to read optional input!");
+        
+            let trimmed2 = optional_input.trim().to_lowercase();
+            
+            if trimmed2 == "exit" {
+                println!("Session Exited Successfully!");
+                break;
+            }
+            continue;
+    }
+}
+
 fn calculate_grade(score: i32) -> char {
     match score {
         w if w > 100 || w < 0 => 'I', // Invalid Entry/Score
@@ -154,40 +189,7 @@ fn main() {
         match choice {
             1 => add_score(&mut scores),
             2 => view_scores(&scores),
-            3 => {
-                // Analyze Scores
-                    loop {
-                        if scores.is_empty() {
-                            println!("No scores found!. Select 1 and enter some scores to analyze!");
-                        }
-
-                        println!("\n--- Score Analysis ---\n");
-
-                        for &score in &scores {
-                            let grade = calculate_grade(score);
-                            let pass = is_pass(score);
-                            let message = feedback(score);
-
-                            println!("Score: {} | Grade: {} | Pass?: {} | Comment: {}", score, grade, pass, message);
-                        }
-
-                        let mut optional_input = String::new();
-
-                        println!("Type 'Exit' to exit!");
-
-                        io::stdin()
-                            .read_line(&mut optional_input)
-                            .expect("Failed to read optional input!");
-                        
-                        let trimmed2 = optional_input.trim().to_lowercase();
-
-                        if trimmed2 == "exit" {
-                            println!("Session Exited Successfully!");
-                            break;
-                        }
-                        continue;
-                    }
-            },
+            3 => analyze_scores(&scores),
             4 => {
                 println!("Session Exited Successfully! Goodbye!");
                 break; // Outer loop exited, program exited.
