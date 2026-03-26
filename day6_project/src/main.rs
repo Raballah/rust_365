@@ -23,9 +23,9 @@ fn calculate_grade(score: i32) -> char {
 
 fn is_pass(score: i32) -> &'static str {
     if score >= 60 {
-       return "Pass";
+        return "Yes";
     }
-    "Fail"
+    "No"
 }
 
 fn feedback(score: i32) -> &'static str {
