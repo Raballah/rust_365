@@ -97,11 +97,13 @@ fn main() {
                         println!("No score found! Select 1 and add some scores first!");
                     }
 
+                    println!("\n== All Scores ==");
+
                     for score in &scores {
                         println!("{:?}", score);
                     }
 
-                    println!("Scores Collected so far: {:?}", scores);
+                    println!("\nScores Count: {}", scores.len());
 
                     let mut input = String::new();
 
