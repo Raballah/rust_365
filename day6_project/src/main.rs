@@ -82,7 +82,7 @@ fn main() {
                     };
 
                     if !is_valid(score) {
-                        println!("Invalid Entry. Score Must be From 0-100.");
+                        println!("Invalid. Enter 0-100. No Negative Entries.");
                         continue;
                     } else {
                         scores.push(score);
