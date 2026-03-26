@@ -9,6 +9,18 @@ fn is_valid(score: i32) -> bool {
     (0..=100).contains(&score)
 }
 
+fn calculate_grade(score: i32) -> char {
+    match score {
+        w if w > 100 || w < 0 => 'I', // Invalid Entry/Score
+        80..=100 => 'A',
+        70..=79 => 'B',
+        60..=69 => 'C',
+        50..=59 => 'D',
+        0..=49 => 'F',
+        _ => 'I', // Invalid Entry/Score
+    }
+}
+
 fn feedback(score: i32) -> &'static str {
     match score {
         w if w > 100 || w < 0 => "Invalid Score. Score Must be From 0-100.",
@@ -69,7 +81,7 @@ fn main() {
                     let trimmed = input.trim().to_lowercase();
 
                     if trimmed == "exit" {
-                        println!("Score Added. Returning to Menu...");
+                        println!("Score(s) Added. Returning to Menu...");
                         break; // Back to (Menu/Outer) loop
                     }
 
@@ -97,7 +109,7 @@ fn main() {
                         println!("No score found! Select 1 and add some scores first!");
                     }
 
-                    println!("\n== All Scores ==");
+                    println!("\n--- All Scores ---");
 
                     for score in &scores {
                         println!("{:?}", score);
@@ -129,10 +141,13 @@ fn main() {
                             println!("No scores found!. Select 1 and enter some scores to analyze!");
                         }
 
+                        println!("\n--- Score Analysis ---\n");
+
                         for &score in &scores {
+                            let grade = calculate_grade(score);
                             let message = feedback(score);
 
-                            println!("Score: {} | Feedback: {}", score, message);
+                            println!("Score: {} | Grade: {} | Comment: {}", score, grade, message);
                         }
 
                         let mut optional_input = String::new();
