@@ -140,6 +140,13 @@ fn view_scores(scores: &Vec<i32>) {  // Borrows scores &Vec<i32>, displays as i3
     }
 }
 
+fn is_pass(score: i32) -> &'static str {
+    if score >= 60 {
+        return "Yes";
+    }
+    "No"
+}
+
 fn analyze_scores(scores: &Vec<i32>) {
     // Analyze Scores
     loop {
@@ -156,7 +163,23 @@ fn analyze_scores(scores: &Vec<i32>) {
             
             println!("Score: {} | Grade: {} | Pass?: {} | Comment: {}", score, grade, pass, message);
         }
-        
+
+        println!("\n--Pass/Fail Overview--\n");
+        let mut pass_count: i32 = 0;
+        let mut fail_count: i32 = 0;
+
+        for &score in scores {
+            if is_pass(score) == "Yes" {
+                pass_count += 1;
+            } else {
+                fail_count += 1;
+            }
+        }
+
+        println!("Pass Count: {}", pass_count);
+        println!("Fails Count: {}", fail_count);
+
+        // Inpt for 'Exit' to exit loop
         let mut optional_input = String::new();
         
         println!("Type 'Exit' to exit!");
@@ -185,13 +208,6 @@ fn calculate_grade(score: i32) -> char {
         0..=49 => 'F',
         _ => 'I', // Invalid Entry/Score
     }
-}
-
-fn is_pass(score: i32) -> &'static str {
-    if score >= 60 {
-        return "Yes";
-    }
-    "No"
 }
 
 fn feedback(score: i32) -> &'static str {
