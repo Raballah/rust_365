@@ -74,7 +74,7 @@ fn add_score(scores: &mut Vec<i32>) {  // Modifies the scores mut vector, borrow
     }
 }
 
-fn view_scores(scores: &Vec<i32>) {  // Borrows scores &Vec<i32>, displays as i32
+fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
     //View All Scores
     loop {
         if scores.is_empty() {
@@ -147,7 +147,7 @@ fn is_pass(score: i32) -> &'static str {
     "No"
 }
 
-fn analyze_scores(scores: &Vec<i32>) {
+fn analyze_scores(scores: &[i32]) {
     // Analyze Scores
     loop {
         if scores.is_empty() {
