@@ -116,9 +116,9 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
             .read_line(&mut input)
             .expect("Failed to read input!");
                     
-        let trimmed = input.trim().to_lowercase();
+        let trimmed = input.trim();
         
-        if trimmed == "exit" {
+        if trimmed.eq_ignore_ascii_case("exit") {
             println!("Exiting...Back to Main Menu!");
             break;
         }
@@ -171,9 +171,9 @@ fn analyze_scores(scores: &[i32]) {
             .read_line(&mut optional_input)
             .expect("Failed to read optional input!");
         
-            let trimmed2 = optional_input.trim().to_lowercase();
+            let trimmed2 = optional_input.trim();
             
-            if trimmed2 == "exit" {
+            if trimmed2.eq_ignore_ascii_case("exit") {
                 println!("Session Exited Successfully!");
                 break;
             }
