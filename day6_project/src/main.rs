@@ -141,10 +141,10 @@ fn analyze_scores(scores: &[i32]) {
         
         for score in scores {
             let grade = calculate_grade(*score);
-            let pass = is_pass(*score);
+            let label = if is_pass(*score) {"Yes"} else {"No"};
             let message = feedback(*score);
             
-            println!("Score: {} | Grade: {} | Pass?: {} | Comment: {}", score, grade, pass, message);
+            println!("Score: {} | Grade: {} | Pass?: {} | Comment: {}", score, grade, label, message);
         }
 
         println!("\n--Pass/Fail Overview--\n");
