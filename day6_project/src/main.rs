@@ -98,23 +98,13 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
         println!("Average Score: {:.0}", average_score);
 
         // highest score determinant
-        let mut highest_score = scores[0];
-
-        for &score in scores {
-            if score > highest_score {
-                highest_score = score;
-            }
-        }
+        let highest_score = scores.iter().max().unwrap();
+        
         println!("Highest Score: {}", highest_score);
 
         // lowest score determinant
-        let mut lowest_score = scores[0];
-
-        for &score in scores {
-            if score < lowest_score {
-                lowest_score = score;
-            }
-        }
+        let lowest_score = scores.iter().min().unwrap();
+        
         println!("Lowest Score: {}", lowest_score);
         
         // Input for 'Exit' to exit loop
