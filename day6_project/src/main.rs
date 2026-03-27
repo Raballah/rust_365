@@ -91,11 +91,7 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
         println!("\nScores Count: {}", scores.len());
 
         // average score calculation
-        let mut sum = 0;
-        
-        for score in scores {
-            sum += *score;
-        }
+        let sum: i32 = scores.iter().sum();
 
         let average_score: f64 = sum as f64 / scores.len() as f64;
 
