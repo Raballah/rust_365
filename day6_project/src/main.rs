@@ -98,15 +98,15 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
         println!("Average Score: {:.0}", average_score);
 
         // highest score determinant
-        let highest_score = scores.iter().max().unwrap();
-        
-        println!("Highest Score: {}", highest_score);
+        if let Some(highest_score) = scores.iter().max() {
+            println!("Highest Score: {}", highest_score);
+        }
 
         // lowest score determinant
-        let lowest_score = scores.iter().min().unwrap();
-        
-        println!("Lowest Score: {}", lowest_score);
-        
+        if let Some(lowest_score) = scores.iter().min() {
+            println!("Lowest Score: {}", lowest_score);    
+        }
+
         // Input for 'Exit' to exit loop
         let mut input = String::new();
         
