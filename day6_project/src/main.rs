@@ -49,9 +49,9 @@ fn add_score(scores: &mut Vec<i32>) {  // Modifies the scores mut vector, borrow
             .read_line(&mut input)
             .expect("Failed to read input!");
         
-        let trimmed = input.trim().to_lowercase();
+        let trimmed = input.trim();
 
-        if trimmed == "exit" {
+        if trimmed.eq_ignore_ascii_case("exit") {
             println!("Score(s) Added. Returning to Menu...");
             break; // Back to (Menu/Outer) loop.
         }
