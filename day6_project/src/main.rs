@@ -126,11 +126,8 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
     }
 }
 
-fn is_pass(score: i32) -> &'static str {
-    if score >= 60 {
-        return "Yes";
-    }
-    "No"
+fn is_pass(score: i32) -> bool {
+    score >= 60
 }
 
 fn analyze_scores(scores: &[i32]) {
@@ -155,7 +152,7 @@ fn analyze_scores(scores: &[i32]) {
         let mut fail_count: i32 = 0;
 
         for &score in scores {
-            if is_pass(score) == "Yes" {
+            if is_pass(score) == true {
                 pass_count += 1;
             } else {
                 fail_count += 1;
