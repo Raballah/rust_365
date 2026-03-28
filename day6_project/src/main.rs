@@ -53,7 +53,7 @@ fn add_score(scores: &mut Vec<i32>) {  // Modifies the scores mut vector, borrow
             println!("Score(s) Added. Returning to Menu...");
             break; // Back to (Menu/Outer) loop.
         }
-
+        
         let score: i32 = match trimmed.parse::<i32>() {
             Ok(num) => num,
             Err(_) => {
@@ -133,6 +133,7 @@ fn analyze_scores(scores: &[i32]) {
     loop {
         if scores.is_empty() {
             println!("No scores found!. Select 1 and enter some scores to analyze!");
+            return;
         }
         
         println!("\n--- Score Analysis ---\n");
