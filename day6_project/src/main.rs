@@ -23,13 +23,11 @@ fn get_user_input() -> i32 {
             .read_line(&mut menu_choice)
             .expect("Failed to read menu choice");
         
-        match menu_choice.trim().parse::<i32>() {
-            Ok(num) => break num, // num becomes choice, loop ends.
-            Err(_) => {
-                println!("Invalid Entry. Choice must be from 1-4!");
-                continue;
-            }
+        if let Ok(num) = menu_choice.trim().parse::<i32>() {
+            break num
         }
+        println!("Invalid Entry. Choice must be from 1-4!");
+        continue;
     }
 }
 
