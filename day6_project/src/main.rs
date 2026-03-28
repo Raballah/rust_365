@@ -83,7 +83,7 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
         println!("\n--- All Scores ---");
 
         for score in scores {
-            println!("{:?}", score);
+            println!("{}", score);
         }
         
         println!("\nScores Count: {}", scores.len());
