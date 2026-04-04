@@ -14,7 +14,24 @@ fn show_menu() {
         println!("4. Exit");
 }
 
-fn get_user_input() -> i32 {
+enum MenuOption {
+    AddScore,
+    ViewScores,
+    AnalyzeScores,
+    Exit,
+}
+
+fn parse_menu_choice(input: i32) -> Option<MenuOption>{
+    match input {
+        1 => Some(MenuOption::AddScore),
+        2 => Some(MenuOption::ViewScores),
+        3 => Some(MenuOption::AnalyzeScores),
+        4 => Some(MenuOption::Exit),
+        _ => None, // All i32 inputs are invalid
+    }
+}
+
+fn get_user_input() -> MenuOption {
     loop {
         let mut menu_choice = String::new();
         println!("\nEnter your choice: ");
@@ -23,9 +40,13 @@ fn get_user_input() -> i32 {
             .read_line(&mut menu_choice)
             .expect("Failed to read menu choice");
         
+        // parse to i32, convert to MenuOption
         if let Ok(num) = menu_choice.trim().parse::<i32>() {
-            break num
+            if let Some(option) = parse_menu_choice(num) {
+                break option; // Valid MenuOption, exit loop
+            }
         }
+        // if parse failed or number number not 1-4
         println!("Invalid Entry. Choice must be from 1-4!");
         continue;
     }
@@ -213,21 +234,17 @@ fn main() {
         show_menu();
 
         // 3. Menu Choice Handler - reprompts, iteration ends at valid choice
-        let choice: i32 = get_user_input();
+        let choice: MenuOption = get_user_input();
 
         // 4. Choice-based Actions
         match choice {
-            1 => add_score(&mut scores),
-            2 => view_scores(&scores),
-            3 => analyze_scores(&scores),
-            4 => {
+            MenuOption::AddScore => add_score(&mut scores),
+            MenuOption::ViewScores => view_scores(&scores),
+            MenuOption::AnalyzeScores => analyze_scores(&scores),
+            MenuOption::Exit => {
                 println!("Session Exited Successfully! Goodbye!");
                 break; // Outer loop exited, program exited.
-            },
-            _ => {
-                println!("Invalid Entry. Choice Must be 1, 2, 3, or 4!");
-                continue;
-            },
+            }
         }
     }
 }
