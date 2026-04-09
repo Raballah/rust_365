@@ -1,12 +1,11 @@
 // Day 9, borrowing and references
 
-fn print_value(text: &str) {
-    println!("{}", text);
+fn change_name(naming: &mut String) {
+    naming.push_str(" Smart");
 }
 fn main() {
-    let s = String::from("Hello");
-    print_value(&s);
-    print_value("Hello");
+    let mut name = String::from("James");
+    change_name(&mut name);
 
-    println!("{}", s);
+    println!("Full Names: {}", name);
 }
