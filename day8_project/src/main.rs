@@ -73,13 +73,17 @@ fn main() {
 } 
 */
 
-fn sum(numbers: &[i32]) -> i32 {
-    numbers.iter().sum()
+fn main() {
+    let mut word = String::from("hello!");
+
+    let three = &word[0..3];
+    println!("{}", three);
+
+    word.clear();
+
+    println!("{}", word);
 }
 
-fn main() {
-    let nums = [10, 20, 30, 40, 50];
-    let result = sum(&nums[1..3]);
-
-    println!("{}", result);
+pub fn clear(&mut self) {
+    self.len = 0;
 }
