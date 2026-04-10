@@ -73,17 +73,18 @@ fn main() {
 } 
 */
 
+// Day 11 Mini Project: Word Analyzer.
+
 fn main() {
-    let mut word = String::from("hello!");
+    let sentence = String::from("You are right!");
 
-    let three = &word[0..3];
-    println!("{}", three);
+    for c in sentence.chars() {
+        println!("{}", c);
+    }
 
-    word.clear();
+    let first = &sentence[0..3];
+    let last = &sentence[8..14];
 
-    println!("{}", word);
-}
-
-pub fn clear(&mut self) {
-    self.len = 0;
+    println!("{}", first);
+    println!("{}", last);
 }
