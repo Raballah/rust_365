@@ -1,4 +1,4 @@
-// Day 9, borrowing and references
+/* // Day 9, borrowing and references
 // Day 9 Mini Project - Borrowing Fix 
 
 fn football(game: &str) {
@@ -49,4 +49,18 @@ fn main() {
     
     prepend_text(&mut game);
     println!("{}", game);
+} */
+
+// Day 10, Mutable References Rules
+// Only one mutable refereces &mut or several immutable references &, 
+// but not both at the same time.
+
+fn main() {
+    let mut game = String::from("soccer");
+
+    let r1 = &game; // immutable borrow
+    println!("{}", r1); // last use, Non-lexical lifetimes NLL
+
+    let r2 = &mut game; // Allowed after r1 is done.
+    println!("{}", r2);
 }
