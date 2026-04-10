@@ -73,13 +73,13 @@ fn main() {
 } 
 */
 
+fn sum(numbers: &[i32]) -> i32 {
+    numbers.iter().sum()
+}
+
 fn main() {
-    let mut word = String::from("hello");
+    let nums = [10, 20, 30, 40, 50];
+    let result = sum(&nums[1..3]);
 
-    let r1 = &mut word;
-    println!("{}", r1); // r1 borrow ends, NLL
-
-    let r2 = &mut word;
-    println!("{}", r2);
-    // no more than one &mut reference at any given time.
+    println!("{}", result);
 }
