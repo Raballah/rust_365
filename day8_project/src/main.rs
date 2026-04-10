@@ -54,13 +54,32 @@ fn main() {
 // Day 10, Mutable References Rules
 // Only one mutable refereces &mut or several immutable references &, 
 // but not both at the same time.
+// Day 10 Mini Project, Fixing Borrow Errors 
+/*
+fn main() {
+    let mut text = String::from("Rust");
+
+    let r1 = &text;
+    let r2 = &text;
+    // multiple immutable borrws & allowed at the same time.
+
+    println!("{} and {}", r1, r2); // r1 and r2 gets out of scope
+    
+    let r3 = &mut text;
+
+    r3.push_str(" is awesome!");
+
+    println!("{}", r3); // works, r3 gets out of scope, frees 'text'
+} 
+*/
 
 fn main() {
-    let mut game = String::from("soccer");
+    let mut word = String::from("hello");
 
-    let r1 = &game; // immutable borrow
-    println!("{}", r1); // last use, Non-lexical lifetimes NLL
+    let r1 = &mut word;
+    println!("{}", r1); // r1 borrow ends, NLL
 
-    let r2 = &mut game; // Allowed after r1 is done.
+    let r2 = &mut word;
     println!("{}", r2);
+    // no more than one &mut reference at any given time.
 }
