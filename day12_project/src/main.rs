@@ -4,17 +4,18 @@ struct Student {
         passed: bool,
     }
 
+fn score_status(learner: &Student) {
+    println!("Student's name: {}", learner.name);
+    println!("Student's score: {}", learner.score);
+    println!("Student's pass status: {}", learner.passed);
+}
+
 fn main() {
-    let mut student = Student {
-        name: String::from("Alice"),
+    let student = Student {
+        name: String::from("Alice"), // name Owns the 'Alice' value
         score: 85,
         passed: true,
     };
 
-    student.name = String::from("Mercy");
-    student.passed = false;
-
-    println!("{}", student.name);
-    println!("{}", student.score);
-    println!("{}", student.passed);
+    score_status(&student);
 }
