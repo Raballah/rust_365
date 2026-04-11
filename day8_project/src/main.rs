@@ -4,7 +4,7 @@
 // Display first, 4th, and last word in this sentence
 
 fn main() {
-    let sentence = String::from("Rust is a powerful programming language!");
+    let sentence = String::from("You will not believe what I just found out!");
 
     let mut words = sentence.split_whitespace(); // a lazy iterator
 
