@@ -11,11 +11,18 @@ fn score_status(learner: &Student) {
 }
 
 fn main() {
-    let student = Student {
+    let student1 = Student {
         name: String::from("Alice"), // name Owns the 'Alice' value
         score: 85,
         passed: true,
     };
 
-    score_status(&student);
+    score_status(&student1);
+
+    let student2 = Student {
+        name: String::from("Mary"),
+        ..student1
+    };
+
+    score_status(&student2);
 }
