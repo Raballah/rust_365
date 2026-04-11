@@ -34,34 +34,23 @@ struct Student {
     score: i32,
 }
 
-impl Student {
-    fn is_pass(&self) -> bool {
-        self.score >= 50
-    }
+// Associated function, say for creating a new student's data
 
-    fn grade(&self) -> char {
-        match self.score {
-            w if w > 100 || w < 0 => 'I', // Invalid score
-            80..=100 => 'A',
-            70..=79 => 'B',
-            60..=69 => 'C',
-            50..=59 => 'D',
-            _ => 'F',
+impl Student {
+    fn new(name: &str, score: i32) -> Student {
+        Student {
+            name: name.to_string(),
+            score,
         }
     }
 }
 
-fn score_display(student: &Student) {
-    println!("Student name: {}", student.name);
-    println!("Pass level: {}", student.is_pass());
-    println!("Grade: {}", student.grade());
+fn score_display(learner: &Student) {
+    println!("Name: {}", learner.name);
+    println!("Score: {}", learner.score);
 }
-
 fn main() {
-    let student = Student {
-        name: String::from("Alice"),
-        score: 78,
-    };
+    let student2 = Student::new("James", 85);
 
-    score_display(&student);
+    score_display(&student2);
 }
