@@ -75,16 +75,36 @@ fn main() {
 
 // Day 11 Mini Project: Word Analyzer.
 
-fn main() {
-    let sentence = String::from("You are right!");
+fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
 
-    for c in sentence.chars() {
-        println!("{}", c);
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[..i];
+        }
     }
 
-    let first = &sentence[0..3];
-    let last = &sentence[8..14];
-
-    println!("{}", first);
-    println!("{}", last);
+    &s
 }
+
+fn last_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate().rev() {
+        if item == b' ' {
+            return &s[i+1..];
+        }
+    }
+
+    &s
+}
+
+fn main() {
+    let sentence = String::from("Rust is powerful!");
+
+    let first = first_word(&sentence);
+    let last = last_word(&sentence);
+
+    println!("First: {}", first);
+    println!("Last: {}", last);
+} 
