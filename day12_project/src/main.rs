@@ -272,7 +272,7 @@ fn main() {
 
 // Bank use case of struct with impl method syntax. 
 
-
+/*
 struct BankAccount {
     owner: String,
     balance: f64,
@@ -324,4 +324,75 @@ fn main() {
     // Proceed to withdraw of 800.0
     let withdraw_success = account.withdrawal(800.0);
     println!("Withdrawal possibility: {} | Balance after withdrwal: {}", withdraw_success, account.get_balance());
+}
+*/
+
+struct Book {
+    title: String,
+    author: String,
+    available: bool,
+}
+
+impl Book {
+    // :: - associated function, creates a new Book instance
+    fn new(title: &str, author: &str) -> Self {
+        Book {
+            title: title.to_string(),
+            author: author.to_string(),
+            available: true, // all books available when first added
+        }
+    }
+
+    // . method, reads from existing instance
+    fn is_available(&self) -> bool {
+        self.available
+    }
+
+    // . method, mutates existing instance
+    fn checkout(&mut self) -> bool {
+        if self.available {
+            self.available = false;
+            true // checkout succeeded
+        } else {
+            false // Already checked out
+        }
+    }
+
+    // . method, mutates existing instance
+    fn return_book(&mut self) {
+        self.available = true;
+    }
+
+    // . method, reads from existing instance
+    fn display(&self) {
+        println!("Title: {} | Author: {} | Available: {}", self.title, self.author, if self.available{ "Yes" } else { "No" });
+    }
+}
+
+fn main() {
+    // :: - no Book exists yet, creating one from scratch
+    let mut book1 = Book::new("The Rust Programming Language", "Steve Klabnik");
+    let mut book2 = Book::new("Programming Rust", "Jim Blandy");
+    let mut book3 = Book::new("The Journey of Success", "Bob Rabs");
+
+    println!("--- Library Inventory ---");
+    book1.display();
+    book2.display();
+    book3.display();
+
+    println!("\n--- Checkout Attempt ---");
+    let success = book1.checkout(); // mutates book1 available field
+    println!("Checked out '{}': {}", book1.title, success);
+
+    // trying to checkout book already checked out
+    let success2 = book1.checkout();
+    println!("Checked out '{}' again: {}", book1.title, success2);
+
+    println!("\n--- Returning Book ---");
+    book1.return_book();  // . — mutates book1 back to available
+    println!("'{}' returned.", book1.title);
+
+    println!("\n--- Final Inventory ---");
+    book1.display();
+    book2.display();
 }
