@@ -299,11 +299,11 @@ fn main() {
     // Display item in one of the structs
     println!("Mary's box contains {}", major_package[1].fruit_type);
 
-    let kays_box = major_package.iter().find(|yellow_box| yellow_box.customer_name == "Kay");
-
-    match kays_box {
-        Some(yellow_box) => println!("Kay's yellow box contains {}.", kays_box.unwrap().fruit_type),
-        None => println!("No box associated with Kay!"),
+    if let Some(peters_box)  = major_package.iter().find(|b| b.customer_name == "Peter") {
+        let cost = peters_box.calculate_shipping();
+        println!("Shipping for {}'s box costs: ${}", peters_box.customer_name, cost);
+    } else {
+        println!("No box found for Peter!");
     }
 
     let children_fed: u32 = major_package.iter().map(|s| s.children).sum();
