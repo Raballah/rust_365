@@ -273,15 +273,27 @@ fn main() {
 struct FruitBox {
     customer_name: String,
     fruit_type: String,
-    children: i32,
+    children: u32,
+}
+
+impl FruitBox {
+    // calculating shipping cost based on fruit type
+    fn calculate_shipping(&self) -> f64 {
+        if self.fruit_type == "Mango" {
+            10.50 // mangos are heavy
+        } else {
+            5.00 // others are lighter/cheaper to ship.
+        }
+    }
 }
 
 fn main() {
     let major_package: Vec<FruitBox> = vec![
         FruitBox { customer_name: String::from("John"), fruit_type: String::from("Mango"), children: 4 },
-        FruitBox { customer_name: String::from("Mary"), fruit_type: String::from("Oranges"), children: 6 },
-        FruitBox { customer_name: String::from("Moses"), fruit_type: String::from("Apples"), children: 2 },
-        FruitBox {customer_name: String::from("Kay"), fruit_type: String::from("Guava"), children: 3},
+        FruitBox { customer_name: String::from("Mary"), fruit_type: String::from("Oranges"), children: 3 },
+        FruitBox { customer_name: String::from("Moses"), fruit_type: String::from("Apples"), children: 1 },
+        FruitBox { customer_name: String::from("Kay"), fruit_type: String::from("Mango"), children: 4 },
+        FruitBox { customer_name: String::from("Paul"), fruit_type: String::from("Oranges"), children: 6 },
     ];
 
     // Display item in one of the structs
@@ -293,4 +305,7 @@ fn main() {
         Some(yellow_box) => println!("Kay's yellow box contains {}.", kays_box.unwrap().fruit_type),
         None => println!("No box associated with Kay!"),
     }
+
+    let children_fed: u32 = major_package.iter().map(|s| s.children).sum();
+    println!("Total children enjoying our fruits: {}", children_fed);
 }
