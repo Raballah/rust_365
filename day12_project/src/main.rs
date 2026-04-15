@@ -32,6 +32,10 @@ impl Student {
         Self { name, score}
     }
 
+    fn is_valid(score: i32) -> bool {
+        (0..=100).contains(&score)
+    }
+
     fn grade(&self) -> char {
         match self.score {
             w if w > 100 || w < 0 => 'I', // Invalid Entry/Score
@@ -50,7 +54,6 @@ impl Student {
 
     fn feedback(&self) -> &'static str {
         match self.score {
-            w if w > 100 || w < 0 => "Invalid Score. Score Must be From 0-100.",
             80..=100 => "Excellent Work!",
             70..=79 => "Good Work. Keep Improving!",
             60..=69 => "Good Trial, but Needs Improvement!",
@@ -124,10 +127,6 @@ fn get_user_input() -> MenuOption {
     }
 }
 
-fn is_valid(score: i32) -> bool {
-    (0..=100).contains(&score)
-}
-
 fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, borrowed here.
         
     loop {
@@ -155,7 +154,7 @@ fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, 
             }
          };
 
-         if !is_valid(score) {
+         if !Student::is_valid(score) {
             println!("Invalid. Enter 0-100. No Negative Entries.");
             continue;
          } else {
