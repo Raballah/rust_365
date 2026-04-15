@@ -216,16 +216,9 @@ fn analyze_scores(students: &[Student]) {
         }
 
         println!("\n--Pass/Fail Overview--\n");
-        let mut pass_count: i32 = 0;
-        let mut fail_count: i32 = 0;
 
-        for student in students {
-            if student.is_pass() {
-                pass_count += 1;
-            } else {
-                fail_count += 1;
-            }
-        }
+        let pass_count = students.iter().filter(|s| s.is_pass()).count();
+        let fail_count = students.iter().filter(|s| !s.is_pass()).count();
 
         println!("Pass Count: {}", pass_count);
         println!("Fails Count: {}", fail_count);
