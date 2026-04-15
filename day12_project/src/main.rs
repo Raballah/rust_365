@@ -1,6 +1,5 @@
 // Day 12 mini projec. refactoring CLI Scores Manager with struct Student 
 
-/*
 use std::io;
 // Extracted input reading into a single function
 fn read_input(prompt: &str) -> String {
@@ -29,6 +28,10 @@ struct Student {
 }
 
 impl Student {
+    fn new(name: String, score: i32) -> Self {
+        Self { name, score}
+    }
+
     fn grade(&self) -> char {
         match self.score {
             w if w > 100 || w < 0 => 'I', // Invalid Entry/Score
@@ -65,7 +68,7 @@ struct Statistics {
     lowest: i32,
 }
 
-fn compute_statistics(students: &Vec<Student>) -> Statistics {
+fn compute_statistics(students: &[Student]) -> Statistics {
     let count = students.len();
     let sum: i32 = students.iter().map(|s| s.score).sum();
     let average = sum as f64 / count as f64;
@@ -128,16 +131,11 @@ fn is_valid(score: i32) -> bool {
 fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, borrowed here.
         
     loop {
-        loop {
-            // Begin with student name
-            let name = read_input("Enter student name or 'exit' to Exit: ");
-
-            if name.eq_ignore_ascii_case("exit") {
-                println!("Exited to outer loop successfully...");
-                break; // Back to Main/Outer loop
-            } else {
-                break; // name collected, proceed to score entry
-            }           
+        // Name declared within the main loop
+        let name = read_input("Enter student name or 'exit' to Exit: ");
+        
+        if name.eq_ignore_ascii_case("exit") {
+            break; // Exits and heads over to main menu
         }
         
         // Add student score
@@ -161,13 +159,16 @@ fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, 
             println!("Invalid. Enter 0-100. No Negative Entries.");
             continue;
          } else {
-            students.push(Student {name, score});
-            println!("Student {} added. Number of students added so far: {}", students::name, students.len());
+            students.push(Student::new(name, score));
+            // Getting reference to last student added.
+            if let Some(last_name) = students.last() {
+                println!("Student {} added. Number of students added so far: {}", last_name.name, students.len());
+            }
          }
     }
 }
 
-fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
+fn view_scores(students: &[Student]) {  // Borrows scores &Vec<i32>, displays as i32
     //View All Scores
     loop {
         if students.is_empty() {
@@ -177,11 +178,12 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
         
         println!("\n--- All Scores ---");
 
-        let scores_list = students.score;
-        println!("{}", scores_list);
+        for student in students {
+            println!("{}: {}", student.name, student.score);
+        }
         
         // compute once, compute via method
-        let stats = compute_statistics(scores);
+        let stats = compute_statistics(students);
         stats.display();
      
         let trimmed = read_input("\nType 'exit' to return to Menu: ");
@@ -194,7 +196,7 @@ fn view_scores(scores: &[i32]) {  // Borrows scores &Vec<i32>, displays as i32
     }
 }
 
-fn analyze_scores(students: &Vec<Student>) {
+fn analyze_scores(students: &[Student]) {
     // Analyze Scores
     loop {
         if students.is_empty() {
@@ -209,7 +211,8 @@ fn analyze_scores(students: &Vec<Student>) {
                 student.name,
                 student.score,
                 student.grade(),
-                if student.is_pass() { "Yes" } else { "No" }
+                if student.is_pass() { "Yes" } else { "No" },
+                student.feedback()
             );
         }
 
@@ -217,10 +220,12 @@ fn analyze_scores(students: &Vec<Student>) {
         let mut pass_count: i32 = 0;
         let mut fail_count: i32 = 0;
 
-        if students.is_pass(&score) {
-            pass_count += 1;
-        } else {
-            fail_count += 1;
+        for student in students {
+            if student.is_pass() {
+                pass_count += 1;
+            } else {
+                fail_count += 1;
+            }
         }
 
         println!("Pass Count: {}", pass_count);
@@ -267,53 +272,4 @@ fn main() {
             }
         }
     }
-}
-*/
-
-struct FruitBox {
-    customer_name: String,
-    fruit_type: String,
-    children: u32,
-}
-
-impl FruitBox {
-    // calculating shipping cost based on fruit type
-    fn calculate_shipping(&self) -> f64 {
-        if self.fruit_type == "Mango" {
-            10.50 // mangos are heavy
-        } else {
-            5.00 // others are lighter/cheaper to ship.
-        }
-    }
-}
-
-fn main() {
-    let mut major_package: Vec<FruitBox> = vec![
-        FruitBox { customer_name: String::from("John"), fruit_type: String::from("Mango"), children: 4 },
-        FruitBox { customer_name: String::from("Mary"), fruit_type: String::from("Oranges"), children: 3 },
-        FruitBox { customer_name: String::from("Moses"), fruit_type: String::from("Apples"), children: 1 },
-        FruitBox { customer_name: String::from("Kay"), fruit_type: String::from("Mango"), children: 4 },
-        FruitBox { customer_name: String::from("Paul"), fruit_type: String::from("Oranges"), children: 6 },
-    ];
-
-    // Display item in one of the structs
-    println!("Mary's box contains {}", major_package[1].fruit_type);
-
-    if let Some(marys_box)  = major_package.iter_mut().find(|b| b.customer_name == "Mary") {
-        marys_box.children += 1;        
-        println!("Updated: {} now has {} children.", marys_box.customer_name, marys_box.children);
-    } else {
-        println!("No box found for Mary!");
-    } 
-
-    let children_fed: u32 = major_package.iter().map(|s| s.children).sum();
-    println!("Total children enjoying our fruits: {}", children_fed);
-
-
-
-    let total_cost: f64 = major_package
-        .iter()
-        .map(|box_item| box_item.calculate_shipping())
-        .sum();
-    println!("The total cost of shippping is ${:.1}", total_cost);
 }
