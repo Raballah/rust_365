@@ -75,8 +75,8 @@ fn compute_statistics(students: &[Student]) -> Statistics {
     let count = students.len();
     let sum: i32 = students.iter().map(|s| s.score).sum();
     let average = sum as f64 / count as f64;
-    let highest = students.iter().map(|s| s.score).max().unwrap(); // Safe caller guarantees non-empty
-    let lowest = students.iter().map(|s| s.score).min().unwrap();
+    let highest = students.iter().map(|s| s.score).max().unwrap_or(0); // Safe caller guarantees non-empty
+    let lowest = students.iter().map(|s| s.score).min().unwrap_or(0);
 
     Statistics { 
         count, 
@@ -131,7 +131,7 @@ fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, 
         
     loop {
         // Name declared within the main loop
-        let name = read_input("Enter student name or 'exit' to Exit: ");
+        let name = read_input("Enter student NAME or 'exit' to Exit: ");
         
         if name.eq_ignore_ascii_case("exit") {
             break; // Exits and heads over to main menu
@@ -139,7 +139,7 @@ fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, 
         
         // Add student score
         // score entry validation
-        let trimmed_score = read_input("\nEnter Student Score or 'exit' to Exit: ");
+        let trimmed_score = read_input("\nEnter student SCORE or 'exit' to Exit: ");
 
         if trimmed_score.eq_ignore_ascii_case("exit") {
             println!("Score(s) Added. Returning to Menu...");
