@@ -288,7 +288,7 @@ impl FruitBox {
 }
 
 fn main() {
-    let major_package: Vec<FruitBox> = vec![
+    let mut major_package: Vec<FruitBox> = vec![
         FruitBox { customer_name: String::from("John"), fruit_type: String::from("Mango"), children: 4 },
         FruitBox { customer_name: String::from("Mary"), fruit_type: String::from("Oranges"), children: 3 },
         FruitBox { customer_name: String::from("Moses"), fruit_type: String::from("Apples"), children: 1 },
@@ -299,13 +299,21 @@ fn main() {
     // Display item in one of the structs
     println!("Mary's box contains {}", major_package[1].fruit_type);
 
-    if let Some(peters_box)  = major_package.iter().find(|b| b.customer_name == "Peter") {
-        let cost = peters_box.calculate_shipping();
-        println!("Shipping for {}'s box costs: ${}", peters_box.customer_name, cost);
+    if let Some(marys_box)  = major_package.iter_mut().find(|b| b.customer_name == "Mary") {
+        marys_box.children += 1;        
+        println!("Updated: {} now has {} children.", marys_box.customer_name, marys_box.children);
     } else {
-        println!("No box found for Peter!");
-    }
+        println!("No box found for Mary!");
+    } 
 
     let children_fed: u32 = major_package.iter().map(|s| s.children).sum();
     println!("Total children enjoying our fruits: {}", children_fed);
+
+
+
+    let total_cost: f64 = major_package
+        .iter()
+        .map(|box_item| box_item.calculate_shipping())
+        .sum();
+    println!("The total cost of shippping is ${:.1}", total_cost);
 }
