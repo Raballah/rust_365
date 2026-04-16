@@ -78,6 +78,17 @@ impl Student {
             _ => "Invalid Score",            
         }
     }
+
+    fn performance(&self) -> Performance {
+        match self.score {
+            80..=100 => Performance::Excellent,
+            70..=79 => Performance::Good,
+            60..=69 => Performance::Average,
+            50..=59 => Performance::Weak,
+            0..=49 => Performance::Poor,
+            _ => Performance::Poor,
+        }
+    }
 }
 
 enum Grade {
@@ -114,6 +125,7 @@ impl Statistics {
         println!("Highest Score: {}", self.highest);
         println!("Lowest Score: {}", self.lowest);
     }
+
     fn from_students(students: &[Student]) -> Self {
         let count = students.len();
         let sum: i32 = students.iter().map(|s| s.score).sum();
@@ -122,6 +134,26 @@ impl Statistics {
         let lowest = students.iter().map(|s| s.score).min().unwrap_or(0);
 
         Self { count, average, highest, lowest }
+    }
+}
+
+enum Performance {
+    Excellent,
+    Good,
+    Average,
+    Weak,
+    Poor,
+}
+
+impl Performance {
+    fn into_str(&self) -> &'static str {
+        match self {
+            Performance::Excellent => "Excellent",
+            Performance::Good => "Good",
+            Performance::Average => "Average",
+            Performance::Weak => "Weak",
+            Performance::Poor => "Poor",
+        }
     }
 }
 
@@ -258,10 +290,16 @@ fn analyze_scores(students: &[Student]) {
                 Grade::A => println!("Top student: {}", student.name),
                 Grade::B => println!("Upcoming top performer: {}", student.name),
                 Grade::C => println!("Slow learner. Scaffolding recommended: {}", student.name),
-                Grade::D => println!("Special attention needed in class: {}", student.name),
+                Grade::D => println!("Remedial reuired: {}", student.name),
                 Grade::F => println!("Needs help: {}", student.name),
             }
         }
+
+        println!("\n-- Student Performance Notes --\n");
+        for student in students {
+            println!("{}'s performance level: {}", student.name, student.performance().into_str());
+        }
+
 
         // Inpt for 'Exit' to exit loop
         let mut optional_input = String::new();
