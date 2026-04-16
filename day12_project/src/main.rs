@@ -160,7 +160,7 @@ fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, 
          } else {
             students.push(Student::new(name, score));
             // Getting reference to last student added.
-            if let Some(last_name) = students.last() {
+            if let Some(last_student) = students.last() {
                 println!("Student {} added. Number of students added so far: {}", last_name.name, students.len());
             }
          }
