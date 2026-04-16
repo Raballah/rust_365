@@ -246,17 +246,27 @@ fn analyze_scores(students: &[Student]) {
         }
 
         println!("\n--Pass/Fail Overview--\n");
-
         let pass_count = students.iter().filter(|s| s.result().to_str() == "Pass").count();
         let fail_count = students.iter().filter(|s| s.result().to_str() == "Fail").count();
 
         println!("Pass Count: {}", pass_count);
         println!("Fails Count: {}", fail_count);
 
+        println!("\n-- Student-specific Notes to Teacher --\n");
+        for student in students {
+            match student.grade() {
+                Grade::A => println!("Top student: {}", student.name),
+                Grade::B => println!("Upcoming top performer: {}", student.name),
+                Grade::C => println!("Slow learner. Scaffolding recommended: {}", student.name),
+                Grade::D => println!("Special attention needed in class: {}", student.name),
+                Grade::F => println!("Needs help: {}", student.name),
+            }
+        }
+
         // Inpt for 'Exit' to exit loop
         let mut optional_input = String::new();
         
-        println!("Type 'Exit' to exit!");
+        println!("\nType 'Exit' to exit!");
         
         io::stdin()
             .read_line(&mut optional_input)
