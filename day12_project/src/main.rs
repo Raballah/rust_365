@@ -36,15 +36,13 @@ impl Student {
         (0..=100).contains(&score)
     }
 
-    fn grade(&self) -> char {
+    fn grade(&self) -> Grade {
         match self.score {
-            w if w > 100 || w < 0 => 'I', // Invalid Entry/Score
-            80..=100 => 'A',
-            70..=79 => 'B',
-            60..=69 => 'C',
-            50..=59 => 'D',
-            0..=49 => 'F',
-            _ => 'I', // Invalid Entry/Score}
+            80..=100 => Grade::A,
+            70..=79 => Grade::B,
+            60..=69 => Grade::C,
+            50..=59 => Grade::D,
+            _ => Grade::F,
         }
     }
     
@@ -60,6 +58,26 @@ impl Student {
             50..=59 => "Fair Trial. Work Harder Next Time!",
             0..=49 => "Below Average. See Me!",
             _ => "Invalid Score",            
+        }
+    }
+}
+
+enum Grade {
+    A,
+    B,
+    C,
+    D,
+    F,
+}
+
+impl Grade {
+    fn as_str(&self) -> &'static str {
+        match self {
+            Grade::A => "A",
+            Grade::B => "B",
+            Grade::C => "C",
+            Grade::D => "D",
+            Grade::F => "F",
         }
     }
 }
@@ -202,7 +220,7 @@ fn analyze_scores(students: &[Student]) {
                 "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {}",
                 student.name,
                 student.score,
-                student.grade(),
+                student.grade().as_str(),
                 if student.is_pass() { "Yes" } else { "No" },
                 student.feedback()
             );
