@@ -22,6 +22,20 @@ fn show_menu() {
         println!("4. Exit");
 }
 
+enum PassStatus {
+    Pass,
+    Fail,
+}
+
+impl PassStatus {
+    fn to_str(&self) -> &'static str {
+        match self {
+            PassStatus::Pass => "Pass",
+            PassStatus::Fail => "Fail",
+        }
+    }
+}
+
 struct Student {
     name: String,
     score: i32,
@@ -46,8 +60,12 @@ impl Student {
         }
     }
     
-    fn is_pass(&self) -> bool {
-        self.score >= 60
+    fn result(&self) -> PassStatus {
+        if self.score >= 60 {
+            PassStatus::Pass
+        } else {
+            PassStatus::Fail
+        }
     }
 
     fn feedback(&self) -> &'static str {
@@ -215,21 +233,22 @@ fn analyze_scores(students: &[Student]) {
         }
         
         println!("\n--- Score Analysis ---\n");
+
         for student in students {
             println!(
                 "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {}",
                 student.name,
                 student.score,
                 student.grade().as_str(),
-                if student.is_pass() { "Yes" } else { "No" },
+                student.result().to_str(),
                 student.feedback()
             );
         }
 
         println!("\n--Pass/Fail Overview--\n");
 
-        let pass_count = students.iter().filter(|s| s.is_pass()).count();
-        let fail_count = students.iter().filter(|s| !s.is_pass()).count();
+        let pass_count = students.iter().filter(|s| s.result().to_str() == "Pass").count();
+        let fail_count = students.iter().filter(|s| s.result().to_str() == "Fail").count();
 
         println!("Pass Count: {}", pass_count);
         println!("Fails Count: {}", fail_count);
