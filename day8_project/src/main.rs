@@ -24,6 +24,7 @@ fn main() {
     println!("Fourth word: {}", fourth);
 } 
 */
+/*
 struct FruitBox {
     customer_name: String,
     fruit_type: String,
@@ -70,4 +71,33 @@ fn main() {
         .map(|box_item| box_item.calculate_shipping())
         .sum();
     println!("The total cost of shippping is ${:.1}", total_cost);
+}
+*/
+
+// Focus on enums
+
+enum Grade {
+    A,
+    B,
+    C,
+    D,
+    F
+}
+
+fn describe_grade(grade: Grade) -> &'static str {
+    match grade {
+        Grade::A => "Excellent work",
+        Grade::B => "Good",
+        Grade::C => "Average",
+        Grade::D => "Below average",
+        Grade::F => "Fail",
+    }
+}
+fn main() {
+    let g = Grade::A;
+    match g {
+        Grade::A => println!("Excellent attempt");
+        Grade::B => println!("Good work")
+        _ => println!("Keep working harder!")
+    }
 }
