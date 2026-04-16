@@ -71,27 +71,21 @@ struct Statistics {
     lowest: i32,
 }
 
-fn compute_statistics(students: &[Student]) -> Statistics {
-    let count = students.len();
-    let sum: i32 = students.iter().map(|s| s.score).sum();
-    let average = sum as f64 / count as f64;
-    let highest = students.iter().map(|s| s.score).max().unwrap_or(0); // Safe caller guarantees non-empty
-    let lowest = students.iter().map(|s| s.score).min().unwrap_or(0);
-
-    Statistics { 
-        count, 
-        average, 
-        highest,
-        lowest
-    }
-}
-
 impl Statistics {
     fn display(&self) {
         println!("\nScores Count: {}", self.count);
         println!("Average Score: {:.0}", self.average);
         println!("Highest Score: {}", self.highest);
         println!("Lowest Score: {}", self.lowest);
+    }
+    fn from_students(students: &[Student]) -> Self {
+        let count = students.len();
+        let sum: i32 = students.iter().map(|s| s.score).sum();
+        let average = sum as f64 / count as f64;
+        let highest = students.iter().map(|s| s.score).max().unwrap_or(0);
+        let lowest = students.iter().map(|s| s.score).min().unwrap_or(0);
+
+        Self { count, average, highest, lowest }
     }
 }
 
@@ -161,7 +155,7 @@ fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, 
             students.push(Student::new(name, score));
             // Getting reference to last student added.
             if let Some(last_student) = students.last() {
-                println!("Student {} added. Number of students added so far: {}", last_name.name, students.len());
+                println!("Student {} added. Number of students added so far: {}", last_student.name, students.len());
             }
          }
     }
@@ -176,13 +170,12 @@ fn view_scores(students: &[Student]) {  // Borrows scores &Vec<i32>, displays as
         }
         
         println!("\n--- All Scores ---");
-
         for student in students {
             println!("{}: {}", student.name, student.score);
         }
         
         // compute once, compute via method
-        let stats = compute_statistics(students);
+        let stats = Statistics::from_students(students);
         stats.display();
      
         let trimmed = read_input("\nType 'exit' to return to Menu: ");
