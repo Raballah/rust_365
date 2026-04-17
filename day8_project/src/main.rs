@@ -76,6 +76,7 @@ fn main() {
 
 // Focus on enums
 
+/*
 enum Grade {
     A,
     B,
@@ -100,4 +101,75 @@ fn main() {
         Grade::B => println!("Good work")
         _ => println!("Keep working harder!")
     }
+}
+*/
+ 
+// A Filter iterator adapter and a matches! macro overivew
+// matches! returns a bool, so good for providing the predicate to use with filter
+
+#[derive(Debug)]
+enum Gender {
+    Male,
+    Female,
+    NonBinary(String), // holds a label
+}
+
+impl Gender {
+    fn is_binary(&self) -> bool {
+        matches!(self, Gender::Male | Gender::Female)
+    }
+
+    fn label(&self) -> &str {
+        match self {
+            Gender::Male => "Male",
+            Gender::Female => "Female",
+            Gender::NonBinary(inner_text) => inner_text,
+        }
+    }
+}
+
+#[derive(Debug)]
+struct Person {
+    name: String,
+    age: u8,
+    gender: Gender,
+}
+
+impl Person {
+    fn new(name: &str, age: u8, gender: Gender) -> Self {
+        Person { name: name.to_string(), age, gender }
+    }
+
+    fn is_adult(&self) -> bool {
+        self.age >= 18
+    }
+
+    fn gender_label(&self) -> &str {
+        self.gender.label()
+    }
+}
+
+fn main() {
+    let people = vec!{
+        Person::new("Alice",  30, Gender::Female),
+        Person::new("Bob",    25, Gender::Male),
+        Person::new("Carol",  17, Gender::Female),
+        Person::new("Dave",   40, Gender::Male),
+        Person::new("Erin",   22, Gender::NonBinary("Genderqueer".into())), // explain this part, seems unclear to me.
+        Person::new("Frank",  19, Gender::Male),
+    };
+
+    // Counting number of males and females using .filter iterator type and match! macro
+    let male_count = people
+        .iter()
+        .filter(|p| matches!(p.gender, Gender::Male))
+        .count();
+    
+    let female_count = people
+        .iter()
+        .filter(|p| matches!(p.gender, Gender::Female))
+        .count();
+    
+    println!("Males: {}", male_count);
+    println!("Females: {}", female_count);
 }
