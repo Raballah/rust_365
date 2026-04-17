@@ -172,4 +172,14 @@ fn main() {
     
     println!("Males: {}", male_count);
     println!("Females: {}", female_count);
+
+    // Adult females only 
+    let adult_females: Vec<&Person> = people
+        .iter()
+        .filter(|p| matches!(p.gender, Gender::Female) && p.is_adult())
+        .collect(); // collect? why not .push() here?
+    
+    for person in &adult_females {
+        println!("{} is an adult female.", person.name);
+    }
 }
