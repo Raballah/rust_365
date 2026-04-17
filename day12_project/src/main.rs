@@ -278,8 +278,8 @@ fn analyze_scores(students: &[Student]) {
         }
 
         println!("\n--Pass/Fail Overview--\n");
-        let pass_count = students.iter().filter(|s| s.result().to_str() == "Pass").count();
-        let fail_count = students.iter().filter(|s| s.result().to_str() == "Fail").count();
+        let pass_count = students.iter().filter(|s| matches!(s.result(), PassStatus::Pass)).count();
+        let fail_count = students.iter().filter(|s| matches!(s.result(), PassStatus::Fail)).count();
 
         println!("Pass Count: {}", pass_count);
         println!("Fails Count: {}", fail_count);
