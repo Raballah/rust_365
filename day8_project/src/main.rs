@@ -192,4 +192,12 @@ fn main() {
     for person in &non_binary {
         println!("{} identifies as {}", person.name, person.gender_label());
     }
+
+    // use enum impl method as filter predicate
+    let binary_adults: Vec<&Person> = people
+        .iter()
+        .filter(|p| p.gender.is_binary() && p.is_adult())
+        .collect();
+    
+    println!("Binary-gender adults: {}", binary_adults.len());
 }
