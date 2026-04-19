@@ -85,7 +85,6 @@ impl Student {
             70..=79 => Performance::Good,
             60..=69 => Performance::Average,
             50..=59 => Performance::Weak,
-            0..=49 => Performance::Poor,
             _ => Performance::Poor,
         }
     }
