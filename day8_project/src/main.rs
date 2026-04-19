@@ -155,7 +155,7 @@ fn main() {
         Person::new("Bob",    25, Gender::Male),
         Person::new("Carol",  17, Gender::Female),
         Person::new("Dave",   40, Gender::Male),
-        Person::new("Erin",   22, Gender::NonBinary("Genderqueer".into())), // explain this part, seems unclear to me.
+        Person::new("Erin",   22, Gender::NonBinary("Genderqueer".into())),
         Person::new("Frank",  19, Gender::Male),
     };
 
@@ -181,5 +181,15 @@ fn main() {
     
     for person in &adult_females {
         println!("{} is an adult female.", person.name);
+    }
+
+    // pattern matching for enums that carry data
+    let non_binary: Vec<&Person> = people
+        .iter()
+        .filter(|p| matches!(p.gender, Gender::NonBinary(_)))
+        .collect();
+    
+    for person in &non_binary {
+        println!("{} identifies as {}", person.name, person.gender_label());
     }
 }
