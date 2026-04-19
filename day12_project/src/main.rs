@@ -1,6 +1,7 @@
 // Day 12 mini projec. refactoring CLI Scores Manager with struct Student 
 
 use std::io;
+use std::fmt;
 // Extracted input reading into a single function
 fn read_input(prompt: &str) -> String {
     let mut input = String::new();
@@ -107,6 +108,19 @@ impl Grade {
             Grade::D => "D",
             Grade::F => "F",
         }
+    }
+}
+
+impl fmt::Display for Grade {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let s = match self {
+            Grade::A => "A",
+            Grade::B => "B",
+            Grade::C => "C",
+            Grade::D => "D",
+            Grade::F => "F",
+        };
+        write!(f, "{}", s)
     }
 }
 
@@ -270,7 +284,7 @@ fn analyze_scores(students: &[Student]) {
                 "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {}",
                 student.name,
                 student.score,
-                student.grade().as_str(),
+                student.grade(),
                 student.result().to_str(),
                 student.feedback()
             );
