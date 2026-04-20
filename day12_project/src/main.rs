@@ -147,15 +147,16 @@ enum Performance {
     Poor,
 }
 
-impl Performance {
-    fn as_str(&self) -> &'static str {
-        match self {
+impl fmt::Display for Performance {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let performance = match self {
             Performance::Excellent => "Excellent",
             Performance::Good => "Good",
             Performance::Average => "Average",
             Performance::Weak => "Weak",
             Performance::Poor => "Poor",
-        }
+        };
+        write!(f, "{}", performance)
     }
 }
 
@@ -323,7 +324,7 @@ impl App {
                 println!(
                     "{}'s performance level: {}", 
                     student.name, 
-                    student.performance().as_str());
+                    student.performance());
             }
 
             // Inpt for 'Exit' to exit loop
