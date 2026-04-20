@@ -99,18 +99,6 @@ enum Grade {
     F,
 }
 
-impl Grade {
-    fn as_str(&self) -> &'static str {
-        match self {
-            Grade::A => "A",
-            Grade::B => "B",
-            Grade::C => "C",
-            Grade::D => "D",
-            Grade::F => "F",
-        }
-    }
-}
-
 impl fmt::Display for Grade {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let s = match self {
