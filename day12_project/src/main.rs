@@ -239,7 +239,7 @@ impl App {
             println!("Invalid. Enter 0-100. No Negative Entries.");
             continue;
          } else {
-            self.push(Student::new(name, score));
+            self.students.push(Student::new(name, score));
             // Getting reference to last student added.
             if let Some(last_student) = self.students.last() {
                 println!(
