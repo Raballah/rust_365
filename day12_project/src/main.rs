@@ -197,9 +197,9 @@ impl App {
 
             // 4. Choice-based Actions
             match choice {
-                MenuOption::AddScore => self.add_score(),
-                MenuOption::ViewScores => self.view_scores(),
-                MenuOption::AnalyzeScores => self.analyze_scores(),
+                MenuOption::AddScore => self.add_student(),
+                MenuOption::ViewScores => self.view_students(),
+                MenuOption::AnalyzeScores => self.analyze(),
                 MenuOption::Exit => {
                     println!("Session Exited Successfully! Goodbye!");
                     break; // Outer loop exited, program exited.
@@ -208,7 +208,7 @@ impl App {
         }
     }
 
-    fn add_score(&mut self) {  // Modifies the scores mut vector, borrowed here.
+    fn add_student(&mut self) {  // Modifies the scores mut vector, borrowed here.
         
     loop {
         // Name declared within the main loop
@@ -251,7 +251,7 @@ impl App {
         }
     }
 
-    fn view_scores(&self) { // Borrows scores &Vec<i32>, displays as i32
+    fn view_students(&self) { // Borrows scores &Vec<i32>, displays as i32
     //View All Scores
         loop {
             if self.students.is_empty() {
@@ -278,7 +278,7 @@ impl App {
         }
     }
 
-    fn analyze_scores(&self) {
+    fn analyze(&self) {
         // Analyze Scores
         loop {
             if self.students.is_empty() {
