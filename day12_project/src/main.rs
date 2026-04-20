@@ -175,22 +175,40 @@ fn parse_menu_choice(input: i32) -> Option<MenuOption>{
     }
 }
 
-fn get_user_input() -> MenuOption {
-    loop {
-        let menu_choice = read_input("\nEnter your choice: ");
-
-        if let Ok(num) = menu_choice.parse::<i32>() {
-            if let Some(option) = parse_menu_choice(num) {
-                break option; // Valid MenuOption, exit loop
-            }
-        }
-        // if parse failed or number number not 1-4
-        println!("Invalid Entry. Choice must be from 1-4!");
-        continue;
-    }
+// 1. Student Score Collector / App Layer
+struct App {
+    students: Vec<Student>,
 }
 
-fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, borrowed here.
+impl App {
+    fn new() -> Self {
+        Self {
+            students: Vec::new(),
+        }
+    }
+
+    fn run(&mut self) {
+        loop {
+            // 2. Menu System (Core Feature)
+            show_menu();
+
+            // 3. Menu Choice Handler - reprompts, iteration ends at valid choice
+            let choice: MenuOption = get_user_input();
+
+            // 4. Choice-based Actions
+            match choice {
+                MenuOption::AddScore => self.add_score(),
+                MenuOption::ViewScores => self.view_scores(),
+                MenuOption::AnalyzeScores => self.analyze_scores(),
+                MenuOption::Exit => {
+                    println!("Session Exited Successfully! Goodbye!");
+                    break; // Outer loop exited, program exited.
+                }
+            }
+        }
+    }
+
+    fn add_score(&mut self) {  // Modifies the scores mut vector, borrowed here.
         
     loop {
         // Name declared within the main loop
@@ -221,126 +239,125 @@ fn add_score(students: &mut Vec<Student>) {  // Modifies the scores mut vector, 
             println!("Invalid. Enter 0-100. No Negative Entries.");
             continue;
          } else {
-            students.push(Student::new(name, score));
+            self.push(Student::new(name, score));
             // Getting reference to last student added.
-            if let Some(last_student) = students.last() {
-                println!("Student {} added. Number of students added so far: {}", last_student.name, students.len());
+            if let Some(last_student) = self.students.last() {
+                println!(
+                    "Student {} added. Number of students added so far: {}", 
+                    last_student.name, 
+                    self.students.len());
+                }
             }
-         }
+        }
+    }
+
+    fn view_scores(&self) { // Borrows scores &Vec<i32>, displays as i32
+    //View All Scores
+        loop {
+            if self.students.is_empty() {
+                println!("No score found! Select 1 and add some scores first!");
+                return;
+            }
+            
+            println!("\n--- All Scores ---");
+            for student in &self.students {
+                println!("{}: {}", student.name, student.score);
+            }
+            
+            // compute once, compute via method
+            let stats = Statistics::from_students(&self.students);
+            stats.display();
+        
+            let trimmed = read_input("\nType 'exit' to return to Menu: ");
+            
+            if trimmed.eq_ignore_ascii_case("exit") {
+                println!("Exiting...Back to Main Menu!");
+                break;
+            }
+            continue;
+        }
+    }
+
+    fn analyze_scores(&self) {
+        // Analyze Scores
+        loop {
+            if self.students.is_empty() {
+                println!("No scores found!. Select 1 and enter some scores to analyze!");
+                return;
+            }
+            
+            println!("\n--- Score Analysis ---\n");
+
+            for student in &self.students {
+                println!(
+                    "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {}",
+                    student.name,
+                    student.score,
+                    student.grade(),
+                    student.result().as_str(),
+                    student.feedback()
+                );
+            }
+
+            println!("\n--Pass/Fail Overview--\n");
+            let pass_count = self.students
+                .iter()
+                .filter(|s| matches!(s.result(), PassStatus::Pass))
+                .count();
+            let fail_count = self.students
+                .iter()
+                .filter(|s| matches!(s.result(), PassStatus::Fail))
+                .count();
+
+            println!("Pass Count: {}", pass_count);
+            println!("Fails Count: {}", fail_count);
+
+            println!("\n-- Student-specific Notes to Teacher --\n");
+            for student in &self.students {
+                match student.grade() {
+                    Grade::A => println!("Top student: {}", student.name),
+                    Grade::B => println!("Upcoming top performer: {}", student.name),
+                    Grade::C => println!("Slow learner. Scaffolding recommended: {}", student.name),
+                    Grade::D => println!("Remedial reuired: {}", student.name),
+                    Grade::F => println!("Needs help: {}", student.name),
+                }
+            }
+
+            println!("\n-- Student Performance Notes --\n");
+            for student in &self.students {
+                println!(
+                    "{}'s performance level: {}", 
+                    student.name, 
+                    student.performance().as_str());
+            }
+
+            // Inpt for 'Exit' to exit loop
+            let trimmed = read_input("\nType 'Exit' to exit!");
+
+            if trimmed.eq_ignore_ascii_case("exit") {
+                println!("Session Exited Successfully!");
+                break;            
+            } 
+            continue;
+        }
     }
 }
 
-fn view_scores(students: &[Student]) {  // Borrows scores &Vec<i32>, displays as i32
-    //View All Scores
+fn get_user_input() -> MenuOption {
     loop {
-        if students.is_empty() {
-            println!("No score found! Select 1 and add some scores first!");
-            return;
+        let menu_choice = read_input("\nEnter your choice: ");
+
+        if let Ok(num) = menu_choice.parse::<i32>() {
+            if let Some(option) = parse_menu_choice(num) {
+                break option; // Valid MenuOption, exit loop
+            }
         }
-        
-        println!("\n--- All Scores ---");
-        for student in students {
-            println!("{}: {}", student.name, student.score);
-        }
-        
-        // compute once, compute via method
-        let stats = Statistics::from_students(students);
-        stats.display();
-     
-        let trimmed = read_input("\nType 'exit' to return to Menu: ");
-        
-        if trimmed.eq_ignore_ascii_case("exit") {
-            println!("Exiting...Back to Main Menu!");
-            break;
-        }
+        // if parse failed or number number not 1-4
+        println!("Invalid Entry. Choice must be from 1-4!");
         continue;
     }
 }
 
-fn analyze_scores(students: &[Student]) {
-    // Analyze Scores
-    loop {
-        if students.is_empty() {
-            println!("No scores found!. Select 1 and enter some scores to analyze!");
-            return;
-        }
-        
-        println!("\n--- Score Analysis ---\n");
-
-        for student in students {
-            println!(
-                "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {}",
-                student.name,
-                student.score,
-                student.grade(),
-                student.result().as_str(),
-                student.feedback()
-            );
-        }
-
-        println!("\n--Pass/Fail Overview--\n");
-        let pass_count = students.iter().filter(|s| matches!(s.result(), PassStatus::Pass)).count();
-        let fail_count = students.iter().filter(|s| matches!(s.result(), PassStatus::Fail)).count();
-
-        println!("Pass Count: {}", pass_count);
-        println!("Fails Count: {}", fail_count);
-
-        println!("\n-- Student-specific Notes to Teacher --\n");
-        for student in students {
-            match student.grade() {
-                Grade::A => println!("Top student: {}", student.name),
-                Grade::B => println!("Upcoming top performer: {}", student.name),
-                Grade::C => println!("Slow learner. Scaffolding recommended: {}", student.name),
-                Grade::D => println!("Remedial reuired: {}", student.name),
-                Grade::F => println!("Needs help: {}", student.name),
-            }
-        }
-
-        println!("\n-- Student Performance Notes --\n");
-        for student in students {
-            println!("{}'s performance level: {}", student.name, student.performance().as_str());
-        }
-
-
-        // Inpt for 'Exit' to exit loop
-        let mut optional_input = String::new();
-        
-        println!("\nType 'Exit' to exit!");
-        
-        io::stdin()
-            .read_line(&mut optional_input)
-            .expect("Failed to read optional input!");
-        
-            let trimmed2 = optional_input.trim();
-            
-            if trimmed2.eq_ignore_ascii_case("exit") {
-                println!("Session Exited Successfully!");
-                break;
-            }
-            continue;
-    }
-}
-
 fn main() {
-    // 1. Student Score Collector / Vector
-    let mut students: Vec<Student> = Vec::new();
-    
-    loop {
-        // 2. Menu System (Core Feature)
-        show_menu();
-
-        // 3. Menu Choice Handler - reprompts, iteration ends at valid choice
-        let choice: MenuOption = get_user_input();
-
-        // 4. Choice-based Actions
-        match choice {
-            MenuOption::AddScore => add_score(&mut students),
-            MenuOption::ViewScores => view_scores(&students),
-            MenuOption::AnalyzeScores => analyze_scores(&students),
-            MenuOption::Exit => {
-                println!("Session Exited Successfully! Goodbye!");
-                break; // Outer loop exited, program exited.
-            }
-        }
-    }
+    App::new().run();
 }
