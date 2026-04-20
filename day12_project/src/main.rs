@@ -29,7 +29,7 @@ enum PassStatus {
 }
 
 impl PassStatus {
-    fn to_str(&self) -> &'static str {
+    fn as_str(&self) -> &'static str {
         match self {
             PassStatus::Pass => "Pass",
             PassStatus::Fail => "Fail",
@@ -147,7 +147,7 @@ enum Performance {
 }
 
 impl Performance {
-    fn into_str(&self) -> &'static str {
+    fn as_str(&self) -> &'static str {
         match self {
             Performance::Excellent => "Excellent",
             Performance::Good => "Good",
@@ -273,7 +273,7 @@ fn analyze_scores(students: &[Student]) {
                 student.name,
                 student.score,
                 student.grade(),
-                student.result().to_str(),
+                student.result().as_str(),
                 student.feedback()
             );
         }
@@ -298,7 +298,7 @@ fn analyze_scores(students: &[Student]) {
 
         println!("\n-- Student Performance Notes --\n");
         for student in students {
-            println!("{}'s performance level: {}", student.name, student.performance().into_str());
+            println!("{}'s performance level: {}", student.name, student.performance().as_str());
         }
 
 
