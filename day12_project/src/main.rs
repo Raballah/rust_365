@@ -28,12 +28,13 @@ enum PassStatus {
     Fail,
 }
 
-impl PassStatus {
-    fn as_str(&self) -> &'static str {
-        match self {
+impl fmt::Display for PassStatus {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let p = match self {
             PassStatus::Pass => "Pass",
             PassStatus::Fail => "Fail",
-        }
+        };
+        write!(f, "{}", p)
     }
 }
 
@@ -294,7 +295,7 @@ impl App {
                     student.name,
                     student.score,
                     student.grade(),
-                    student.result().as_str(),
+                    student.result(),
                     student.feedback()
                 );
             }
