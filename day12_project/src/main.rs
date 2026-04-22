@@ -1,4 +1,4 @@
-// Day 12 mini projec. refactoring CLI Scores Manager with struct Student 
+// Day 14: Struct + Enum Driven CLI System 
 
 use std::io;
 use std::fmt;
