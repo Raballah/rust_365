@@ -77,7 +77,7 @@ impl Student {
             60..=69 => "Good Trial, but Needs Improvement!",
             50..=59 => "Fair Trial. Work Harder Next Time!",
             0..=49 => "Below Average. See Me!",
-            _ => "Invalid Score",            
+            _ => "Below average. See me!",            
         }
     }
 
