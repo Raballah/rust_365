@@ -44,12 +44,12 @@ struct Student {
 }
 
 impl Student {
-    fn new(name: String, score: i32) -> Self {
-        Self { name, score}
-    }
-
-    fn is_valid(score: i32) -> bool {
-        (0..=100).contains(&score)
+    fn new(name: String, score: i32) -> Option<Self> {
+        if (0..=100).contains(&score) {
+            Some(Self { name, score })
+        } else {
+            None
+        }
     }
 
     fn grade(&self) -> Grade {
@@ -237,19 +237,22 @@ impl App {
             }
          };
 
-         if !Student::is_valid(score) {
-            println!("Invalid. Enter 0-100. No Negative Entries.");
-            continue;
-         } else {
-            self.students.push(Student::new(name, score));
-            // Getting reference to last student added.
-            if let Some(last_student) = self.students.last() {
-                println!(
-                    "Student {} added. Number of students added so far: {}", 
-                    last_student.name, 
-                    self.students.len());
-                }
-            }
+         match Student::new(name, score) {
+            Some(student) => {
+                self.students.push(student);
+                println!("Student added"); 
+            },
+            None => println!("Invalid. Enter 0-100. No Negative Entries."),
+         }
+
+         // Getting reference to last student added.
+         if let Some(last_student) = self.students.last() {
+            println!(
+                "Last added student: {}. Number of students added so far: {}",
+                last_student.name,
+                self.students.len()
+            );
+         }
         }
     }
 
