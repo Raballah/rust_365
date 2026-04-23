@@ -319,7 +319,12 @@ impl App {
             }
 
             println!("\n--Pass/Fail Overview--\n");
-            let pass_count = self.students.iter().filter(|s| matches!(s.result(), PassStatus::Pass)).count();
+            let pass_count = self.students.iter()
+                .filter(|s| {
+                    let r = s.result();
+                    matches!(r, PassStatus::Pass)
+                    })
+                    .count();
             let fail_count = self.students.len() - pass_count;
 
             println!("Pass Count: {}", pass_count);
