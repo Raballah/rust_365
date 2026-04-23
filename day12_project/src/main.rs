@@ -336,8 +336,7 @@ impl App {
             if trimmed.eq_ignore_ascii_case("exit") {
                 println!("Session Exited Successfully!");
                 break;            
-            } 
-            continue;
+            }
         }
     }
 }
