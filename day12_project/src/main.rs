@@ -201,7 +201,7 @@ impl App {
             match choice {
                 MenuOption::AddScore => self.add_student(),
                 MenuOption::ViewScores => self.view_students(),
-                MenuOption::AnalyzeScores => self.analyze(),
+                MenuOption::AnalyzeScores => self.analyze_students(),
                 MenuOption::Exit => {
                     println!("Session Exited Successfully! Goodbye!");
                     break; // Outer loop exited, program exited.
@@ -283,7 +283,7 @@ impl App {
         }
     }
 
-    fn analyze(&self) {
+    fn analyze_students(&self) {
         // Analyze Scores
         loop {
             if self.students.is_empty() {
