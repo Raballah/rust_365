@@ -309,6 +309,7 @@ impl App {
                     performance
                 );
 
+                println!("\n--- Score Implications for the Student ---\n");
                 match grade {
                     Grade::A => println!("Top student"),
                     Grade::B => println!("Upcoming top performer"),
