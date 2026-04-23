@@ -131,7 +131,7 @@ impl Statistics {
     fn from_students(students: &[Student]) -> Self {
         let count = students.len();
         let sum: i32 = students.iter().map(|s| s.score).sum();
-        let average = sum as f64 / count as f64;
+        let average = if count > 0 { sum as f64 / count as f64 } else { 0.0 };
         let highest = students.iter().map(|s| s.score).max().unwrap_or(0);
         let lowest = students.iter().map(|s| s.score).min().unwrap_or(0);
 
