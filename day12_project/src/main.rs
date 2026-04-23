@@ -276,10 +276,9 @@ impl App {
             let trimmed = read_input("\nType 'exit' to return to Menu: ");
             
             if trimmed.eq_ignore_ascii_case("exit") {
-                println!("Exiting...Back to Main Menu!");
+                println!("Successfully exited to main menu...!");
                 break;
             }
-            continue;
         }
     }
 
@@ -309,7 +308,7 @@ impl App {
                     performance
                 );
 
-                println!("\n--- Score Implications for the Student ---\n");
+                println!("\n--- Score Implication for the Student ---\n");
                 match grade {
                     Grade::A => println!("Top student"),
                     Grade::B => println!("Upcoming top performer"),
