@@ -292,16 +292,30 @@ impl App {
             }
             
             println!("\n--- Score Analysis ---\n");
-
             for student in &self.students {
+                let score = student.score;
+                let grade = student.grade();
+                let result = student.result();
+                let feedback = student.feedback();
+                let performance = student.performance();
+
                 println!(
-                    "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {}",
+                    "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {} | Performance level: {}",
                     student.name,
-                    student.score,
-                    student.grade(),
-                    student.result(),
-                    student.feedback()
+                    score,
+                    grade,
+                    result,
+                    feedback,
+                    performance
                 );
+
+                match grade {
+                    Grade::A => println!("Top student"),
+                    Grade::B => println!("Upcoming top performer"),
+                    Grade::C => println!("Slow learner. Scaffolding recommended"),
+                    Grade::D => println!("Remedial reuired"),
+                    Grade::F => println!("Needs help"),                   
+                }
             }
 
             println!("\n--Pass/Fail Overview--\n");
@@ -310,25 +324,6 @@ impl App {
 
             println!("Pass Count: {}", pass_count);
             println!("Fails Count: {}", fail_count);
-
-            println!("\n-- Student-specific Notes to Teacher --\n");
-            for student in &self.students {
-                match student.grade() {
-                    Grade::A => println!("Top student: {}", student.name),
-                    Grade::B => println!("Upcoming top performer: {}", student.name),
-                    Grade::C => println!("Slow learner. Scaffolding recommended: {}", student.name),
-                    Grade::D => println!("Remedial reuired: {}", student.name),
-                    Grade::F => println!("Needs help: {}", student.name),
-                }
-            }
-
-            println!("\n-- Student Performance Notes --\n");
-            for student in &self.students {
-                println!(
-                    "{}'s performance level: {}", 
-                    student.name, 
-                    student.performance());
-            }
 
             // Inpt for 'Exit' to exit loop
             let trimmed = read_input("\nType 'Exit' to exit!");
