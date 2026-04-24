@@ -90,6 +90,18 @@ impl Student {
             _ => Performance::Poor,
         }
     }
+
+    fn display(&self) {
+        println!(
+            "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {} | Performance level: {}",
+            self.name,
+            self.score,
+            self.grade(),
+            self.result(),
+            self.feedback(),
+            self.performance()
+        );
+    }
 }
 
 enum Grade {
@@ -292,24 +304,10 @@ impl App {
             
             println!("\n--- Score Analysis ---\n");
             for student in &self.students {
-                let score = student.score;
-                let grade = student.grade();
-                let result = student.result();
-                let feedback = student.feedback();
-                let performance = student.performance();
-
-                println!(
-                    "Student name: {} | Score: {} | Grade: {} | Pass: {} | Comment: {} | Performance level: {}",
-                    student.name,
-                    score,
-                    grade,
-                    result,
-                    feedback,
-                    performance
-                );
+                student.display();
 
                 println!("\n--- Score Implication for the Student ---\n");
-                match grade {
+                match student.grade() {
                     Grade::A => println!("Top student"),
                     Grade::B => println!("Upcoming top performer"),
                     Grade::C => println!("Slow learner. Scaffolding recommended"),
