@@ -105,4 +105,16 @@ fn main() {
         println!("Order number 603 added. Current order numbers: {:?}", order_numbers);
     }
 
+    order_numbers.sort(); // how to use this to sort in ascending order? insert ascneding in .sort(), soomething like .sort(ascending)?
+    println!("The sorted list of orders (ascending): {:?}", order_numbers); // returns unit type (), why? a better way to implement .sort() operator with vectors?
+
+    order_numbers.sort_by(|a, d| d.cmp(a));
+    println!("The reversed order of orders (descending): {:?}", order_numbers); // this implementation of .reverse() also returns unity type/nothing. does .reverse() reverse a sorted order of items in a collection/vector or simply reverses the order of appearance of items in the vector, based on the latest item order?
+
+    let cleared_orders: Vec<i32> = order_numbers.drain(..).collect();
+    println!("Removed orders include: {:?}", cleared_orders);
+    println!("No order numbers here as seen here: {:?}", order_numbers);
+
+    // are vector operators like the ones used here likely to take ownership of the vector itself? 
+    // I see most of them just operate on the vector, even though .push() mutates the vector to a new vector, but does not take ownership, right?
 }
