@@ -24,6 +24,7 @@ fn main() {
 */
 // Iteratign over vectors
 
+/*
 fn main() {
     let mut shoe_sizes: Vec<i32> = vec![34, 45, 32, 12, 32, 22, 29];
 
@@ -31,4 +32,17 @@ fn main() {
         *size += 2;
         println!("Index {}: Shoe size: {}", index, size);
     }
+}
+*/
+
+// Ownership rules with vectors
+
+fn main() {
+    let mut greeting = vec![String::from("Hello")];
+
+    let hi = &vec![0]; // mutable borrow
+    greeting.push(String::from(" world!")); 
+
+    println!("Hey, {:?}!", hi);
+    println!("Wow! {:?}", greeting);
 }
