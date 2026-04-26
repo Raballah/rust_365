@@ -51,6 +51,7 @@ fn main() {
 
 // In case of different data types, use enums not vectors. 
 
+/*
 use std::fmt;
 
 #[derive(Debug)]
@@ -80,4 +81,28 @@ fn main() {
         .collect();
 
     println!("I think {}", sentence);
+}
+*/
+
+// Common operations with vectors
+
+fn main() {
+    let mut order_numbers: Vec<i32> = vec![891, 894, 589, 738, 120, 521, 903];
+
+    let total_orders = order_numbers.len();
+    println!("Total orders: {}", total_orders);
+
+    if order_numbers.is_empty() {
+        println!("No orders found!");
+    } else {
+        println!("Some orders are available!");
+    }
+
+    if order_numbers.contains(&603) {
+        println!("The order 589 is avaiable!")
+    } else {
+        order_numbers.push(603);
+        println!("Order number 603 added. Current order numbers: {:?}", order_numbers);
+    }
+
 }
