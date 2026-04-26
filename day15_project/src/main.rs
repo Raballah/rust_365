@@ -1,6 +1,7 @@
 // on Vectors and Collections
 // Accessing elements in vectors, indexing can panic. use .get()
 
+/*
 fn main() {
     let numbers = vec![11, 34, 74, 12, 78, 37, 57];
 
@@ -18,5 +19,15 @@ fn main() {
         println!("Value at index 4: {}", num);
     } else {
         println!("The vector has non value at index 4!");
+    }
+}
+*/
+// Iteratign over vectors
+
+fn main() {
+    let shoe_sizes: Vec<i32> = vec![34, 45, 32, 12, 32, 22, 29];
+
+    for (index, size) in shoe_sizes.iter().enumerate() {
+        println!("Index {}: Shoe size: {}", index, size);
     }
 }
