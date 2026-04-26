@@ -25,9 +25,10 @@ fn main() {
 // Iteratign over vectors
 
 fn main() {
-    let shoe_sizes: Vec<i32> = vec![34, 45, 32, 12, 32, 22, 29];
+    let mut shoe_sizes: Vec<i32> = vec![34, 45, 32, 12, 32, 22, 29];
 
-    for (index, size) in shoe_sizes.iter().enumerate() {
+    for (index, size) in shoe_sizes.iter_mut().enumerate() {
+        *size += 2;
         println!("Index {}: Shoe size: {}", index, size);
     }
 }
