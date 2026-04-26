@@ -1,120 +1,66 @@
-// on Vectors and Collections
-// Accessing elements in vectors, indexing can panic. use .get()
+// Day 15 Mini-Project: Building a CLI Score Tracker
 
-/*
-fn main() {
-    let numbers = vec![11, 34, 74, 12, 78, 37, 57];
-
-    match numbers.get(5) {
-        Some(value) => println!("Value at index 5: {}", value),
-        None => println!("No value at index 5!"),
-    }
-
-    match numbers.get(20) {
-        Some(val) => println!("Value of x: {}", val),
-        None => println!("Such index not found!"),
-    }
-
-    if let Some(num) = numbers.get(4) {
-        println!("Value at index 4: {}", num);
-    } else {
-        println!("The vector has non value at index 4!");
-    }
-}
-*/
-// Iteratign over vectors
-
-/*
-fn main() {
-    let mut shoe_sizes: Vec<i32> = vec![34, 45, 32, 12, 32, 22, 29];
-
-    for (index, size) in shoe_sizes.iter_mut().enumerate() {
-        *size += 2;
-        println!("Index {}: Shoe size: {}", index, size);
-    }
-}
-*/
-
-// Ownership rules with vectors
-
-/*
-fn main() {
-    let mut greeting = vec![String::from("Hello")];
-
-    let hi = &vec![0]; // mutable borrow
-    greeting.push(String::from(" world!")); 
-
-    println!("Hey, {:?}!", hi);
-    println!("Wow! {:?}", greeting);
-}
-*/
-
-// In case of different data types, use enums not vectors. 
-
-/*
+use std::io;
 use std::fmt;
 
-#[derive(Debug)]
-enum Data {
-    Int(i32),
-    Text(String),
+fn read_input(prompt: &str) -> String {
+    let mut input = String::new();
+    println!("{}", prompt);
+    
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read input!");
+    
+    input.trim().to_string()
 }
 
-impl fmt::Display for Data {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Data::Int(n) => write!(f, "{}", n),
-            Data::Text(t) => write!(f, "{}", t), 
+struct Mark {
+    score: i32,
+}
+
+impl Mark {
+    fn new(score: i32) -> Self {
+        Self { score }
+    }
+}
+
+// Student score entry app
+
+struct App {
+    scores: Vec<Mark>,
+}
+
+impl App {
+    fn new() -> Self {
+        Self {
+            scores: Vec::new(),
+        }
+    }
+
+    fn run(&mut self) {
+        self.add_score();
+    }
+
+    fn add_score(&mut self) {
+        loop {
+            let trimmed = read_input("Enter score or type 'exit' to Exit: ");
+
+            if trimmed.eq_ignore_ascii_case("exit") {
+                println!("Exited session successfully...");
+                break; // Back to outer scope of the loop
+            }
+
+            let score: i32 = match trimmed.parse::<i32>() {
+                Ok(num) => num,
+                Err(_) =>{
+                    println!("Invalid entry. Enter numbers from 0 to 100");
+                    continue;
+                }
+            }; 
         }
     }
 }
 
-
 fn main() {
-    let values = vec![
-        Data::Int(46),
-        Data::Text(String::from(" is the best age.")),
-        ];
-    
-    let sentence: String = values.iter()
-        .map(|item| item.to_string())
-        .collect();
-
-    println!("I think {}", sentence);
-}
-*/
-
-// Common operations with vectors
-
-fn main() {
-    let mut order_numbers: Vec<i32> = vec![891, 894, 589, 738, 120, 521, 903];
-
-    let total_orders = order_numbers.len();
-    println!("Total orders: {}", total_orders);
-
-    if order_numbers.is_empty() {
-        println!("No orders found!");
-    } else {
-        println!("Some orders are available!");
-    }
-
-    if order_numbers.contains(&603) {
-        println!("The order 589 is avaiable!")
-    } else {
-        order_numbers.push(603);
-        println!("Order number 603 added. Current order numbers: {:?}", order_numbers);
-    }
-
-    order_numbers.sort(); // how to use this to sort in ascending order? insert ascneding in .sort(), soomething like .sort(ascending)?
-    println!("The sorted list of orders (ascending): {:?}", order_numbers); // returns unit type (), why? a better way to implement .sort() operator with vectors?
-
-    order_numbers.sort_by(|a, d| d.cmp(a));
-    println!("The reversed order of orders (descending): {:?}", order_numbers); // this implementation of .reverse() also returns unity type/nothing. does .reverse() reverse a sorted order of items in a collection/vector or simply reverses the order of appearance of items in the vector, based on the latest item order?
-
-    let cleared_orders: Vec<i32> = order_numbers.drain(..).collect();
-    println!("Removed orders include: {:?}", cleared_orders);
-    println!("No order numbers here as seen here: {:?}", order_numbers);
-
-    // are vector operators like the ones used here likely to take ownership of the vector itself? 
-    // I see most of them just operate on the vector, even though .push() mutates the vector to a new vector, but does not take ownership, right?
+    App::new().run();
 }
