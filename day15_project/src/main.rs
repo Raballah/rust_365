@@ -37,6 +37,7 @@ fn main() {
 
 // Ownership rules with vectors
 
+/*
 fn main() {
     let mut greeting = vec![String::from("Hello")];
 
@@ -45,4 +46,38 @@ fn main() {
 
     println!("Hey, {:?}!", hi);
     println!("Wow! {:?}", greeting);
+}
+*/
+
+// In case of different data types, use enums not vectors. 
+
+use std::fmt;
+
+#[derive(Debug)]
+enum Data {
+    Int(i32),
+    Text(String),
+}
+
+impl fmt::Display for Data {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Data::Int(n) => write!(f, "{}", n),
+            Data::Text(t) => write!(f, "{}", t), 
+        }
+    }
+}
+
+
+fn main() {
+    let values = vec![
+        Data::Int(46),
+        Data::Text(String::from(" is the best age.")),
+        ];
+    
+    let sentence: String = values.iter()
+        .map(|item| item.to_string())
+        .collect();
+
+    println!("I think {}", sentence);
 }
