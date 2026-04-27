@@ -131,5 +131,6 @@ impl App {
 }
 
 fn main() {
-    App::new().run();
+    let mut app = App::new();
+    app.run();
 }
