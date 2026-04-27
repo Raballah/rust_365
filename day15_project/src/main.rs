@@ -1,7 +1,6 @@
 // Day 15 Mini-Project: Building a CLI Score Tracker
 
 use std::io;
-use std::fmt;
 
 fn read_input(prompt: &str) -> String {
     let mut input = String::new();
@@ -37,8 +36,7 @@ impl Mark {
 
 // Student score entry app
 // let mut scores: Vec<Mark> = Vec::new();
-// loop {
-// show
+// menu_display();
 //}
 struct App {
     scores: Vec<Mark>,
@@ -52,12 +50,10 @@ impl App {
     }
 
     fn run(&mut self) {
+        // display main menu
+        menu_display();
         // add student
         self.add_score();
-
-        // show main menu
-        menu_display();
-
     }
 
     fn add_score(&mut self) {
