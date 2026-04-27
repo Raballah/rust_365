@@ -42,6 +42,21 @@ fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
     }
 }
 
+fn get_user_input() -> MenuChoice {
+    loop {
+        let menu_selection = read_input("Enter 1 to 5 to choose action: ");
+
+        if let Ok(num) = menu_selection.parse::<i32>() {
+            if let Some(choice) = parse_menu_selection(num) {
+                break choice;
+            }
+            // If parsed failed or selection not a choice 
+            println!("Invalid Entry. Enter a number from 1 to 5!");
+            continue;
+        }
+    }
+}
+
 struct Mark {
     score: i32,
 }
