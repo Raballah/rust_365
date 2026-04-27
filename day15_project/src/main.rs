@@ -23,6 +23,25 @@ fn menu_display() {
         println!("5. Exit");
 }
 
+enum MenuChoice {
+    AddScores,
+    ViewScores,
+    RemoveLast,
+    ShowAverage,
+    Exit,
+}
+
+fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
+    match input {
+        1 => Some(MenuChoice::AddScores),
+        2 => Some(MenuChoice::ViewScores),
+        3 => Some(MenuChoice::RemoveLast),
+        4 => Some(MenuChoice::ShowAverage),
+        5 => Some(MenuChoice::Exit),
+        _ => None, // Meaning all i32 inputs become invalid here.
+    }
+}
+
 struct Mark {
     score: i32,
 }
