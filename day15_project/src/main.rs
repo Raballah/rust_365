@@ -26,7 +26,7 @@ fn menu_display() {
 enum MenuChoice {
     AddScores,
     ViewScores,
-    RemoveLast,
+    RemoveLastScore,
     ShowAverage,
     Exit,
 }
@@ -35,7 +35,7 @@ fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
     match input {
         1 => Some(MenuChoice::AddScores),
         2 => Some(MenuChoice::ViewScores),
-        3 => Some(MenuChoice::RemoveLast),
+        3 => Some(MenuChoice::RemoveLastScore),
         4 => Some(MenuChoice::ShowAverage),
         5 => Some(MenuChoice::Exit),
         _ => None, // Meaning all i32 inputs become invalid here.
@@ -44,7 +44,7 @@ fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
 
 fn get_user_input() -> MenuChoice {
     loop {
-        let menu_selection = read_input("Enter 1 to 5 to choose action: ");
+        let menu_selection = read_input("Greetings! What do you want to next? Choose from 1 to 5: ");
 
         if let Ok(num) = menu_selection.parse::<i32>() {
             if let Some(choice) = parse_menu_selection(num) {
@@ -87,10 +87,25 @@ impl App {
     }
 
     fn run(&mut self) {
-        // display main menu
-        menu_display();
-        // add student
-        self.add_score();
+        loop {
+            //  Display of Main Menu
+            menu_display();
+
+            // User choice handler.
+            let choice: MenuChoice = get_user_input();
+
+            // choice-based actions
+            match choice {
+                MenuChoice::AddScores => self.add_score(),
+                MenuChoice::ViewScores => println!("to be adjusted with view_scores()"),
+                MenuChoice::RemoveLastScore => println!("to be adjusted with remove_last_score()"),
+                MenuChoice::ShowAverage => println!("to be adjusted with show_average()"),
+                MenuChoice::Exit => {
+                    println!("Successfully exited...");
+                    break;
+                }
+            }
+        }
     }
 
     fn add_score(&mut self) {
