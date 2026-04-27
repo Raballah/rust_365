@@ -16,8 +16,11 @@ fn read_input(prompt: &str) -> String {
 fn menu_display() {
     println!("\n=== Score Tracker ===");
 
-        println!("\n1. Add score");
-        println!("2. View all scores");
+        println!("\n1. Add Score");
+        println!("2. View Scores");
+        println!("3. Remove Last Score");
+        println!("4. Show Average");
+        println!("5. Exit");
 }
 
 struct Mark {
