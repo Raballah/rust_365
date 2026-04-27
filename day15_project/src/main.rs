@@ -44,7 +44,7 @@ fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
 
 fn get_user_input() -> MenuChoice {
     loop {
-        let menu_selection = read_input("Greetings! What do you want to next? Choose from 1 to 5: ");
+        let menu_selection = read_input("Greetings! What do you want to do next? Choose from 1 to 5: ");
 
         if let Ok(num) = menu_selection.parse::<i32>() {
             if let Some(choice) = parse_menu_selection(num) {
@@ -57,6 +57,7 @@ fn get_user_input() -> MenuChoice {
     }
 }
 
+#[derive(Debug)]
 struct Mark {
     score: i32,
 }
@@ -75,6 +76,8 @@ impl Mark {
 // let mut scores: Vec<Mark> = Vec::new();
 // menu_display();
 //}
+
+#[derive(Debug)]
 struct App {
     scores: Vec<Mark>,
 }
@@ -86,6 +89,7 @@ impl App {
         }
     }
 
+    // program instance initializer / session activator
     fn run(&mut self) {
         loop {
             //  Display of Main Menu
@@ -97,7 +101,7 @@ impl App {
             // choice-based actions
             match choice {
                 MenuChoice::AddScores => self.add_score(),
-                MenuChoice::ViewScores => println!("to be adjusted with view_scores()"),
+                MenuChoice::ViewScores => self.view_scores(),
                 MenuChoice::RemoveLastScore => println!("to be adjusted with remove_last_score()"),
                 MenuChoice::ShowAverage => println!("to be adjusted with show_average()"),
                 MenuChoice::Exit => {
@@ -108,6 +112,7 @@ impl App {
         }
     }
 
+    // Major inner actions for the program
     fn add_score(&mut self) {
         loop {
             let trimmed = read_input("Enter score or type 'exit' to Exit: ");
@@ -132,7 +137,8 @@ impl App {
                 },
                 None => println!("Invalid. Enter non-negative numbers, from 0 to 100!"),
             }
-            // Last score added and total scores added so far.
+
+            // Retrieve last score added and total scores added so far
             match self.scores.last() {
                 Some(last_mark) => println!(
                     "Last score added: {} Total scores: {}", 
@@ -140,6 +146,32 @@ impl App {
                     self.scores.len()
                 ),
                 None => println!("No score added so far!"),
+            }
+        }
+    }
+
+    fn view_scores(&self) {
+        loop {
+            if self.scores.is_empty() {
+                println!("No scores found. Choose 1 to enter some scores first!");
+                return;
+            }
+
+            // view the entire scores vector
+            println!("Current scores: {:?}", self.scores);
+
+            // view individual scores
+            for mark in &self.scores {
+                println!("{}", mark.score);
+
+            }
+
+            // exit to main main menu
+            let trimmed = read_input("Type 'exit' to exit to main menu: ");
+
+            if trimmed.eq_ignore_ascii_case("exit") {
+                println!("Back to main menu...");
+                break;
             }
         }
     }
