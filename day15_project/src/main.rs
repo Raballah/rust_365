@@ -72,10 +72,41 @@ impl Mark {
     }
 }
 
+#[derive(Debug)]
+struct ScoreStats {
+    count: usize,
+    average: f64,
+    maximum: i32,
+    minimum: i32,
+}
+
+impl ScoreStats {
+    fn analyzer(scores: &[Mark]) -> Self {
+        let count = scores.len();
+
+        /*if count == 0 {
+            println!("No scores to analyze. Enter some scores first!");
+            break;
+        }*/
+
+        let sum: i32 = scores.iter().map(|m| m.score).sum();
+        let average = sum as f64 / count as f64;
+        let maximum = scores.iter().map(|m| m.score).max().unwrap_or(0);
+        let minimum = scores.iter().map(|m| m.score).min().unwrap_or(0);
+
+        Self { count, average, maximum, minimum }
+    }
+
+    fn score_stats_display(&self) {
+        println!("Total scores counted: {}", self.count);
+        println!("Average score: {:.1}", self.average);
+        println!("Maximum score: {}", self.maximum);
+        println!("Minimum score: {}", self.minimum);
+    }
+}
+
 // Student score entry app
 // let mut scores: Vec<Mark> = Vec::new();
-// menu_display();
-//}
 
 #[derive(Debug)]
 struct App {
@@ -197,16 +228,13 @@ impl App {
     }
 
     fn analyze_scores(&self) {
-        let count = self.scores.len();
+        //let count = self.scores.len();
 
-        if count == 0 {
+        if self.scores.is_empty() {
             println!("No scores yet. Add some scores first!");
         } else {
-            let sum: i32 = self.scores.iter().map(|m| m.score).sum();
-            let average = sum as f64 / count as f64;
-
-            println!("Average score: {:.1}", average);
-            println!("Total scores counted: {}", count);
+            let stats = ScoreStats::analyzer(&self.scores);
+            stats.score_stats_display();
         }
 
         read_input("Press enter to return to main menu...");
