@@ -72,29 +72,26 @@ impl Mark {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct ScoreStats {
     count: usize,
     average: f64,
     maximum: i32,
     minimum: i32,
+    sorted: Vec<Mark>,
 }
 
 impl ScoreStats {
     fn analyzer(scores: &[Mark]) -> Self {
         let count = scores.len();
-
-        /*if count == 0 {
-            println!("No scores to analyze. Enter some scores first!");
-            break;
-        }*/
-
         let sum: i32 = scores.iter().map(|m| m.score).sum();
         let average = sum as f64 / count as f64;
         let maximum = scores.iter().map(|m| m.score).max().unwrap_or(0);
         let minimum = scores.iter().map(|m| m.score).min().unwrap_or(0);
 
-        Self { count, average, maximum, minimum }
+        scores.sort();
+
+        Self { count, average, maximum, minimum, sorted }
     }
 
     fn score_stats_display(&self) {
@@ -102,6 +99,7 @@ impl ScoreStats {
         println!("Average score: {:.1}", self.average);
         println!("Maximum score: {}", self.maximum);
         println!("Minimum score: {}", self.minimum);
+        println!("Sorted scores: {:?}", self.sorted);
     }
 }
 
