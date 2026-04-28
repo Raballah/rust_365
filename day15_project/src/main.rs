@@ -19,7 +19,7 @@ fn menu_display() {
         println!("\n1. Add Score");
         println!("2. View Scores");
         println!("3. Remove Last Score");
-        println!("4. Show Average");
+        println!("4. Analyze Scores");
         println!("5. Exit");
 }
 
@@ -27,7 +27,7 @@ enum MenuChoice {
     AddScores,
     ViewScores,
     RemoveLastScore,
-    ShowAverage,
+    AnalyzeScores,
     Exit,
 }
 
@@ -36,7 +36,7 @@ fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
         1 => Some(MenuChoice::AddScores),
         2 => Some(MenuChoice::ViewScores),
         3 => Some(MenuChoice::RemoveLastScore),
-        4 => Some(MenuChoice::ShowAverage),
+        4 => Some(MenuChoice::AnalyzeScores),
         5 => Some(MenuChoice::Exit),
         _ => None, // Meaning all i32 inputs become invalid here.
     }
@@ -103,7 +103,7 @@ impl App {
                 MenuChoice::AddScores => self.add_score(),
                 MenuChoice::ViewScores => self.view_scores(),
                 MenuChoice::RemoveLastScore => self.remove_last_score(),
-                MenuChoice::ShowAverage => self.show_average(),
+                MenuChoice::AnalyzeScores => self.analyze_scores(),
                 MenuChoice::Exit => {
                     println!("Successfully exited...");
                     break;
@@ -196,11 +196,11 @@ impl App {
         }
     }
 
-    fn show_average(&self) {
+    fn analyze_scores(&self) {
         let count = self.scores.len();
 
         if count == 0 {
-            println!("No scores yet. Add some score first!");
+            println!("No scores yet. Add some scores first!");
         } else {
             let sum: i32 = self.scores.iter().map(|m| m.score).sum();
             let average = sum as f64 / count as f64;
