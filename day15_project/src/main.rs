@@ -57,7 +57,7 @@ fn get_user_input() -> MenuChoice {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Mark {
     score: i32,
 }
@@ -72,6 +72,7 @@ impl Mark {
     }
 }
 
+// Needed for use by sort_by_key/ Clone necessary to clone Vec<Mark>
 #[derive(Debug, Clone)]
 struct ScoreStats {
     count: usize,
@@ -89,7 +90,9 @@ impl ScoreStats {
         let maximum = scores.iter().map(|m| m.score).max().unwrap_or(0);
         let minimum = scores.iter().map(|m| m.score).min().unwrap_or(0);
 
-        scores.sort();
+        // clone Vec<Mark> into owned and mutable vec, then sort_by_key m.score
+        let mut sorted: Vec<Mark> = scores.to_vec();
+        sorted.sort_by_key(|m| m.score);
 
         Self { count, average, maximum, minimum, sorted }
     }
