@@ -102,8 +102,8 @@ impl App {
             match choice {
                 MenuChoice::AddScores => self.add_score(),
                 MenuChoice::ViewScores => self.view_scores(),
-                MenuChoice::RemoveLastScore => println!("to be adjusted with remove_last_score()"),
-                MenuChoice::ShowAverage => println!("to be adjusted with show_average()"),
+                MenuChoice::RemoveLastScore => self.remove_last_score(),
+                MenuChoice::ShowAverage => self.show_average(),
                 MenuChoice::Exit => {
                     println!("Successfully exited...");
                     break;
@@ -174,6 +174,42 @@ impl App {
                 break;
             }
         }
+    }
+
+    fn remove_last_score(&mut self) {
+        loop {
+            match self.scores.pop() {
+                Some(last_mark) => {
+                    println!("Last score removed: {}", last_mark.score);
+                    println!("Remaining marks: {:?}", self.scores);
+                },
+                None => println!("No scores to remove. Enter some scores to continue!"),
+            }
+
+            // exit to main main menu
+            let trimmed = read_input("Type 'exit' to exit to main menu: ");
+
+            if trimmed.eq_ignore_ascii_case("exit") {
+                println!("Back to main menu...");
+                break;
+            }
+        }
+    }
+
+    fn show_average(&self) {
+        let count = self.scores.len();
+
+        if count == 0 {
+            println!("No scores yet. Add some score first!");
+        } else {
+            let sum: i32 = self.scores.iter().map(|m| m.score).sum();
+            let average = sum as f64 / count as f64;
+
+            println!("Average score: {:.1}", average);
+            println!("Total scores counted: {}", count);
+        }
+
+        read_input("Press enter to return to main menu...");
     }
 }
 
