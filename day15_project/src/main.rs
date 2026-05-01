@@ -86,7 +86,11 @@ impl ScoreStats {
     fn analyzer(scores: &[Mark]) -> Self {
         let count = scores.len();
         let sum: i32 = scores.iter().map(|m| m.score).sum();
-        let average = sum as f64 / count as f64;
+        let average = if count > 0 {
+            sum as f64 / count as f64
+        } else {
+            0.00
+        };
         let maximum = scores.iter().map(|m| m.score).max().unwrap_or(0);
         let minimum = scores.iter().map(|m| m.score).min().unwrap_or(0);
 
@@ -209,22 +213,12 @@ impl App {
     }
 
     fn remove_last_score(&mut self) {
-        loop {
-            match self.scores.pop() {
-                Some(last_mark) => {
-                    println!("Last score removed: {}", last_mark.score);
-                    println!("Remaining marks: {:?}", self.scores);
-                },
-                None => println!("No scores to remove. Enter some scores to continue!"),
-            }
-
-            // exit to main main menu
-            let trimmed = read_input("Type 'exit' to exit to main menu: ");
-
-            if trimmed.eq_ignore_ascii_case("exit") {
-                println!("Back to main menu...");
-                break;
-            }
+        match self.scores.pop() {
+            Some(last_mark) => {
+                println!("Last score removed: {}", last_mark.score);
+                println!("Remaining marks: {:?}", self.scores);
+            },
+            None => println!("No scores to remove. Enter some scores to continue!"),
         }
     }
 
