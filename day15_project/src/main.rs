@@ -24,7 +24,7 @@ fn menu_display() {
 }
 
 enum MenuChoice {
-    AddScores,
+    AddScore,
     ViewScores,
     RemoveLastScore,
     AnalyzeScores,
@@ -33,7 +33,7 @@ enum MenuChoice {
 
 fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
     match input {
-        1 => Some(MenuChoice::AddScores),
+        1 => Some(MenuChoice::AddScore),
         2 => Some(MenuChoice::ViewScores),
         3 => Some(MenuChoice::RemoveLastScore),
         4 => Some(MenuChoice::AnalyzeScores),
@@ -140,7 +140,7 @@ impl App {
 
             // choice-based actions
             match choice {
-                MenuChoice::AddScores => self.add_score(),
+                MenuChoice::AddScore => self.add_score(),
                 MenuChoice::ViewScores => self.view_scores(),
                 MenuChoice::RemoveLastScore => self.remove_last_score(),
                 MenuChoice::AnalyzeScores => self.analyze_scores(),
@@ -191,25 +191,17 @@ impl App {
     }
 
     fn view_scores(&self) {
-        loop {
-            if self.scores.is_empty() {
-                println!("No scores found. Choose 1 to enter some scores first!");
-                return;
-            }
-
-            // view the entire scores vector
-            for (i, mark) in self.scores.iter().enumerate() {
-                println!("{}: {}", i + 1, mark.score);
-            }
-
-            // exit to main main menu
-            let trimmed = read_input("Type 'exit' to exit to main menu: ");
-
-            if trimmed.eq_ignore_ascii_case("exit") {
-                println!("Back to main menu...");
-                break;
-            }
+        if self.scores.is_empty() {
+            println!("No scores found. Choose 1 to enter some scores first!");
         }
+
+        // View the entire app / scores vector
+        for (i, mark) in self.scores.iter().enumerate() {
+            println!("{}: {}", i + 1, mark.score);
+        }
+
+        // Exit
+        read_input("Press Enter key to return to main menu...");
     }
 
     fn remove_last_score(&mut self) {
