@@ -106,7 +106,10 @@ impl ScoreStats {
         println!("Average score: {:.1}", self.average);
         println!("Maximum score: {}", self.maximum);
         println!("Minimum score: {}", self.minimum);
-        println!("Sorted scores: {:?}", self.sorted);
+        println!(
+            "Sorted scores: {:?}", 
+            self.sorted
+        );
     }
 }
 
@@ -198,12 +201,6 @@ impl App {
                 println!("{}: {}", i + 1, mark.score);
             }
 
-            // view individual scores
-            for mark in &self.scores {
-                println!("{}", mark.score);
-
-            }
-
             // exit to main main menu
             let trimmed = read_input("Type 'exit' to exit to main menu: ");
 
@@ -218,7 +215,11 @@ impl App {
         match self.scores.pop() {
             Some(last_mark) => {
                 println!("Last score removed: {}", last_mark.score);
-                println!("Remaining marks: {:?}", self.scores);
+
+                println!("= Remaining scores = ");
+                for (i, mark) in self.scores.iter().enumerate() {
+                    println!("{}: {}", i + 1, mark.score);
+                }
             },
             None => println!("No scores to remove. Enter some scores to continue!"),
         }
