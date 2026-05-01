@@ -106,10 +106,11 @@ impl ScoreStats {
         println!("Average score: {:.1}", self.average);
         println!("Maximum score: {}", self.maximum);
         println!("Minimum score: {}", self.minimum);
-        println!(
-            "Sorted scores: {:?}", 
-            self.sorted
-        );
+
+        println!("\nSorted scores (ascending) >>");
+        for (i, mark) in self.sorted.iter().enumerate() {
+            println!("{}: {}", i + 1, mark.score);  
+            }
     }
 }
 
