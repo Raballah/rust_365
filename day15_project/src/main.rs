@@ -195,10 +195,8 @@ impl App {
 
             // view the entire scores vector
             for (i, mark) in self.scores.iter().enumerate() {
-                println!("{}: {}", i, mark.score);
+                println!("{}: {}", i + 1, mark.score);
             }
-
-            println!("Current scores: {:?}", self.scores);
 
             // view individual scores
             for mark in &self.scores {
