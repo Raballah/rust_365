@@ -79,7 +79,6 @@ struct ScoreStats {
     average: f64,
     maximum: i32,
     minimum: i32,
-    sorted: Vec<Mark>,
 }
 
 impl ScoreStats {
@@ -94,23 +93,24 @@ impl ScoreStats {
         let maximum = scores.iter().map(|m| m.score).max().unwrap_or(0);
         let minimum = scores.iter().map(|m| m.score).min().unwrap_or(0);
 
-        // clone Vec<Mark> into owned and mutable vec, then sort_by_key m.score
-        let mut sorted: Vec<Mark> = scores.to_vec();
-        sorted.sort_by_key(|m| m.score);
-
-        Self { count, average, maximum, minimum, sorted }
+        Self { count, average, maximum, minimum }
     }
 
-    fn score_stats_display(&self) {
+    fn score_stats_display(&self, scores: &[Mark]) {
         println!("Total scores counted: {}", self.count);
         println!("Average score: {:.1}", self.average);
         println!("Maximum score: {}", self.maximum);
         println!("Minimum score: {}", self.minimum);
 
-        println!("\nSorted scores (ascending) >>");
-        for (i, mark) in self.sorted.iter().enumerate() {
-            println!("{}: {}", i + 1, mark.score);  
+        // Vec<&Mark> build temporarily, sorted and dropped on display
+        let mut sorted: Vec<&Mark> = scores.iter().collect();
+        sorted.sort_by_key(|m| m.score);
+
+        println!("\nSorted scores (ascending) >>:");
+        for (i, mark) in sorted.iter().enumerate() {
+            println!(" {}: {}", i + 1, mark.score);  
             }
+        // sorted dropped here.
     }
 }
 
@@ -219,13 +219,11 @@ impl App {
     }
 
     fn analyze_scores(&self) {
-        //let count = self.scores.len();
-
         if self.scores.is_empty() {
             println!("No scores yet. Add some scores first!");
         } else {
             let stats = ScoreStats::analyzer(&self.scores);
-            stats.score_stats_display();
+            stats.score_stats_display(&self.scores);
         }
 
         read_input("Press enter to return to main menu...");
