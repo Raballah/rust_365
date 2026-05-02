@@ -18,7 +18,7 @@ fn menu_display() {
 
         println!("\n1. Add Score");
         println!("2. View Scores");
-        println!("3. Remove Last Score");
+        println!("3. Remove Score");
         println!("4. Analyze Scores");
         println!("5. Exit");
 }
@@ -26,7 +26,7 @@ fn menu_display() {
 enum MenuChoice {
     AddScore,
     ViewScores,
-    RemoveLastScore,
+    RemoveScore,
     AnalyzeScores,
     Exit,
 }
@@ -35,7 +35,7 @@ fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
     match input {
         1 => Some(MenuChoice::AddScore),
         2 => Some(MenuChoice::ViewScores),
-        3 => Some(MenuChoice::RemoveLastScore),
+        3 => Some(MenuChoice::RemoveScore),
         4 => Some(MenuChoice::AnalyzeScores),
         5 => Some(MenuChoice::Exit),
         _ => None, // Meaning all i32 inputs become invalid here.
@@ -128,7 +128,7 @@ impl App {
             match choice {
                 MenuChoice::AddScore => self.add_score(),
                 MenuChoice::ViewScores => self.view_scores(),
-                MenuChoice::RemoveLastScore => self.remove_last_score(),
+                MenuChoice::RemoveScore => self.remove_by_index(),
                 MenuChoice::AnalyzeScores => self.analyze_scores(),
                 MenuChoice::Exit => {
                     println!("Successfully exited...");
@@ -210,17 +210,58 @@ impl App {
         read_input("Press Enter key to return to main menu...");
     }
 
-    fn remove_last_score(&mut self) {
-        match self.scores.pop() {
-            Some(last_mark) => {
-                println!("Last score removed: {}", last_mark.score);
+    fn remove_by_index(&mut self) {
+        loop {
+            if self.scores.is_empty() {
+                println!("No scores found. Add some scores first!");
+                break;
+            }
 
-                println!("= Remaining scores = ");
-                for (i, mark) in self.scores.iter().enumerate() {
-                    println!("{}: {}", i + 1, mark.score);
+            println!("-- Remove Score by Index --");
+
+            // Every score and its index currently 
+            for (i, mark) in self.scores.iter().enumerate() {
+                println!(" {}: {}", i + 1, mark.score);
+            }
+
+            let trimmed = read_input("Enter index to remove score or 'exit' to Exit: ");
+
+            if trimmed.eq_ignore_ascii_case("exit") {
+                println!("Exited successfully...");
+                break; // Back to outer scope of the loop
+            }
+
+            let display_index: usize = match trimmed.parse::<usize>() {
+                Ok(num) if num >= 1 => num,
+                _ => {
+                    println!("Invalid. Enter a number from 1 onwards!");
+                    continue;
                 }
-            },
-            None => println!("No scores to remove. Enter some scores to continue!"),
+            };
+
+            let actual_index = display_index - 1; // Index converted to 0-based.
+
+            // Immutable borrow with .get() use to get score first
+            let score_value = match self.scores.get(actual_index) {
+                Some(mark) => mark.score, // copies i32, ends borrow
+                None => {
+                    println!("No score at index {}. Try another index!", display_index);
+                    continue;
+                }
+            };  // immutable borrow with .get() ends here.
+
+            // .remove(!) T with mutable borrow now to remove the score
+            self.scores.remove(actual_index);
+            println!("Score {} at index {} removed!", score_value, display_index);
+
+            println!("= Remaining scores = ");
+            if self.scores.is_empty() {
+                println!(" No scores remaining.");
+            } else {
+                for (i, mark) in self.scores.iter().enumerate() {
+                    println!(" {}: {}", i + 1, mark.score);
+                }
+            }
         }
     }
 
