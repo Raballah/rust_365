@@ -172,8 +172,8 @@ impl App {
 
             match Mark::new(score) {
                 Some(mark) => {
-                    self.scores.push(mark);
-                    println!("Score added!");
+                    self.scores.push(mark); 
+                    println!("Score {} added successfully!", score);
                 },
                 None => println!("Invalid. Enter non-negative numbers, from 0 to 100!"),
             }
