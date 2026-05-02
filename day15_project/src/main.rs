@@ -82,21 +82,7 @@ struct ScoreStats {
 }
 
 impl ScoreStats {
-    fn analyzer(scores: &[Mark]) -> Self {
-        let count = scores.len();
-        let sum: i32 = scores.iter().map(|m| m.score).sum();
-        let average = if count > 0 {
-            sum as f64 / count as f64
-        } else {
-            0.00
-        };
-        let maximum = scores.iter().map(|m| m.score).max().unwrap_or(0);
-        let minimum = scores.iter().map(|m| m.score).min().unwrap_or(0);
-
-        Self { count, average, maximum, minimum }
-    }
-
-    fn score_stats_display(&self, scores: &[Mark]) {
+    fn display(&self, scores: &[Mark]) {
         println!("Total scores counted: {}", self.count);
         println!("Average score: {:.1}", self.average);
         println!("Maximum score: {}", self.maximum);
@@ -149,6 +135,26 @@ impl App {
                     break;
                 }
             }
+        }
+    }
+
+    // Service layer
+    fn analyzer(&self) -> Option<ScoreStats> {
+        if !self.scores.is_empty() {
+            let count = self.scores.len();
+            let sum: i32 = self.scores.iter().map(|m| m.score).sum();
+            let average = if count > 0 {
+                sum as f64 / count as f64
+            } else {
+                0.00
+            };
+            
+            let maximum = self.scores.iter().map(|m| m.score).max().unwrap_or(0);
+            let minimum = self.scores.iter().map(|m| m.score).min().unwrap_or(0);
+
+            Some(ScoreStats { count, average, maximum, minimum })
+        } else {
+            None 
         }
     }
 
@@ -219,13 +225,11 @@ impl App {
     }
 
     fn analyze_scores(&self) {
-        if self.scores.is_empty() {
-            println!("No scores yet. Add some scores first!");
-        } else {
-            let stats = ScoreStats::analyzer(&self.scores);
-            stats.score_stats_display(&self.scores);
+        match self.analyzer() {
+            Some(stats) => stats.display(&self.scores),
+            None => println!("No scores yet. Add scores first!")
         }
-
+        
         read_input("Press enter to return to main menu...");
     }
 }
