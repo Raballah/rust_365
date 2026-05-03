@@ -220,7 +220,7 @@ impl App {
             println!("-- Remove Score by Index --");
 
             // Every score and its index currently 
-            println!("\n- Every score and its index currently -");
+            println!("\n- Available index-score currently -");
             for (i, mark) in self.scores.iter().enumerate() {
                 println!(" {}: {}", i + 1, mark.score);
             }
