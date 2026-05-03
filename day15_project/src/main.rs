@@ -222,7 +222,7 @@ impl App {
             // Every score and its index currently 
             println!("\n- Available index-score currently -");
             for (i, mark) in self.scores.iter().enumerate() {
-                println!(" {}: {}", i + 1, mark.score);
+                println!(" Index {}: {}", i + 1, mark.score);
             }
 
             let trimmed = read_input("Enter index to remove score or 'exit' to Exit: ");
@@ -234,7 +234,7 @@ impl App {
 
             let display_index: usize = match trimmed.parse::<usize>() {
                 Ok(num) if num >= 1 => num,
-                _ => {
+                _ => { // Not Err(_) because 0 can be parsed as Ok(0), hence _ catches all 3 options
                     println!("Invalid. Enter a number from 1 onwards!");
                     continue;
                 }
@@ -246,7 +246,7 @@ impl App {
             let score_value = match self.scores.get(actual_index) {
                 Some(mark) => mark.score, // copies i32, ends borrow
                 None => {
-                    println!("No score at index {}. Try another index!", display_index);
+                    println!("No score at index {}. Choose an available index!", display_index);
                     continue;
                 }
             };  // immutable borrow with .get() ends here.
