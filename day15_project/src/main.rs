@@ -17,10 +17,11 @@ fn menu_display() {
     println!("\n=== Score Tracker ===");
 
         println!("\n1. Add Score");
-        println!("2. View Scores");
-        println!("3. Remove Score");
-        println!("4. Analyze Scores");
-        println!("5. Exit");
+        println!("2. Edit Score");
+        println!("3. View Scores");
+        println!("4. Remove Score");
+        println!("5. Analyze Scores");
+        println!("6. Exit");
 }
 
 enum MenuChoice {
