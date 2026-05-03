@@ -206,6 +206,9 @@ impl App {
                 println!("No scores yet. Add some scores first!");
                 break;
             }
+
+            //Currently available scores to edit
+            
         } 
     }
 
@@ -235,7 +238,7 @@ impl App {
             // Every score and its index currently 
             println!("\n- Available index-score currently -");
             for (i, mark) in self.scores.iter().enumerate() {
-                println!(" Index {}: {}", i + 1, mark.score);
+                println!(" {}: {}", i + 1, mark.score);
             }
 
             let trimmed = read_input("Enter index to remove score or 'exit' to Exit: ");
