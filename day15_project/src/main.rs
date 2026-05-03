@@ -26,6 +26,7 @@ fn menu_display() {
 
 enum MenuChoice {
     AddScore,
+    EditScore,
     ViewScores,
     RemoveScore,
     AnalyzeScores,
@@ -35,10 +36,11 @@ enum MenuChoice {
 fn parse_menu_selection(input: i32) -> Option<MenuChoice> {
     match input {
         1 => Some(MenuChoice::AddScore),
-        2 => Some(MenuChoice::ViewScores),
-        3 => Some(MenuChoice::RemoveScore),
-        4 => Some(MenuChoice::AnalyzeScores),
-        5 => Some(MenuChoice::Exit),
+        2 => Some(MenuChoice::EditScore),
+        3 => Some(MenuChoice::ViewScores),
+        4 => Some(MenuChoice::RemoveScore),
+        5 => Some(MenuChoice::AnalyzeScores),
+        6 => Some(MenuChoice::Exit),
         _ => None, // Meaning all i32 inputs become invalid here.
     }
 }
@@ -128,6 +130,7 @@ impl App {
             // choice-based actions
             match choice {
                 MenuChoice::AddScore => self.add_score(),
+                MenuChoice::EditScore => self.edit_score(),
                 MenuChoice::ViewScores => self.view_scores(),
                 MenuChoice::RemoveScore => self.remove_by_index(),
                 MenuChoice::AnalyzeScores => self.analyze_scores(),
@@ -195,6 +198,15 @@ impl App {
                 None => println!("No score added so far!"),
             }
         }
+    }
+
+    fn edit_score(&mut self) {
+        loop {
+            if self.scores.is_empty() {
+                println!("No scores yet. Add some scores first!");
+                break;
+            }
+        } 
     }
 
     fn view_scores(&self) {
