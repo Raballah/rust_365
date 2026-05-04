@@ -63,6 +63,8 @@ fn get_user_input() -> MenuChoice {
 #[derive(Debug, Clone)]
 struct Mark {
     score: i32,
+    date_received: String,
+    owner: String,
 }
 
 impl Mark {
@@ -200,6 +202,7 @@ impl App {
         }
     }
 
+    // function to edit score
     fn edit_score(&mut self) {
         loop {
             if self.scores.is_empty() {
@@ -229,28 +232,39 @@ impl App {
                 }
             };
             
-            // .get(i) to check if index within bounds, immutable borrow
             let programming_index = typed_index - 1;
 
-            let score_value = match self.scores.get(programming_index) {
-                Some(mark) => mark.score, // copies score: i32 directly
-                None => {
-                    println!("No score at this index. Enter an available index!");
-                    continue;
-                }
-            };
-            
-            // Proceed to edit by entering a new score at the target index
-            self.scores.get_mut(programming_index);
-            println!("Current score at position {}: {}", typed_index, score_value);
-
-            let trimmed2 = read_input("Enter new score or 'exit' to Exit: ");
+        
+            let trimmed2 = read_input("Enter new score value or 'exit' to Exit: ");
 
             if trimmed2.eq_ignore_ascii_case("exit") {
                 println!("Successfully exited to main menu...");
                 break;
             }
-            println!("To be populated with logic");
+                              
+            let new_score_value: i32 = match trimmed2.parse::<i32>() {
+                Ok(num) if (0..=100).contains(&num) => num,             
+                _ => {
+                    println!("Invalid. Enter non-negative numbers, 0-100");
+                    continue;
+                }
+            };
+
+            match self.scores.get_mut(programming_index) {
+                Some(mark) => {
+                    let score_value = mark.score;
+                    mark.score = new_score_value; // direct assignment of new value
+                    println!(
+                        "Score at position {} updated: {} → {}",
+                        typed_index, score_value, new_score_value                        
+                    );
+                    continue;
+                },
+                None => {
+                    println!("No score at this index. Enter an available index!");
+                    continue;
+                }
+            }
         } 
     }
 
