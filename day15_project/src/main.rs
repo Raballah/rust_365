@@ -208,6 +208,7 @@ impl App {
             }
 
             // Currently available scores to edit
+            println!("--Available scores you can edit--");
             for (i, mark) in self.scores.iter().enumerate() {
                 println!(" {}: {}", i + 1, mark.score);
             }
