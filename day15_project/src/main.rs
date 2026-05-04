@@ -220,7 +220,7 @@ impl App {
                 break;
             }
 
-            let typed_index: usize = match typed_index.parse::<usize>() {
+            let typed_index: usize = match trimmed.parse::<usize>() {
                 Ok(num) if num >= 1 => num,
                 _ => {
                     println!("Invalid. Index must be a number, from 1 onwards!");
@@ -228,16 +228,28 @@ impl App {
                 }
             };
             
-            // use .get(i) to check if index within bounds, immutable borrow
+            // .get(i) to check if index within bounds, immutable borrow
             let programming_index = typed_index - 1;
+
             let score_value = match self.scores.get(programming_index) {
                 Some(mark) => mark.score, // copies score: i32 directly
-                None => println("No score at this index. Select from the available indeces!"),
+                None => {
+                    println!("No score at this index. Enter an available index!");
+                    continue;
+                }
             };
             
-            match self.scores.get(programming_index) {
-                Some(mark)
+            // Proceed to edit by entering a new score at the target index
+            self.scores.get_mut(programming_index);
+            println!("Current score at position {}: {}", typed_index, score_value);
+
+            let trimmed2 = read_input("Enter new score or 'exit' to Exit: ");
+
+            if trimmed2.eq_ignore_ascii_case("exit") {
+                println!("Successfully exited to main menu...");
+                break;
             }
+            println!("To be populated with logic");
         } 
     }
 
