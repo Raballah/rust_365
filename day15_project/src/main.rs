@@ -63,8 +63,6 @@ fn get_user_input() -> MenuChoice {
 #[derive(Debug, Clone)]
 struct Mark {
     score: i32,
-    date_received: String,
-    owner: String,
 }
 
 impl Mark {
