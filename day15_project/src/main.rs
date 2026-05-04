@@ -207,8 +207,37 @@ impl App {
                 break;
             }
 
-            //Currently available scores to edit
+            // Currently available scores to edit
+            for (i, mark) in self.scores.iter().enumerate() {
+                println!(" {}: {}", i + 1, mark.score);
+            }
+
+            // Index-based choice of score to edit
+            let trimmed = read_input("Enter index to edit or 'exit' to Exit: ");
+
+            if trimmed.eq_ignore_ascii_case("exit") {
+                println!("Successfully exited to main menu...");
+                break;
+            }
+
+            let typed_index: usize = match typed_index.parse::<usize>() {
+                Ok(num) if num >= 1 => num,
+                _ => {
+                    println!("Invalid. Index must be a number, from 1 onwards!");
+                    continue;
+                }
+            };
             
+            // use .get(i) to check if index within bounds, immutable borrow
+            let programming_index = typed_index - 1;
+            let score_value = match self.scores.get(programming_index) {
+                Some(mark) => mark.score, // copies score: i32 directly
+                None => println("No score at this index. Select from the available indeces!"),
+            };
+            
+            match self.scores.get(programming_index) {
+                Some(mark)
+            }
         } 
     }
 
