@@ -356,9 +356,6 @@ impl App {
         read_input("Press enter to return to main menu...");
     }
 
-    // serde / serde_json file saving aspects path and methods
-    const SAVE_FILE: &str = "scores.json";
-
     // Save scores to file
     fn save_to_file(&self) {
         match serde_json::to_string_pretty(&self.scores) {
@@ -368,7 +365,7 @@ impl App {
                     Err(e) => println!("Failed to save scores: {}", e),
                 }
             },
-            Err(e) => println!("Failed to serialized scores", e),
+            Err(e) => println!("Failed to serialized scores: {}", e),
         }
     }
 
@@ -388,6 +385,9 @@ impl App {
         }
     }
 }
+
+// serde / serde_json file saving aspects path and methods
+const SAVE_FILE: &str = "scores.json";
 
 fn main() {
     let mut app = App::new();
