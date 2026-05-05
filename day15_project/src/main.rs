@@ -232,7 +232,19 @@ impl App {
             
             let programming_index = typed_index - 1;
 
-        
+            // Validate index within bounds before new score input-- use of .len()
+            if programming_index >= self.scores.len() {
+                println!(
+                    "No scores at position {}. Choose from 1 to {}!",
+                    typed_index,
+                    self.scores.len()
+                );
+                continue; // loops back for picking a correct index first
+            }
+
+            // Current score shown and user asked to enter a new score
+            println!("Current score at {}: {}", typed_index, self.scores[programming_index].score);
+
             let trimmed2 = read_input("Enter new score value or 'exit' to Exit: ");
 
             if trimmed2.eq_ignore_ascii_case("exit") {
@@ -248,20 +260,14 @@ impl App {
                 }
             };
 
-            match self.scores.get_mut(programming_index) {
-                Some(mark) => {
-                    let score_value = mark.score;
-                    mark.score = new_score_value; // direct assignment of new value
-                    println!(
-                        "Score at position {} updated: {} → {}",
-                        typed_index, score_value, new_score_value                        
-                    );
-                    continue;
-                },
-                None => {
-                    println!("No score at this index. Enter an available index!");
-                    continue;
-                }
+            // Use of get_mut(i) mutable borrow
+            if let Some(mark) = self.scores.get_mut(programming_index) {
+                let score_value = mark.score;
+                mark.score = new_score_value; // direct assignment of new value
+                println!(
+                    "Score at position {} updated: {} → {}",
+                    typed_index, score_value, new_score_value
+                );
             }
         } 
     }
