@@ -1,6 +1,7 @@
 // Day 15 Mini-Project: Building a CLI Score Tracker
 
 use std::io;
+use serde::{Serialize, Deserialize};
 
 fn read_input(prompt: &str) -> String {
     let mut input = String::new();
@@ -60,7 +61,7 @@ fn get_user_input() -> MenuChoice {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct Mark {
     score: i32,
 }
@@ -113,9 +114,12 @@ struct App {
 
 impl App {
     fn new() -> Self {
-        Self {
+        let mut app = Self {
             scores: Vec::new(),
-        }
+        };
+        app.load_from_file(); // Load saved data on startup
+
+        app
     }
 
     // program instance initializer / session activator
@@ -349,6 +353,38 @@ impl App {
         }
         
         read_input("Press enter to return to main menu...");
+    }
+
+    // serde / serde_json file saving aspects path and methods
+    const SAVE_FILE: &str = "scores.json";
+
+    // Save scores to file
+    fn save_to_file(&self) {
+        match serde_json::to_string_pretty(&self.scores) {
+            Ok(json) => {
+                match std::fs::write(SAVE_FILE, json) {
+                    Ok(_) => println!("Scores saved successfully!"),
+                    Err(e) => println!("Failed to save scores: {}", e),
+                }
+            },
+            Err(e) => println!("Failed to serialized scores", e),
+        }
+    }
+
+    // Load scores from file
+    fn load_from_file(&mut self) {
+        match std::fs::read_to_string(SAVE_FILE) {
+            Ok(contents) => {
+                match serde_json::from_str::<Vec<Mark>>(&contents) {
+                    Ok(loaded) => {
+                        self.scores = loaded;
+                        println!("Scores loaded successfully! {} scores found.", self.scores.len());
+                    },
+                    Err(e) => println!("Failed to parse saved file: {}", e),
+                }
+            },
+            Err(_) =>  println!("No saved file found. Starting fresh."),
+        }
     }
 }
 
