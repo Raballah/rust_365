@@ -139,6 +139,7 @@ impl App {
                 MenuChoice::RemoveScore => self.remove_by_index(),
                 MenuChoice::AnalyzeScores => self.analyze_scores(),
                 MenuChoice::Exit => {
+                    self.save_to_file(); // save on clean exit
                     println!("Successfully exited...");
                     break;
                 }
