@@ -165,3 +165,71 @@ fn main() {
         println!("Data successfully persisted to {}", SAVED_FILE);
     }
 }*/
+
+// Create a vector of struct type and save file on completion, 
+// load file on startup.
+
+use serde::{Serialize, Deserialize};
+use std::fs;
+use std::path::Path;
+
+const SAVED_FILE: &str = "students.json";
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Student {
+    parent: String,
+    name: String,
+    score: u32,
+}
+
+// load file JSON in string on startup
+fn load_on_startup() -> Result<Vec<Student>, Box<dyn std::error::Error>> {
+    if !Path::new(SAVED_FILE).exists() {
+        return Err("File does not exist".into());
+    }
+    
+    // read file to string
+    let content = fs::read_to_string(SAVED_FILE)?;
+    // convert the string to Vec<Student>
+    let data: Vec<Student> = serde_json::from_str(&content)?;
+    Ok(data)
+}
+
+// fn to save data in Vec<Student> on closing. turn it into Json
+fn save_on_exit(data: &[Student]) -> Result<(), Box<dyn std::error::Error>> {
+    let json = serde_json::to_string_pretty(&data)?;
+
+    // Write the serialized data to the SAVED_FILE. WRITES OR OVERWRITES
+    fs::write(SAVED_FILE, json)?;
+    Ok(())
+}
+
+fn main() {
+    // load data on startup
+    let mut students: Vec<Student> = load_on_startup().unwrap_or_else(|_| {
+        println!("No saved file found, starting with a fresh list.");
+        Vec::new()
+    });
+
+    println!("Loaded users: {:?}", students);
+
+    // Adding some users:
+    students.push(Student {
+        parent: String::from("John"), 
+        name: String::from("Joseph"),
+        score: 45,
+    });
+
+    students.push(Student {
+        parent: String::from("Jowi"),
+        name: String::from("Mary"),
+        score: 78,
+    });
+
+    // saving data before exiting
+    if let Err(e) = save_on_exit(&students) {
+        eprintln!("Failed to save data: {}", e);
+    } else {
+        println!("Data successfully persisted: {}", SAVED_FILE);
+    }
+}

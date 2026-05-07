@@ -1,0 +1,22 @@
+[
+  {
+    "parent": "John",
+    "name": "Joseph",
+    "score": 45
+  },
+  {
+    "parent": "Jowi",
+    "name": "Mary",
+    "score": 78
+  },
+  {
+    "parent": "John",
+    "name": "Joseph",
+    "score": 45
+  },
+  {
+    "parent": "Jowi",
+    "name": "Mary",
+    "score": 78
+  }
+]
