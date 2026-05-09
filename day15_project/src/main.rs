@@ -2,6 +2,8 @@
 
 use std::io;
 use serde::{Serialize, Deserialize};
+use std::path::Path;
+use std::fs;
 
 fn read_input(prompt: &str) -> String {
     let mut input = String::new();
@@ -370,8 +372,28 @@ impl App {
     }
 
     // Load scores from file
+    fn load_from_file(&mut self) -> Result<(), Box<dyn std::error:Error>> { 
+        // Early return if the file, SAVE_FILE, does not exist - avoids misleading error messages
+        if !Path::new(SAVE_FILE).exists() {
+            println!("No save file found. Starting fresh.");
+            return Ok(()); // attempt to load data failed 
+        }
+        // SAVE_FILE exists,  (in JSON format). read file contents to string with fs
+        let contents = fs::read_to_string(SAVE_FILE)?; // ? unwraps this and returns Err up if fail
+
+        // Deserialize JSON string (contents) into Vec<Mark> with serde_json
+        let loaded: Vec<Mark> = serde_json::from_str(&contents)?; // ? unwraps this and returns Err up if fail
+        
+        // Assign loaded data to self.scores - mutation, requires &mut self
+        self.scores = loaded; // mutates self.scores
+        println!("Scores loaded! {} scores found.", self.scores.len());
+
+        Ok(()) // signals success. () unit type/nothing return because the scores / loaded data are assigned to self.scores, nothing to return
+    }
+
+    /* instead of this
     fn load_from_file(&mut self) {
-        match std::fs::read_to_string(SAVE_FILE) {
+        match std::fs::read_to_string(SAVE_FILE) { // Would just writing match fs::read_to_string(SAVE_FILE) be enough here, that is, without the std?
             Ok(contents) => {
                 match serde_json::from_str::<Vec<Mark>>(&contents) {
                     Ok(loaded) => {
@@ -383,10 +405,10 @@ impl App {
             },
             Err(_) =>  println!("No saved file found. Starting fresh."),
         }
-    }
+    } */
 }
 
-// serde / serde_json file saving aspects path and methods
+// The file path constnat
 const SAVE_FILE: &str = "scores.json";
 
 fn main() {
