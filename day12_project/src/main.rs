@@ -389,6 +389,8 @@ fn main() {
         graduation_year: 2022,
         salary: 20_000,
     });
+
+    println!("Existing teachers: {:?}", teachers);
     
     // Save on exit
     match save_data(&teachers) {
