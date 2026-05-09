@@ -239,6 +239,7 @@ fn main() {
 // Third attempt at it. Let's see how it goes again. 
 // First begin by importing the necessary crates
 
+/*
 use serde::{Serialize, Deserialize}; // for converting to JSON file and from JSON file
 use std::fs; // for reading and writing on saved file
 use std::path::Path; // for locating file on saved location. 
@@ -310,6 +311,89 @@ fn main() {
         println!("Failed to save file with error: {}", e);
     } else {
         println!("Data successfully persisted to {}", FILE_STORE);
+    }
+}
+*/
+
+// 4th attempt to better understand the mechanics
+// First import the necessary crates
+use serde::{Serialize, Deserialize}; // for data serilization to json and deserialization of json to data
+use std::fs; // a file reading and writing system between saved file and Rust
+use std::path::Path; // for locating the path of saved file, to check if saved or not
+
+// Create a constant, SAVE_FILE, for handling the saving of file 
+const SAVE_FILE: &str = "teachers.json";
+
+// Create the Teacher struct, with necessary derivations 
+#[derive(Debug, Serialize, Deserialize)]
+struct Teacher {
+    name: String,
+    age: u8,
+    graduation_year: u16,
+    salary: u32,
+}
+
+// function to load data on startup
+fn load_data() -> Result<Vec<Teacher>, Box<dyn std::error::Error>> {
+    // Check if file exists, if not, retun an eror mesage in string
+    if !Path::new(SAVE_FILE).exists() {
+        return Err("File does not exist".into());
+    }
+    // File exists at this point. Obviously in json format.
+    // read to string using the fs create, then return as content
+    let content = fs::read_to_string(SAVE_FILE)?; // now, content is in string format, 
+    // read from json format to string format
+    // now, convert the string format to Vec<Teacher>, and return it. 
+    // string to Vec<Teacher> requires deserialization suing serde_json Deserialize crate
+    // bind the deserialized String to Vec<Teacher> to say, data and return it.
+    let data: Vec<Teacher> = serde_json::from_str(&content)?;
+    Ok(data)
+}
+
+// Function to save on exit to json format.
+// Requires Serialziation, that is, changing data/ Vec<Teacher> to json file.
+// So, you use serde_json serialization crate.
+fn save_data(data: &[Teacher]) -> Result<(), Box<dyn std::error::Error>> {
+    // Serialize data to json format / mostly string, and give it a pretty print.
+    let json = serde_json::to_string_pretty(data)?;
+    // Take the serialized data and write it to the json holder, SAVE_FILE, using std::fs
+    fs::write(SAVE_FILE, json)?;
+    Ok(())
+} 
+
+fn main() {
+    // load data on startup
+    let mut teachers: Vec<Teacher> = load_data().unwrap_or_else(|_| {
+        println!("No data found, starting afresh!");
+        Vec::new()
+    });
+
+    // Some data to the teachers vector
+    teachers.push(Teacher {
+        name: String::from("Mary"),
+        age: 45,
+        graduation_year: 2022,
+        salary: 20_000,
+    });
+
+    teachers.push(Teacher {
+        name: String::from("Mark"),
+        age: 24,
+        graduation_year: 2016,
+        salary: 36_000,
+    });
+
+    teachers.push(Teacher {
+        name: String::from("Mary"),
+        age: 45,
+        graduation_year: 2022,
+        salary: 20_000,
+    });
+    
+    // Save on exit
+    match save_data(&teachers) {
+        Ok(()) => println!("Data persistence successful"),
+        Err(e) => eprintln!("Failed to save data. Error {}", e),
     }
 }
 
