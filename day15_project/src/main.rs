@@ -350,7 +350,7 @@ impl App {
     fn analyze_scores(&self) {
         match self.analyzer() {
             Some(stats) => stats.display(&self.scores),
-            None => println!("No scores yet. Add scores first!")
+            None => println!("No scores yet. Add scores first!"),
         }
         
         read_input("Press enter to return to main menu...");
