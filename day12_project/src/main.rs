@@ -266,7 +266,7 @@ fn load_from_file() -> Result<Vec<Worker>, Box<dyn std::error::Error>> {
     let content = fs::read_to_string(FILE_STORE)?;
     // After reading it, the Deserialize the json file to Vec<Worker>
     // this means you convert it from the read string json version to Vec<Worker>
-    let data: Vec<Worker> = serde_json::from_str(FILE_STORE)?;
+    let data: Vec<Worker> = serde_json::from_str(&content)?;
     Ok(data)
 }
 
@@ -277,7 +277,7 @@ fn save_to_json(data: &[Worker]) -> Result<(), Box<dyn std::error::Error>> {
     // in pretty print. then write it to the SAVE_FILE using the file system std::fs
     let json = serde_json::to_string_pretty(&data)?; // turns Vec<Worker> to a json file 
     // now write it using the fs system
-    fs::write(FILE_STORE, json);
+    fs::write(FILE_STORE, json)?;
     Ok(())
 }
 
@@ -303,7 +303,13 @@ fn main() {
         service_years: 10,
     });
 
-    // saving before exiting
-    // catch saving error first? really?
+    // saving before exiting, handling saving errors automatically. 
+    // can have errors saving or not
+
+    if let Err(e) = save_to_json(&workers) {
+        println!("Failed to save file with error: {}", e);
+    } else {
+        println!("Data successfully persisted to {}", FILE_STORE);
+    }
 }
 
