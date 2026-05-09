@@ -169,6 +169,7 @@ fn main() {
 // Create a vector of struct type and save file on completion, 
 // load file on startup.
 
+/*
 use serde::{Serialize, Deserialize};
 use std::fs;
 use std::path::Path;
@@ -233,3 +234,76 @@ fn main() {
         println!("Data successfully persisted: {}", SAVED_FILE);
     }
 }
+*/
+
+// Third attempt at it. Let's see how it goes again. 
+// First begin by importing the necessary crates
+
+use serde::{Serialize, Deserialize}; // for converting to JSON file and from JSON file
+use std::fs; // for reading and writing on saved file
+use std::path::Path; // for locating file on saved location. 
+
+const FILE_STORE: &str = "workers.json";
+
+// create struct for workers, with necessary derivations
+#[derive(Debug, Serialize, Deserialize)]
+struct Worker {
+    name: String,
+    job_id: u32,
+    service_years: u8,
+}
+
+// function to load from file
+fn load_from_file() -> Result<Vec<Worker>, Box<dyn std::error::Error>> {
+    // Check for file first and return error if file does not exist.
+    if !Path::new(FILE_STORE).exists() {
+        return Err("File does not exist".into());
+    }
+    // files exists in this scope
+    // read the json file, you read and write on file using the std::fs crate
+    // this is like capturing the file for the program 
+    // (more like copying a file temporarily from an existing system file)
+    let content = fs::read_to_string(FILE_STORE)?;
+    // After reading it, the Deserialize the json file to Vec<Worker>
+    // this means you convert it from the read string json version to Vec<Worker>
+    let data: Vec<Worker> = serde_json::from_str(FILE_STORE)?;
+    Ok(data)
+}
+
+// Create function to save file, now in Vec<Worker>.
+// Turns a Vec<Worker> file, using Serialize derive, to a json file
+fn save_to_json(data: &[Worker]) -> Result<(), Box<dyn std::error::Error>> {
+    // you want to turn the data of Vec<Worker> to a json format here,
+    // in pretty print. then write it to the SAVE_FILE using the file system std::fs
+    let json = serde_json::to_string_pretty(&data)?; // turns Vec<Worker> to a json file 
+    // now write it using the fs system
+    fs::write(FILE_STORE, json);
+    Ok(())
+}
+
+fn main() {
+    // load existing data on startup
+    let mut workers: Vec<Worker> = load_from_file().unwrap_or_else(|_| {
+        println!("No file found saved, starting afresh");
+        Vec::new()
+    });
+
+    println!("Loaded users: {:?}", workers);
+
+    // Adding users:
+    workers.push( Worker {
+        name: "James".to_string(),
+        job_id: 35790,
+        service_years: 18,
+    });
+
+    workers.push( Worker {
+        name: "Opar".to_string(),
+        job_id: 57903,
+        service_years: 10,
+    });
+
+    // saving before exiting
+    // catch saving error first? really?
+}
+
