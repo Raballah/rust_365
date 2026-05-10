@@ -108,7 +108,6 @@ impl ScoreStats {
 
 // Student score entry app
 // let mut scores: Vec<Mark> = Vec::new();
-
 #[derive(Debug)]
 struct App {
     scores: Vec<Mark>,
@@ -116,12 +115,14 @@ struct App {
 
 impl App {
     fn new() -> Self {
-        let mut app = Self {
+        let mut loaded_app = Self {
             scores: Vec::new(),
         };
-        app.load_from_file(); // Load saved data on startup
 
-        app
+        if let Err(e) = loaded_app.load_from_file() {
+            eprintln!("Failed to load scores: {}", e);
+        }
+        loaded_app
     }
 
     // program instance initializer / session activator
@@ -372,11 +373,11 @@ impl App {
     }
 
     // Load scores from file
-    fn load_from_file(&mut self) -> Result<(), Box<dyn std::error:Error>> { 
+    fn load_from_file(&mut self) -> Result<(), Box<dyn std::error::Error>> { 
         // Early return if the file, SAVE_FILE, does not exist - avoids misleading error messages
         if !Path::new(SAVE_FILE).exists() {
             println!("No save file found. Starting fresh.");
-            return Ok(()); // attempt to load data failed 
+            return Ok(()); // attempt to load data failed
         }
         // SAVE_FILE exists,  (in JSON format). read file contents to string with fs
         let contents = fs::read_to_string(SAVE_FILE)?; // ? unwraps this and returns Err up if fail
