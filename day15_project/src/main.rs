@@ -116,7 +116,7 @@ struct App {
 impl App {
     fn new() -> Self {
         let scores = Self::load_scores_from_disk().unwrap_or_else(|e| {
-            eprintln!("Could not load save file: {}.", e);
+            eprintln!("Could not load saved file: {}.", e);
             Vec::new()
         }); 
 
@@ -126,7 +126,7 @@ impl App {
         } else {
             println!("{} existing score(s) loaded.", scores.len());
         }
-        
+
         Self { scores }
     }
 
@@ -142,23 +142,15 @@ impl App {
         Ok(loaded)
     }
 
-    fn save_to_file(&self) -> Result<(), Box<dyn std::error::Error>> {
-        // serialize Vec<Mark> to JSON string with serde_json, pretty
-        let json = serde_json::to_string_pretty(&self.scores).unwrap_or_else(|e| {
-            eprintln!("Failed to serialize scores: {}", e);
-        });
-
-        // write save to file using fs file system
-        fs::write(SAVE_FILE, json)?;
-        // return Ok(())
-        Ok(())
-    }
     fn save_to_file(&self) {
-        match serde_json::to_string_pretty(&self.scores) {
+        match serde_json::to_string_pretty(&self.scores) { // results in json after serialization
             Ok(json) => match fs::write(SAVE_FILE, json) {
-                Ok(_) => println!("Success. Data succssfully persisted."), // can Ok(_) be Ok(()), with the unit type/nothing in this case and still compile?
-                Err(e) => eprintln!("Failed to write save file: {}", e), // after serialization, is it possible to fail to write save file? what causes that will the user get to redo this ago after the fail?
-            }
+                Ok(_) => println!("Data persisted successfully."),
+                Err(e) => {
+                    eprintln!("Failed to write save file: {}", e);
+                    eprintln!("File NOT saved. Try again from menu.");
+                }
+            },
             Err(e) => eprintln!("Failed to serialize scores: {}", e),
         }
     }
@@ -396,22 +388,9 @@ impl App {
         
         read_input("Press enter to return to main menu...");
     }
-
-    // Save scores to file
-    fn save_to_file(&self) {
-        match serde_json::to_string_pretty(&self.scores) {
-            Ok(json) => {
-                match std::fs::write(SAVE_FILE, json) {
-                    Ok(_) => println!("Scores saved successfully!"),
-                    Err(e) => println!("Failed to save scores: {}", e),
-                }
-            },
-            Err(e) => println!("Failed to serialized scores: {}", e),
-        }
-    }
 }
 
-// The file path constnat
+// The file path constant
 const SAVE_FILE: &str = "scores.json";
 
 fn main() {
