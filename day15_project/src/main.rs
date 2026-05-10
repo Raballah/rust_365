@@ -115,14 +115,23 @@ struct App {
 
 impl App {
     fn new() -> Self {
-        let mut loaded_app = Self {
-            scores: Vec::new(),
-        };
+        let scores = Self::load_scores_from_disk().unwrap_or_else(|e| {
+            eprintln("Could not load save file: {}.", e);
+            Vec::new()
+        }); 
+        Self { scores }
+    }
 
-        if let Err(e) = loaded_app.load_from_file() {
-            eprintln!("Failed to load scores: {}", e);
+    fn load_scores_from_disk() -> Result<Vec<Mark>, Box<dyn std::error::Error>> {
+        if !Path::new(SAVE_FILE).exists() {
+            return Ok(Vec::new()); // first run, no err, no file yet.
         }
-        loaded_app
+        // SAVE_FILE exists on Path, read to string using fs
+        let contents = fs::read_to_string(SAVE_FILE)?; // ? to unwrap or return Err if not exists
+        // Deserialize the JSON string to get Vec<Mark> using serde_json
+        let loaded: Vec<Mark> = serde_json::from_str(&contents)?;
+        // Return the Vec<Mark>
+        Ok(loaded)
     }
 
     // program instance initializer / session activator
@@ -371,42 +380,6 @@ impl App {
             Err(e) => println!("Failed to serialized scores: {}", e),
         }
     }
-
-    // Load scores from file
-    fn load_from_file(&mut self) -> Result<(), Box<dyn std::error::Error>> { 
-        // Early return if the file, SAVE_FILE, does not exist - avoids misleading error messages
-        if !Path::new(SAVE_FILE).exists() {
-            println!("No save file found. Starting fresh.");
-            return Ok(()); // attempt to load data failed
-        }
-        // SAVE_FILE exists,  (in JSON format). read file contents to string with fs
-        let contents = fs::read_to_string(SAVE_FILE)?; // ? unwraps this and returns Err up if fail
-
-        // Deserialize JSON string (contents) into Vec<Mark> with serde_json
-        let loaded: Vec<Mark> = serde_json::from_str(&contents)?; // ? unwraps this and returns Err up if fail
-        
-        // Assign loaded data to self.scores - mutation, requires &mut self
-        self.scores = loaded; // mutates self.scores
-        println!("Scores loaded! {} scores found.", self.scores.len());
-
-        Ok(()) // signals success. () unit type/nothing return because the scores / loaded data are assigned to self.scores, nothing to return
-    }
-
-    /* instead of this
-    fn load_from_file(&mut self) {
-        match std::fs::read_to_string(SAVE_FILE) { // Would just writing match fs::read_to_string(SAVE_FILE) be enough here, that is, without the std?
-            Ok(contents) => {
-                match serde_json::from_str::<Vec<Mark>>(&contents) {
-                    Ok(loaded) => {
-                        self.scores = loaded;
-                        println!("Scores loaded successfully! {} scores found.", self.scores.len());
-                    },
-                    Err(e) => println!("Failed to parse saved file: {}", e),
-                }
-            },
-            Err(_) =>  println!("No saved file found. Starting fresh."),
-        }
-    } */
 }
 
 // The file path constnat
