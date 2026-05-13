@@ -1,12 +1,11 @@
 // Day 16 - Strings in Depth 
 // the format! approach
 fn main() {
-    let fake_news: &str = "he is real";
-    println!("Yes, {}.", fake_news);
+    // Appending text
+    let mut profession_type = String::from("Plumber");
+    profession_type.push('!');
+    println!("He is currently working as a {}", profession_type);
 
-    let confirmation: String = fake_news.to_string();
-    println!("Are you sure {}?", confirmation);
-
-    let another_fake: &str = &confirmation;
-    println!("He thinks that {}.", another_fake);
+    profession_type.push_str(" However, are you fine with it?");
+    println!("Good job being a {}", profession_type);
 }
