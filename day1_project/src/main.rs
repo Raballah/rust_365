@@ -1,7 +1,12 @@
 // Day 16 - Strings in Depth 
+// the format! approach
 fn main() {
-    // Strings => owned, growable UTF-8 strings stored on the heap
-    let mut response: String = String::from("Are you sure ");
-    response.push_str("?");
-    println!("{} Yes, I am sure!", response); // Unlike vectors Vec, String implements Display trait {} for UTF-8 text
+    let fake_news: &str = "he is real";
+    println!("Yes, {}.", fake_news);
+
+    let confirmation: String = fake_news.to_string();
+    println!("Are you sure {}?", confirmation);
+
+    let another_fake: &str = &confirmation;
+    println!("He thinks that {}.", another_fake);
 }
