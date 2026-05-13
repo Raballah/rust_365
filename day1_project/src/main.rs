@@ -1,11 +1,9 @@
 // Day 16 - Strings in Depth 
 // the format! approach
 fn main() {
-    // Appending text
-    let mut profession_type = String::from("Plumber");
-    profession_type.push('!');
-    println!("He is currently working as a {}", profession_type);
+    let small = String::from("Cow");
+    let big = String::from("Shit");
 
-    profession_type.push_str(" However, are you fine with it?");
-    println!("Good job being a {}", profession_type);
+    let bad_word = small + &big;
+    println!("That is some {} talk.", bad_word);
 }
