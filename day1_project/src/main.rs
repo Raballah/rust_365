@@ -26,10 +26,16 @@
 }*/
 
 // Use of .push_str for concatentation. 
-fn main() {
+/*fn main() {
     let code = String::from("James");
     let mut name = String::from("Echo ");
 
     name.push_str(&code);
     println!(" {} is a funny name.", name);
+}*/
+
+// String Length
+fn main() {
+    let money = String::from("fiat");
+    println!("String length: {}", money.len());
 }
