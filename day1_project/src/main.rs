@@ -44,9 +44,19 @@
 // Strings are UTF-8, Unicode Transformation Format - 8 byte 
 // Characteres might take up multiple bytes, ambiguous to Index
 // 
-fn main() {
+/*fn main() {
     let name = String::from("Order");
     let number = name[0];
-    
+
     println!("{}", number);
+}*/
+
+// Accessing String characters safely, as not possible to index
+// Access the 7th character.
+fn main() {
+    let person = String::from("Dave Merry");
+
+    if let Some(char) = person.chars().nth(7) {
+        println!("At index 7, we have {}", char);
+    }
 }
