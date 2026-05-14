@@ -53,10 +53,19 @@
 
 // Accessing String characters safely, as not possible to index
 // Access the 7th character.
-fn main() {
-    let person = String::from("Dave Merry");
+// Characters vary in their bytes, so recommended to access using index like s[0]
+// Bytes have 8 bits u8, or 1 byte, while characters are always assigned to 
+// 4 bytes, u32
+// Bytes are i) always 1 byte (8 bits) u8, ii) raw numeric data (0-255) iii) .bytes() returns individual bytes iv) Several bytes can form one character
+// Characters ii) always 4 bytes (32 bits) ii) A unicode scalar value iii) .chars() returns each Unicode scalar value v) One char is a single code point.
 
-    if let Some(char) = person.chars().nth(7) {
-        println!("At index 7, we have {}", char);
+// Accessing characters in a String 
+
+fn main() {
+    let full_name = String::from("Jamёs Right");
+
+    // Access the 5th character
+    if let Some(third) = full_name.bytes().nth(3) {
+        println!("{}", third);
     }
 }
