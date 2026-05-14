@@ -8,10 +8,19 @@
     println!("That is some {} talk.", bad_word);
 }*/
 
-fn main() {
+/*fn main() {
     let first = String::from("Come");
     let second = String::from("on!");
 
     let joint = format!("{} {}", first, second);
     println!(" {} We are going now.", joint);
+} */
+
+// use of push_str(). mutating in place
+fn main() {
+    let code = String::from("James");
+    let name = String::from("Echo");
+
+    let code_name = format!("{} {}", code, name);
+    println!("{} sounds like a funny code name!", code_name);
 }
