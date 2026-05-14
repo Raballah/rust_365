@@ -17,10 +17,19 @@
 } */
 
 // use of push_str(). mutating in place
-fn main() {
+/*fn main() {
     let code = String::from("James");
     let name = String::from("Echo");
 
     let code_name = format!("{} {}", code, name);
     println!("{} sounds like a funny code name!", code_name);
+}*/
+
+// Use of .push_str for concatentation. 
+fn main() {
+    let code = String::from("James");
+    let mut name = String::from("Echo ");
+
+    name.push_str(&code);
+    println!(" {} is a funny name.", name);
 }
