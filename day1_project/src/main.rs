@@ -69,3 +69,5 @@ fn main() {
         println!("{}", third);
     }
 }
+
+// Bytes vs Characters
