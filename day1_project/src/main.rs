@@ -35,7 +35,18 @@
 }*/
 
 // String Length
-fn main() {
-    let money = String::from("fiat");
+/*fn main() {
+    let money = String::from("é");
     println!("String length: {}", money.len());
+}*/
+
+// Not possible to index Strings
+// Strings are UTF-8, Unicode Transformation Format - 8 byte 
+// Characteres might take up multiple bytes, ambiguous to Index
+// 
+fn main() {
+    let name = String::from("Order");
+    let number = name[0];
+    
+    println!("{}", number);
 }
