@@ -72,7 +72,8 @@
 //.bytes() brings up all the bytes in the String, usually represented as numeric data 0-255
 //.chars() makes it possible to bring the individual Unicode scalar values in a String
 // No wonder we have: 
-fn main() {
+
+/*fn main() {
     let name = String::from("Jóhn");
 
     if let Some(third) = name.bytes().nth(3) {
@@ -80,5 +81,13 @@ fn main() {
     } else {
         println!("No character found!");
     }
-}
+}*/
+
 // Bytes vs Characters
+fn main() {
+    let status = String::from("Wóke");
+    // print all bytes in this String
+    for byte in status.bytes() {
+        println!("{}", byte);
+    }
+}
