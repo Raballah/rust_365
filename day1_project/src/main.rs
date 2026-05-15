@@ -61,13 +61,24 @@
 
 // Accessing characters in a String 
 
-fn main() {
+/*fn main() {
     let full_name = String::from("Jamёs Right");
 
     // Access the 5th character
     if let Some(third) = full_name.bytes().nth(3) {
         println!("{}", third);
     }
-}
+}*/
+//.bytes() brings up all the bytes in the String, usually represented as numeric data 0-255
+//.chars() makes it possible to bring the individual Unicode scalar values in a String
+// No wonder we have: 
+fn main() {
+    let name = String::from("John");
 
+    if let Some(third) = name.chars().nth(3) {
+        println!("The third character is {}", third);
+    } else {
+        println!("No character found!");
+    }
+}
 // Bytes vs Characters
