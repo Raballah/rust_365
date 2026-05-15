@@ -153,9 +153,16 @@ fn main() {
 }*/
 
 // Replacing text in Rust Strings
-fn main() {
-    let command = "You need to go!"; // string literal 
-    let new_command = command.replace("go!", "run!");
+/*fn main() {
+    let command = "You need to go!"; // string literal, command a pointer to data that is baked directly onto the compiled binary
+    let new_command = command.replace("go!", "run!"); // takes ownership of the &str, now new_command is a String.
 
     println!("{} Why?", new_command);
+}*/
+
+fn main() {
+    let main = "He is here.";
+    let next_main = main.to_uppercase();
+
+    println!("{}", next_main);
 }
