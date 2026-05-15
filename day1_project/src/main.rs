@@ -160,9 +160,16 @@ fn main() {
     println!("{} Why?", new_command);
 }*/
 
-fn main() {
+/*fn main() {
     let main = "He is here.";
     let next_main = main.to_uppercase();
 
     println!("{}", next_main);
+}*/
+
+fn main() {
+    let lie = "He is a good player.";
+    let smaller = lie.to_lowercase();
+
+    println!("{}", smaller);
 }
