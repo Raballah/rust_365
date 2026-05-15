@@ -73,9 +73,9 @@
 //.chars() makes it possible to bring the individual Unicode scalar values in a String
 // No wonder we have: 
 fn main() {
-    let name = String::from("John");
+    let name = String::from("Jóhn");
 
-    if let Some(third) = name.chars().nth(3) {
+    if let Some(third) = name.bytes().nth(3) {
         println!("The third character is {}", third);
     } else {
         println!("No character found!");
