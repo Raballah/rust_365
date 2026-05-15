@@ -114,27 +114,27 @@
 
 // Slicing Strings
 // Slicing Strings using a range slicing
-fn main() {
+/*fn main() {
     let food = String::from("Ugali");
     
     let slice = &food[0..2];
 
     println!("The slice: {}", slice);
-}
+} */
 
 // Use of .chars().take(2).collect();
 
-/*fn main() {
+fn main() {
     let food1 = String::from("Ugali");
     let food2 = String::from("🥗Ugali");
     let food3 = String::from("こんにちは");
 
     // .take(2) to always give the first 2 characters
     let safe_slice1: String = food1.chars().take(2).collect();
-    let safe_slice2: String = food2.chars().take(2).collect;
-    let safe_slice3: String = food3.chars().take(2).collect;
+    let safe_slice2: String = food2.chars().take(2).collect();
+    let safe_slice3: String = food3.chars().take(2).collect();
 
     println!("First: {}", safe_slice1);
     println!("Second: {}", safe_slice2);
     println!("Third: {}", safe_slice3);
-}*/
+}
