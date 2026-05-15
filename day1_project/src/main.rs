@@ -141,7 +141,7 @@ fn main() {
 } */
 
 // Slicing - use of the unicode-segmentation crate to slice String characters
-
+/*
 use unicode_segmentation::UnicodeSegmentation;
 
 fn main() {
@@ -150,4 +150,12 @@ fn main() {
     let agreed: String = yummy.graphemes(true).take(1).collect();
 
     println!("Good meal: {}", agreed);
+}*/
+
+// Replacing text in Rust Strings
+fn main() {
+    let command = "You need to go!"; // string literal 
+    let new_command = command.replace("go!", "run!");
+
+    println!("{} Why?", new_command);
 }
