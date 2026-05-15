@@ -84,10 +84,29 @@
 }*/
 
 // Bytes vs Characters
-fn main() {
+/*fn main() {
     let status = String::from("Wóke");
     // print all bytes in this String
     for byte in status.bytes() {
         println!("{}", byte);
+    }
+}*/
+
+/*fn main() {
+    let vital = String::from("Wealth");
+
+    // return all characters in a String
+    for char in vital.chars() {
+        println!("{}", char);
+    }
+}*/
+
+// Iterating Over Strings
+fn main() {
+    let power = String::from("Health");
+
+    // Iterate over the String to bring up all characters in the String
+    for char in power.chars() {
+        println!("{}", char);
     }
 }
