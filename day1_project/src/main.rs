@@ -124,6 +124,7 @@
 
 // Use of .chars().take(2).collect();
 
+/*
 fn main() {
     let food1 = String::from("Ugali");
     let food2 = String::from("🥗Ugali");
@@ -137,4 +138,16 @@ fn main() {
     println!("First: {}", safe_slice1);
     println!("Second: {}", safe_slice2);
     println!("Third: {}", safe_slice3);
+} */
+
+// Slicing - use of the unicode-segmentation crate to slice String characters
+
+use unicode_segmentation::UnicodeSegmentation;
+
+fn main() {
+    let yummy = String::from("👍🏽Ugali🥗");
+
+    let agreed: String = yummy.graphemes(true).take(1).collect();
+
+    println!("Good meal: {}", agreed);
 }
