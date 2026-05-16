@@ -167,9 +167,18 @@ fn main() {
     println!("{}", next_main);
 }*/
 
-fn main() {
+/*fn main() {
     let lie = "He is a good player.";
     let smaller = lie.to_lowercase();
 
     println!("{}", smaller);
+} */
+
+// Splitting Strings
+fn main() {
+    let csv = "Alice, 90, Bob, 50";
+
+    for part in csv.split(',') {
+        println!("{}", part);
+    }
 }
