@@ -269,6 +269,7 @@ fn main() {
 */
 // Use of .find(), accepts a char, an &str, or a closure
 
+/*
 fn main() {
     let mark = "You know, sometimes, at all, you know 2015, and January.";
 
@@ -277,3 +278,6 @@ fn main() {
         None => println!("No char available!"),
     }
 }
+*/
+
+// Parsing Strings Into Numbers
