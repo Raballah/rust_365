@@ -270,10 +270,10 @@ fn main() {
 // Use of .find(), accepts a char, an &str, or a closure
 
 fn main() {
-    let mark = "Something you do not want in your body.";
+    let mark = "You know, sometimes, at all, you know 2015, and January.";
 
-    match mark.find(',') {
-        Some(char) => println!("Some comma item found!"),
-        None => println!("No char found!"),
+    match mark.find(|c: char| c == ','|| c == ' ') {
+        Some(item) => println!("First match at index: {}", item),
+        None => println!("No char available!"),
     }
 }
