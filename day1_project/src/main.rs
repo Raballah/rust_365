@@ -256,6 +256,7 @@ fn main() {
 */
 
 // Use of starts_with()
+/*
 fn main() {
     let scared = "Seeing something you cannot explain.";
 
@@ -263,5 +264,16 @@ fn main() {
         println!("This is true!");
     } else {
         println!("Not true.");
+    }
+}
+*/
+// Use of .find(), accepts a char, an &str, or a closure
+
+fn main() {
+    let mark = "Something you do not want in your body.";
+
+    match mark.find(',') {
+        Some(char) => println!("Some comma item found!"),
+        None => println!("No char found!"),
     }
 }
