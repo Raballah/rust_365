@@ -230,7 +230,7 @@ fn main() {
 // Checking content with Strings
 // The use of .contains(""), ends_with(""), and starts_with("")
 // Use of .contains() -> returns a bool
-
+/*
 fn main() {
     let baked_binary = "Someone is creepy right now.";
 
@@ -238,5 +238,18 @@ fn main() {
         println!("Delimiter found");
     } else {
         println!("No such word exist");
+    }
+}
+*/
+
+// Use of .ends_with() to find some content
+
+fn main() {
+    let gone = "The days when there was honour.";
+
+    if gone.ends_with("honor") {
+        println!("This is definitely a honour!");
+    } else {
+        println!("No word found!");
     }
 }
