@@ -178,7 +178,7 @@ fn main() {
 fn main() {
     let csv = "Alice, 90, Bob, 50";
 
-    for part in csv.split(',') {
+    for part in csv.split(", ") {
         println!("{}", part);
     }
 }
