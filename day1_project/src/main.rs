@@ -175,10 +175,19 @@ fn main() {
 } */
 
 // Splitting Strings
-fn main() {
+/*fn main() {
     let csv = "Alice, 90, Bob, 50";
 
     for part in csv.split(", ") {
         println!("{}", part);
+    }
+}*/
+
+// Trimming Whitespaces
+fn main() {
+    let gone = "He, 48, and, Bob, Move, 89";
+
+    for word in gone.split(", ") {
+        println!("{}", word);
     }
 }
