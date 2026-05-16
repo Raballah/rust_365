@@ -243,7 +243,7 @@ fn main() {
 */
 
 // Use of .ends_with() to find some content
-
+/*
 fn main() {
     let gone = "The days when there was honour.";
 
@@ -251,5 +251,17 @@ fn main() {
         println!("This is definitely a honour!");
     } else {
         println!("No word found!");
+    }
+}
+*/
+
+// Use of starts_with()
+fn main() {
+    let scared = "Seeing something you cannot explain.";
+
+    if scared.to_lowercase().starts_with("seeing") {
+        println!("This is true!");
+    } else {
+        println!("Not true.");
     }
 }
