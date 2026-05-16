@@ -184,11 +184,21 @@ fn main() {
 }*/
 
 // .split() uses char, space or &str to split, what is supplied is the backbone of the split
+// spliting using char character
+/*fn main() {
+    let gone = "He, 48, and, Bob, Move, 89";
+
+    for word in gone.split(',') {
+        println!("{}", word);
+    }
+}*/
+
+// Splitting using space or white space. 
 
 fn main() {
     let gone = "He, 48, and, Bob, Move, 89";
 
-    for word in gone.split(',') {
+    for word in gone.split(' ') {
         println!("{}", word);
     }
 }
