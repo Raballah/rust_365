@@ -193,12 +193,14 @@ fn main() {
     }
 }*/
 
-// Splitting using space or white space. 
+// Splitting Strings using .split() and closure
+// closure - splitting on any character matching a condition
+// The use of closure for splitting Strings 
 
 fn main() {
     let gone = "He, 48, and, Bob, Move, 89";
 
-    for word in gone.split(' ') {
+    for word in gone.split(|c: char| c == ',' || c == ' ') {
         println!("{}", word);
     }
 }
