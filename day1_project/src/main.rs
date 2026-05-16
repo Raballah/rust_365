@@ -206,10 +206,21 @@ fn main() {
 }*/
 
 // Splitting Strings
+/*
 fn main() {
     let task = "He makes sense, but, rather, 169, on street, Nairobi";
 
     for word in task.split(|c: char| c == ' '|| c == ',') {
         println!("{}", word);
     }
+}
+*/
+
+// Trimming whitespace 
+fn main() {
+    let coincidence = "He is also here! ";
+
+    let no_space = coincidence.trim();
+
+    println!("{}", no_space);
 }
