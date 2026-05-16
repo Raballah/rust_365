@@ -217,10 +217,26 @@ fn main() {
 */
 
 // Trimming whitespace 
+/*
 fn main() {
     let coincidence = "He is also here! ";
 
     let no_space = coincidence.trim();
 
     println!("{}", no_space);
+}
+*/
+
+// Checking content with Strings
+// The use of .contains(""), ends_with(""), and starts_with("")
+// Use of .contains() -> returns a bool
+
+fn main() {
+    let baked_binary = "Someone is creepy right now.";
+
+    if baked_binary.contains("creepy") {
+        println!("Delimiter found");
+    } else {
+        println!("No such word exist");
+    }
 }
