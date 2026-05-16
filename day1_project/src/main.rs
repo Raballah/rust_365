@@ -209,7 +209,7 @@ fn main() {
 fn main() {
     let task = "He makes sense, but, rather, 169, on street, Nairobi";
 
-    for word in task.split(' ') {
+    for word in task.split(|c: char| c == ' '|| c == ',') {
         println!("{}", word);
     }
 }
