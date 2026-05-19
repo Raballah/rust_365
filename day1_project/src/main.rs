@@ -292,7 +292,7 @@ fn main() {
     }
 }*/
 // use of ends_with
-fn main() {
+/*fn main() {
     let paragraph = "I think he's taken enough. This is now Enough!";
     let lower = paragraph.to_lowercase();
 
@@ -314,5 +314,17 @@ fn main() {
     // Use of match_indices() to provide exact index and value found, .find() and .matches() combination
     for (index, matched) in lower.match_indices("enough") {
         println!("{} found at byte index {}.", matched, index);
+    }
+}*/
+
+// Use of .starts_with()
+
+fn main() {
+    let food_aspect = "Super crunchy with a lot of super crunchy parts.";
+
+    if food_aspect.starts_with("super") {
+        println!("Yeah, that's right!");
+    } else {
+        println!("Wrong about that!");
     }
 }
