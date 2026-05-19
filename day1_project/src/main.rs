@@ -294,10 +294,19 @@ fn main() {
 // use of ends_with
 fn main() {
     let paragraph = "I think he's taken enough. This is now Enough!";
+    let lower = paragraph.to_lowercase();
 
-    if paragraph.to_lowercase().ends_with("enough!") {
-        println!("Yes, that's true!");
-    } else {
-        println!("That is false!");
+    // counting occurences of 'enough'
+    let vector = lower.matches("enough").collect::<Vec<&str>>();
+    println!("The matches collected as vector: {:?}", vector);
+    
+    // find position of first occurence // .find() returns Options<usize>
+    match lower.rfind("enough") {
+        Some(index) => println!("'enough' foun at byte index: {}", index),
+        None => println!("Nothing found"), 
+    }
+    // Check if it contains enough.
+    if lower.contains("enough") {
+        println!("'enough' found at least once!");
     }
 }
