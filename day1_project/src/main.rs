@@ -1,8 +1,8 @@
 // Day 16 - Strings in Depth 
 // Mini Project - CLI Text Analyzer
 fn main() {
-    let mut word = String::from("You are here");
-    word.push('!');
+    let mut word = String::from("You are here ");
+    word.push_str("righ now.");
 
     println!("{}", word);
 }
