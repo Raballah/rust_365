@@ -309,4 +309,9 @@ fn main() {
     if lower.contains("enough") {
         println!("'enough' exists!");
     }
+
+    // the use of .match_indices(), returns iterator of (byte_index, &str)
+    for (index, matched) in lower.match_indices("enough") {
+        println!("Found '{}' at byte index {}", matched, index);
+    }
 }
