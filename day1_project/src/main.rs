@@ -293,9 +293,9 @@ fn main() {
 }*/
 // use of ends_with
 fn main() {
-    let word = "You are not good Enough!";
+    let paragraph = "I think he's taken enough. This is now Enough!";
 
-    if word.ends_with("enough") {
+    if paragraph.to_lowercase().ends_with("enough!") {
         println!("Yes, that's true!");
     } else {
         println!("That is false!");
