@@ -307,6 +307,6 @@ fn main() {
     }
     // Check if it contains enough.
     if lower.contains("enough") {
-        println!("'enough' found at least once!");
+        println!("'enough' exists!");
     }
 }
