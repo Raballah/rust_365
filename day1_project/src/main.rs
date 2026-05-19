@@ -282,12 +282,22 @@ fn main() {
 
 // Parsing Strings Into Numbers
 // Checking content
-fn main() {
+/*fn main() {
     let word = "I am not your Agemate!";
 
     if word.to_lowercase().contains("not") {
         println!("Yes, I have found it.");
     } else {
         println!("Are you sure it's in there?");
+    }
+}*/
+// use of ends_with
+fn main() {
+    let word = "You are not good Enough!";
+
+    if word.ends_with("enough") {
+        println!("Yes, that's true!");
+    } else {
+        println!("That is false!");
     }
 }
