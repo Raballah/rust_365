@@ -285,9 +285,9 @@ fn main() {
 fn main() {
     let word = "I am not your Agemate!";
 
-    if word.contains("Not") {
-        println!("You are not for real!");
+    if word.to_lowercase().contains("not") {
+        println!("Yes, I have found it.");
     } else {
-        println!("Are you sure?");
+        println!("Are you sure it's in there?");
     }
 }
