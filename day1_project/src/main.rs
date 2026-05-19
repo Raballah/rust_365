@@ -281,3 +281,13 @@ fn main() {
 */
 
 // Parsing Strings Into Numbers
+// Checking content
+fn main() {
+    let word = "I am not your Agemate!";
+
+    if word.contains("Not") {
+        println!("You are not for real!");
+    } else {
+        println!("Are you sure?");
+    }
+}
