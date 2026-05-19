@@ -331,8 +331,16 @@ fn main() {
 */
 
 // Parsing Strings Into Numbers
+/*
 fn main() {
     let age: u32 = "67".parse().expect("Not a number");
 
     println!("{}", age);
+}
+*/
+
+fn main() {
+    // Parse strings into numbers
+    let value: i32 = "300".parse().expect("Not a number");
+    println!("He has ${} in monetary net worth!", value);
 }
