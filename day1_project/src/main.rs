@@ -318,13 +318,21 @@ fn main() {
 }*/
 
 // Use of .starts_with()
-
+/*
 fn main() {
     let food_aspect = "Super crunchy with a lot of super crunchy parts.";
 
-    if food_aspect.starts_with("super") {
+    if food_aspect.to_lowercase().starts_with("super") {
         println!("Yeah, that's right!");
     } else {
         println!("Wrong about that!");
     }
+}
+*/
+
+// Parsing Strings Into Numbers
+fn main() {
+    let age: u32 = "67".parse().expect("Not a number");
+
+    println!("{}", age);
 }
