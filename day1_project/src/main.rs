@@ -311,7 +311,8 @@ fn main() {
     }
 
     // the use of .match_indices(), returns iterator of (byte_index, &str)
+    // Use of match_indices() to provide exact index and value found, .find() and .matches() combination
     for (index, matched) in lower.match_indices("enough") {
-        println!("Found '{}' at byte index {}", matched, index);
+        println!("{} found at byte index {}.", matched, index);
     }
 }
