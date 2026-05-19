@@ -338,9 +338,25 @@ fn main() {
     println!("{}", age);
 }
 */
-
+/*
 fn main() {
     // Parse strings into numbers
     let value: i32 = "300".parse().expect("Not a number");
     println!("He has ${} in monetary net worth!", value);
+}
+*/
+
+// String Ownership in Functions
+// Taking ownership
+// Why &str Parameters Are Flexible
+
+fn greet(name: &str) {
+    println!("Hello, {}", name);
+}
+
+fn main() {
+    let person = String::from("John");
+
+    greet(&person);
+    greet("Mary");
 }
